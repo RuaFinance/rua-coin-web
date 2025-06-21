@@ -1,142 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-} from 'chart.js';
+import React, { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
+import TradingViewWidget from './TradingViewWidget';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
-
-const TradingChart = () => {
+const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
   const [selectedPair, setSelectedPair] = useState('BTC/USDT');
   const [timeframe, setTimeframe] = useState('1H');
-  const [chartData, setChartData] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(43250.50);
   const [priceChange, setPriceChange] = useState(2.45);
+  const [pairInfo, setPairInfo] = useState({
+    high24h: 44100.00,
+    low24h: 42800.00,
+    volume24h: '1.2B USDT',
+    trades24h: '28,456 BTC'
+  });
 
   const timeframes = ['1m', '5m', '15m', '1H', '4H', '1D', '1W'];
 
-  // 生成模拟K线数据
-  const generateChartData = () => {
-    const labels = [];
-    const prices = [];
-    const volumes = [];
-    
-    const now = new Date();
-    let basePrice = 43000;
-    
-    for (let i = 23; i >= 0; i--) {
-      const time = new Date(now.getTime() - i * 60 * 60 * 1000);
-      labels.push(time.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }));
-      
-      // 生成价格数据（模拟波动）
-      const change = (Math.random() - 0.5) * 200;
-      basePrice += change;
-      prices.push(basePrice);
-      
-      // 生成成交量数据
-      volumes.push(Math.random() * 1000 + 500);
-    }
-
-    return {
-      labels,
-      datasets: [
-        {
-          label: selectedPair,
-          data: prices,
-          borderColor: priceChange >= 0 ? '#22c55e' : '#ef4444',
-          backgroundColor: priceChange >= 0 ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.1,
-          pointRadius: 0,
-          pointHoverRadius: 4,
-        }
-      ]
-    };
+  // 格式化交易对名称为TradingView格式
+  const formatSymbolForTradingView = (pair) => {
+    // 将 BTC/USDT 转换为 BTCUSDT
+    return pair.replace('/', '');
   };
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        mode: 'index',
-        intersect: false,
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        titleColor: '#ffffff',
-        bodyColor: '#ffffff',
-        borderColor: '#334155',
-        borderWidth: 1,
-        callbacks: {
-          label: function(context) {
-            return `价格: $${context.parsed.y.toLocaleString()}`;
-          }
-        }
-      },
-    },
-    interaction: {
-      mode: 'nearest',
-      axis: 'x',
-      intersect: false,
-    },
-    scales: {
-      x: {
-        display: true,
-        grid: {
-          color: 'rgba(51, 65, 85, 0.3)',
-        },
-        ticks: {
-          color: '#94a3b8',
-          maxTicksLimit: 8,
-        }
-      },
-      y: {
-        display: true,
-        position: 'right',
-        grid: {
-          color: 'rgba(51, 65, 85, 0.3)',
-        },
-        ticks: {
-          color: '#94a3b8',
-          callback: function(value) {
-            return '$' + value.toLocaleString();
-          }
-        }
-      }
-    },
-    elements: {
-      point: {
-        hoverBackgroundColor: '#0ea5e9',
-        hoverBorderColor: '#ffffff',
-        hoverBorderWidth: 2,
-      }
+  // 根据时间框架选择TradingView的间隔
+  const getIntervalFromTimeframe = (tf) => {
+    switch(tf) {
+      case '1m': return '1';
+      case '5m': return '5';
+      case '15m': return '15';
+      case '1H': return '60';
+      case '4H': return '240';
+      case '1D': return 'D';
+      case '1W': return 'W';
+      default: return '60';
     }
   };
-
-  useEffect(() => {
-    setChartData(generateChartData());
-  }, [selectedPair, timeframe]);
 
   // 模拟实时价格更新
   useEffect(() => {
@@ -161,7 +59,7 @@ const TradingChart = () => {
                 ${currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
               <div className={`flex items-center space-x-1 ${
-                priceChange >= 0 ? 'price-up' : 'price-down'
+                priceChange >= 0 ? 'text-green-400' : 'text-red-400'
               }`}>
                 {priceChange >= 0 ? (
                   <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -205,44 +103,48 @@ const TradingChart = () => {
 
       {/* Chart */}
       <div className="flex-1 mb-4 min-h-0">
-        <div className="h-full min-h-[200px] sm:min-h-[300px]">
-          {chartData && (
-            <Line data={chartData} options={{
-              ...chartOptions,
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                ...chartOptions.scales,
-                x: {
-                  ...chartOptions.scales.x,
-                  ticks: {
-                    ...chartOptions.scales.x.ticks,
-                    maxTicksLimit: window.innerWidth < 640 ? 4 : 8,
-                  }
-                }
-              }
-            }} />
-          )}
+        <div className="h-full min-h-[300px]">
+          <TradingViewWidget
+            symbol={formatSymbolForTradingView(selectedPair)}
+            interval={getIntervalFromTimeframe(timeframe)}
+            theme="DARK"
+            locale="zh_CN"
+            autosize
+            hide_side_toolbar={false}
+            allow_symbol_change={false}
+            save_image={true}
+            show_popup_button={true}
+            withdateranges={true}
+            studies={[
+              "MASimple@tv-basicstudies",
+              "MACD@tv-basicstudies",
+              "StochasticRSI@tv-basicstudies"
+            ]}
+            style={{
+              height: "100%",
+              width: "100%"
+            }}
+          />
         </div>
       </div>
 
-      {/* Market Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 text-xs sm:text-sm flex-shrink-0">
+      {/* Market Stats - 移到图表下方，不会与图表重叠 */}
+      <div className="mt-2 pt-2 border-t border-slate-700 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 text-xs sm:text-sm flex-shrink-0">
         <div>
           <div className="text-gray-400">24h最高</div>
-          <div className="text-white font-mono">$44,100.00</div>
+          <div className="text-white font-mono">${pairInfo.high24h.toLocaleString()}</div>
         </div>
         <div>
           <div className="text-gray-400">24h最低</div>
-          <div className="text-white font-mono">$42,800.00</div>
+          <div className="text-white font-mono">${pairInfo.low24h.toLocaleString()}</div>
         </div>
         <div>
           <div className="text-gray-400">24h成交量</div>
-          <div className="text-white font-mono">1.2B USDT</div>
+          <div className="text-white font-mono">{pairInfo.volume24h}</div>
         </div>
         <div>
           <div className="text-gray-400">24h成交额</div>
-          <div className="text-white font-mono">28,456 BTC</div>
+          <div className="text-white font-mono">{pairInfo.trades24h}</div>
         </div>
       </div>
     </div>

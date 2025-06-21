@@ -164,8 +164,9 @@ const TradingPairs = () => {
               </div>
 
               {/* Mobile/Tablet Layout */}
-              <div className="lg:hidden grid grid-cols-4 gap-2 px-3 py-3 text-sm trading-pair">
-                <div className="flex items-center space-x-2">
+              <div className="lg:hidden grid grid-cols-12 gap-1 px-2 py-2 text-sm trading-pair">
+                {/* 币种 - 占3列 */}
+                <div className="col-span-3 flex items-center space-x-1">
                   <button
                     onClick={() => toggleFavorite(pair.symbol)}
                     className={`${
@@ -177,19 +178,21 @@ const TradingPairs = () => {
                     <Star className="h-3 w-3" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
                   </button>
                   <div>
-                    <div className="font-medium text-white text-sm">{pair.symbol.split('/')[0]}</div>
+                    <div className="font-medium text-white text-xs">{pair.symbol.split('/')[0]}</div>
                     <div className="text-xs text-gray-400">{pair.symbol.split('/')[1]}</div>
                   </div>
                 </div>
                 
-                <div className="text-right">
-                  <div className="font-mono text-white text-sm">
+                {/* 价格 - 占3列 */}
+                <div className="col-span-3 text-right">
+                  <div className="font-mono text-white text-xs">
                     ${pair.price < 1 ? pair.price.toFixed(4) : pair.price.toFixed(2)}
                   </div>
-                  <div className="text-gray-400 text-xs">{pair.volume}</div>
+                  <div className="text-gray-400 text-xs hidden sm:block">{pair.volume}</div>
                 </div>
                 
-                <div className="text-right">
+                {/* 涨跌幅 - 占3列 */}
+                <div className="col-span-3 text-right">
                   <div className={`flex items-center justify-end space-x-1 ${
                     pair.change >= 0 ? 'price-up' : 'price-down'
                   }`}>
@@ -198,13 +201,14 @@ const TradingPairs = () => {
                     ) : (
                       <TrendingDown className="h-3 w-3" />
                     )}
-                    <span className="font-mono text-sm">
+                    <span className="font-mono text-xs whitespace-nowrap">
                       {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
                     </span>
                   </div>
                 </div>
                 
-                <div className="text-right">
+                {/* 操作 - 占3列 */}
+                <div className="col-span-3 text-right">
                   <button className="btn-primary text-xs px-2 py-1">
                     交易
                   </button>
