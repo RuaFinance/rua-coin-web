@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-900 text-white font-sans antialiased;
+    margin: 0;
+    padding: 0;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+  
+  .btn-success {
+    @apply bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg;
+  }
+  
+  .price-up {
+    @apply text-green-400;
+  }
+  
+  .price-down {
+    @apply text-red-400;
+  }
+  
+  .price-neutral {
+    @apply text-gray-400;
+  }
+  
+  .trading-pair {
+    @apply hover:bg-slate-700 cursor-pointer transition-colors duration-200 p-3 rounded-lg;
+  }
+  
+  .order-book-row {
+    @apply hover:bg-slate-700/50 cursor-pointer transition-colors duration-150 px-3 py-1;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent;
+  }
+}
