@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "klinecharts": "^10.0.0-alpha5",
+    "react-tradingview-widget": "^1.3.2"
+  }
+}

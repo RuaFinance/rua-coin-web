@@ -8,7 +8,7 @@ import RecentTrades from './components/RecentTrades';
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen">
       <Header />
       
       <main className="w-full px-2 sm:px-4 lg:px-6 py-4">

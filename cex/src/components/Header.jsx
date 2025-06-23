@@ -6,15 +6,17 @@ const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
-    <header className="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+    <header className="bg-slate-950 border-b border-slate-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold gradient-text">CryptoEx</h1>
+              <h1 className="text-2xl font-bold gradient-text">
+                <a href="/">CryptoEx</a>
+              </h1>
             </div>
-            
+
             {/* Desktop Navigation */}
             <nav className="hidden md:ml-8 md:flex md:space-x-8">
               <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -67,7 +69,11 @@ const Header = () => {
               </button>
 
               {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-1 z-50">
+                <div
+                  className="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-1 z-50"
+                  onMouseLeave={() => setIsUserMenuOpen(false)}
+                  onMouseEnter={() => setIsUserMenuOpen(true)}
+                >
                   <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
                     个人资料
                   </a>

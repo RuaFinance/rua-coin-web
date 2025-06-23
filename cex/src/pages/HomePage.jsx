@@ -47,31 +47,31 @@ const HomePage = () => {
     <main className="container mx-auto p-4">
       {/* 市场概览 */}
       <section className="card mb-6">
-        <h2 className="text-xl font-bold text-white mb-4">市场概览</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <h2 className="h2-word">市场概览</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-white">
           <div>
-            <div className="text-2xl font-bold text-white">{marketData?.totalMarketCap}</div>
+            <div className="text-2xl font-bold">{marketData?.totalMarketCap}</div>
             <div className="text-gray-400">总市值</div>
             <div className={`text-sm ${marketData?.marketCapChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
               {marketData?.marketCapChange >= 0 ? '+' : ''}{marketData?.marketCapChange}%
             </div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">{marketData?.volume24h}</div>
+            <div className="text-2xl font-bold">{marketData?.volume24h}</div>
             <div className="text-gray-400">24h成交量</div>
             <div className={`text-sm ${marketData?.volumeChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
               {marketData?.volumeChange >= 0 ? '+' : ''}{marketData?.volumeChange}%
             </div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">{marketData?.btcDominance}%</div>
+            <div className="text-2xl font-bold">{marketData?.btcDominance}%</div>
             <div className="text-gray-400">BTC占比</div>
             <div className={`text-sm ${marketData?.btcDominanceChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
               {marketData?.btcDominanceChange >= 0 ? '+' : ''}{marketData?.btcDominanceChange}%
             </div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">{marketData?.activeCoins}</div>
+            <div className="text-2xl font-bold">{marketData?.activeCoins}</div>
             <div className="text-gray-400">活跃币种</div>
             <div className="text-sm text-gray-400">--</div>
           </div>
@@ -80,12 +80,12 @@ const HomePage = () => {
 
       {/* 热门币种 */}
       <section className="card">
-        <h2 className="text-xl font-bold text-white mb-4">热门币种</h2>
+        <h2 className="h2-word">热门币种</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {popularCoins.map((coin) => (
             <div 
               key={coin.symbol} 
-              className="bg-slate-800 p-4 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors"
+              className="bg-slate-900 p-4 rounded-lg cursor-pointer hover:bg-slate-500 transition-colors"
               onClick={() => handleCoinClick(coin.symbol)}
             >
               <div className="flex items-center space-x-3">

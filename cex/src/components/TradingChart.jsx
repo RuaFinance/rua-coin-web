@@ -3,8 +3,8 @@ import { BarChart3, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
 import TradingViewWidget from './TradingViewWidget';
 
 const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
-  const [selectedPair, setSelectedPair] = useState('BTC/USDT');
-  const [timeframe, setTimeframe] = useState('1H');
+  const [selectedPair, setSelectedPair] = useState('ETH/USDT');
+  const [timeframe, setTimeframe] = useState('1D');
   const [currentPrice, setCurrentPrice] = useState(43250.50);
   const [priceChange, setPriceChange] = useState(2.45);
   const [pairInfo, setPairInfo] = useState({
@@ -37,15 +37,15 @@ const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
   };
 
   // 模拟实时价格更新
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const change = (Math.random() - 0.5) * 10;
-      setCurrentPrice(prev => prev + change);
-      setPriceChange(prev => prev + (Math.random() - 0.5) * 0.1);
-    }, 2000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const change = (Math.random() - 0.5) * 10;
+  //     setCurrentPrice(prev => prev + change);
+  //     setPriceChange(prev => prev + (Math.random() - 0.5) * 0.1);
+  //   }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div className="card h-full flex flex-col">
@@ -107,7 +107,7 @@ const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
           <TradingViewWidget
             symbol={formatSymbolForTradingView(selectedPair)}
             interval={getIntervalFromTimeframe(timeframe)}
-            theme="DARK"
+            theme="light"
             locale="zh_CN"
             autosize
             hide_side_toolbar={false}

@@ -6,13 +6,19 @@
 
 @layer base {
   body {
-    @apply bg-slate-900 text-white font-sans antialiased;
+    @apply bg-slate-900 text-gray-900 font-sans antialiased;
+    /* @apply bg-slate-900; */
+    /* @apply bg-white; */
+    /* @apply bg-white;
+    @apply text-black font-sans antialiased; */
     margin: 0;
     padding: 0;
   }
 
+  /* 背景色 */
   #root {
-    @apply min-h-screen;
+    /* @apply min-h-screen bg-white; */
+    @apply min-h-screen bg-slate-900;
   }
 }
 
@@ -30,7 +36,22 @@
   }
   
   .card {
-    @apply bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg;
+    /* @apply bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg; */
+    @apply bg-slate-800;
+    @apply border;             /* 1px 边框 */
+    @apply border-slate-700;  /* 边框颜色 */
+    @apply rounded-lg;         /* 圆角 */
+    @apply p-4;                /* 内边距 */
+    @apply shadow-lg;          /* 阴影效果 */
+  }
+
+  .card-inner {
+    @apply bg-gray-100;
+    @apply border;             /* 1px 边框 */
+    @apply border-gray-200;  /* 边框颜色 */
+    @apply rounded-lg;         /* 圆角 */
+    @apply p-4;                /* 内边距 */
+    @apply shadow-lg;          /* 阴影效果 */
   }
   
   .price-up {
@@ -55,5 +76,18 @@
   
   .gradient-text {
     @apply bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent;
+  }
+
+  .trading-page-trading-chart {
+    height: 600px;
+    margin-bottom: 1rem;
+    /* background-color: #000000; */
+  }
+
+  /* HomePage.jsx */
+  .h2-word {
+    /* @apply text-gray-700; */
+    @apply text-white;
+    @apply text-xl font-bold mb-4;
   }
 }
