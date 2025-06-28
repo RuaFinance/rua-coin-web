@@ -64,7 +64,7 @@ const OrderBook = () => {
   return (
     <div className="card h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 flex-shrink-0">
+      <div className="flex items-center justify-between mb-2 flex-shrink-0">
         <h2 className="text-lg font-semibold text-white">订单簿</h2>
         <div className="flex items-center space-x-2">
           <select
@@ -93,7 +93,7 @@ const OrderBook = () => {
 
       <div className="flex-1 overflow-hidden flex flex-col">
         {/* Asks (卖单) - 红色 */}
-        <div className="flex-1 overflow-y-auto mb-2 sm:mb-4 min-h-0">
+        <div className="flex-1 overflow-y-auto mb-2 sm:mb-2 min-h-0">
           {orderBook.asks.slice(0, 10).map((order, index) => (
             <div
               key={`ask-${index}`}
@@ -119,7 +119,7 @@ const OrderBook = () => {
         </div>
 
         {/* Current Price */}
-        <div className="flex items-center justify-center py-2 sm:py-3 mb-2 sm:mb-4 bg-slate-700/50 rounded-lg flex-shrink-0">
+        <div className="flex items-center justify-center py-2 sm:py-3 mb-2 sm:mb-2 bg-slate-700/50 rounded-lg flex-shrink-0">
           <div className="flex items-center space-x-1 sm:space-x-2">
             <span className="text-lg sm:text-2xl font-mono text-green-400">
               {formatPrice(43250.50)}

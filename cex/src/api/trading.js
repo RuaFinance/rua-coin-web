@@ -10,7 +10,7 @@ export const fetchTradingPairData = async (symbol) => {
     // return await api.get(`/trading/pair/${symbol}`);
     
     // 模拟API延迟
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // await new Promise(resolve => setTimeout(resolve, 500));
     
     // 模拟数据
     return {
@@ -40,7 +40,7 @@ export const fetchKlineData = async (symbol, interval, limit = 100) => {
     // return await api.get(`/trading/kline/${symbol}?interval=${interval}&limit=${limit}`);
     
     // 模拟API延迟
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // await new Promise(resolve => setTimeout(resolve, 300));
     
     // 解析交易对
     const baseAsset = symbol.split('/')[0];
@@ -122,7 +122,7 @@ export const fetchOrderBook = async (symbol, limit = 20) => {
     // return await api.get(`/trading/orderbook/${symbol}?limit=${limit}`);
     
     // 模拟API延迟
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // await new Promise(resolve => setTimeout(resolve, 300));
     
     // 生成模拟数据
     const basePrice = 43250.50;
@@ -175,7 +175,7 @@ export const fetchRecentTrades = async (symbol, limit = 20) => {
     // return await api.get(`/trading/trades/${symbol}?limit=${limit}`);
     
     // 模拟API延迟
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // await new Promise(resolve => setTimeout(resolve, 300));
     
     // 生成模拟数据
     const basePrice = 43250.50;
@@ -216,7 +216,7 @@ export const createOrder = async (orderData) => {
     // return await api.post('/trading/order', orderData);
     
     // 模拟API延迟
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // await new Promise(resolve => setTimeout(resolve, 500));
     
     // 模拟成功响应
     return {

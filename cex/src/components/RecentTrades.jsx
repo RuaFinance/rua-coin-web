@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, TrendingUp, TrendingDown } from 'lucide-react';
 
-const RecentTrades = () => {
+const RecentTrades = ({ pairData, symbol }) => {
   const [trades, setTrades] = useState([]);
 
   // 生成模拟交易数据
@@ -71,7 +71,7 @@ const RecentTrades = () => {
       {/* Column Headers */}
       <div className="grid grid-cols-3 gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs text-gray-400 font-medium border-b border-slate-700 mb-2 flex-shrink-0">
         <div className="text-left">价格(USDT)</div>
-        <div className="text-right">数量(BTC)</div>
+        <div className="text-right">数量({symbol})</div>
         <div className="text-right">时间</div>
       </div>
 
@@ -110,7 +110,7 @@ const RecentTrades = () => {
               {trades
                 .filter(t => t.side === 'buy')
                 .reduce((sum, t) => sum + t.amount, 0)
-                .toFixed(4)} BTC
+                .toFixed(4)} {symbol}
             </div>
           </div>
           <div>
@@ -119,7 +119,7 @@ const RecentTrades = () => {
               {trades
                 .filter(t => t.side === 'sell')
                 .reduce((sum, t) => sum + t.amount, 0)
-                .toFixed(4)} BTC
+                .toFixed(4)} {symbol}
             </div>
           </div>
         </div>

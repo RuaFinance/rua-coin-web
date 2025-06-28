@@ -50,7 +50,7 @@ const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
   return (
     <div className="card h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 flex-shrink-0">
+      <div className="flex items-center justify-between mb-2 flex-shrink-0">
         <div className="flex items-center space-x-2 sm:space-x-4 min-w-0">
           <div className="min-w-0">
             <h2 className="text-lg sm:text-xl font-bold text-white">{selectedPair}</h2>
@@ -85,7 +85,7 @@ const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
       </div>
 
       {/* Timeframe Selector */}
-      <div className="flex space-x-1 mb-4 overflow-x-auto flex-shrink-0">
+      <div className="flex space-x-1 mb-2 overflow-x-auto flex-shrink-0">
         {timeframes.map((tf) => (
           <button
             key={tf}
@@ -102,7 +102,7 @@ const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
       </div>
 
       {/* Chart */}
-      <div className="flex-1 mb-4 min-h-0">
+      <div className="flex-1 mb-2 min-h-0">
         <div className="h-full min-h-[300px]">
           <TradingViewWidget
             symbol={formatSymbolForTradingView(selectedPair)}

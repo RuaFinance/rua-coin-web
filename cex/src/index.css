@@ -17,14 +17,16 @@
 
   /* 背景色 */
   #root {
-    /* @apply min-h-screen bg-white; */
-    @apply min-h-screen bg-slate-900;
+    @apply min-h-screen bg-white;
+    /* @apply min-h-screen bg-slate-900; */
+    /* @apply home-page bg-white; */
+    /* @apply min-h-screen bg-[#F5F5F5]; */
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+    @apply bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-sm font-medium transition-colors duration-200;
   }
   
   .btn-success {
@@ -37,21 +39,43 @@
   
   .card {
     /* @apply bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg; */
-    @apply bg-slate-800;
-    @apply border;             /* 1px 边框 */
-    @apply border-slate-700;  /* 边框颜色 */
+    /* @apply bg-white; */
+    @apply bg-black;
+    /* 1px 边框 */
+    /* @apply border; */
+    @apply border-[#f5f7fa]; /* 边框颜色 */
     @apply rounded-lg;         /* 圆角 */
     @apply p-4;                /* 内边距 */
-    @apply shadow-lg;          /* 阴影效果 */
+    @apply shadow-sm;          /* 阴影效果 */
+  }
+
+  .homepage-card {
+    /* @apply bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg; */
+    /* @apply bg-white; */
+    @apply bg-white;
+    /* 1px 边框 */
+    /* @apply border; */
+    @apply border-[#f5f7fa]; /* 边框颜色 */
+    @apply rounded-lg;         /* 圆角 */
+    @apply p-4;                /* 内边距 */
+    @apply shadow-sm;          /* 阴影效果 */
   }
 
   .card-inner {
     @apply bg-gray-100;
-    @apply border;             /* 1px 边框 */
-    @apply border-gray-200;  /* 边框颜色 */
+    /* 1px 边框 */
+    /* @apply border; */
+    /* 边框颜色 */
+    /* @apply border-gray-200;   */
     @apply rounded-lg;         /* 圆角 */
-    @apply p-4;                /* 内边距 */
+
+    /* 内边距 */
+    /* @apply p-0; */
     @apply shadow-lg;          /* 阴影效果 */
+  }
+
+  .card-inner-form {
+    @apply bg-[#1d1d1d]
   }
   
   .price-up {
@@ -68,6 +92,7 @@
   
   .trading-pair {
     @apply hover:bg-slate-700 cursor-pointer transition-colors duration-200 p-3 rounded-lg;
+    @apply hover:bg-[#eeeeee];
   }
   
   .order-book-row {
@@ -87,7 +112,30 @@
   /* HomePage.jsx */
   .h2-word {
     /* @apply text-gray-700; */
-    @apply text-white;
+    @apply text-[#1e2329];
     @apply text-xl font-bold mb-4;
   }
+
+  .text-common {
+    /* @apply text-gray-900; */
+    @apply text-[#202630]
+  }
+
+  .text-trading-page-common {
+    @apply text-white;
+  }
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-2.304/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+  /* font-weight: 400; */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-2.304/fonts/webfonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: 700;  /* 加粗字重 */
+  font-display: swap;
 }
