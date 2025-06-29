@@ -193,7 +193,10 @@ const TradingPairs = () => {
               </div>
 
               {/* Mobile/Tablet Layout */}
-              <div className="lg:hidden grid grid-cols-12 gap-1 px-2 py-2 text-sm trading-pair">
+              <div
+                className="lg:hidden grid grid-cols-12 gap-1 px-2 py-2 text-sm trading-pair"
+                onClick={() => handleCoinClick(pair.symbol)}
+              >
                 {/* 币种 - 占3列 */}
                 <div className="col-span-3 flex items-center space-x-1">
                   <button
@@ -238,7 +241,13 @@ const TradingPairs = () => {
                 
                 {/* 操作 - 占3列 */}
                 <div className="col-span-3 text-right">
-                  <button className="btn-primary text-xs px-2 py-1">
+                  <button
+                    className="btn-primary text-xs px-2 py-1"
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleCoinClick(pair.symbol);
+                    }}
+                  >
                     交易
                   </button>
                 </div>

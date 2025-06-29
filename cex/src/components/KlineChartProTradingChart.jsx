@@ -29,7 +29,7 @@ class CustomDatafeed {
   }
 }
 
-export default function KlineTradingChartPro() {
+export default function KlineTradingChartPro({ symbol }) {
   const containerRef = useRef(null);
   const chartRef = useRef(null);
   const hasInitializedRef = useRef(false); // 防止 useEffect 重复执行
@@ -61,10 +61,10 @@ export default function KlineTradingChartPro() {
     const chart = new KLineChartPro({
       container: "k-line-chart",
       symbol: {
-        exchange: 'MOCK',
-        market: 'mock',
+        exchange: 'rua-coin',
+        market: 'spot',
         name: 'Mock Symbol',
-        shortName: 'MOCK',
+        shortName: symbol,
         ticker: 'MOCK',
         // priceCurrency: 'USD',
         type: 'Stock',

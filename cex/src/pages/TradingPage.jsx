@@ -99,7 +99,7 @@ const TradingPage = () => {
           <div className="trading-page-trading-chart flex-1 min-h-0" >
           {/* <div className="h-[700px] mb-4 bg-amber-50"> */}
             {/* <CustomKlineTradingChart symbol={pairData?.symbol || 'BTC/USDT'} /> */}
-            <KlineTradingChartPro/>
+            <KlineTradingChartPro symbol={symbol}/>
           </div>
           
           {/* 底部交易面板和最新成交 */}
