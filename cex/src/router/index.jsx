@@ -4,8 +4,8 @@ import HomePage from '../pages/HomePage';
 import TradingPage from '../pages/TradingPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
-const router = createBrowserRouter([
-  {
+const router = createBrowserRouter(
+  [{
     path: '/',
     element: <Layout />,
     children: [
@@ -22,7 +22,9 @@ const router = createBrowserRouter([
         element: <NotFoundPage />,
       },
     ],
-  },
-]);
+  }],
+  {
+    basename: '/rua-coin-web'
+  },);
 
 export default router;
