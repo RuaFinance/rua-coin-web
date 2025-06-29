@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, User, Settings, Bell, Search } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,27 +14,27 @@ const Header = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold gradient-text">
-                <a href="/">RuaCoin</a>
+                <Link to="/">RuaCoin</Link>
               </h1>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:ml-8 md:flex md:space-x-8">
-              <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 交易
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 现货
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 合约
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 资产
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 理财
-              </a>
+              </Link>
             </nav>
           </div>
 
@@ -80,19 +81,19 @@ const Header = () => {
                   onMouseLeave={() => setIsUserMenuOpen(false)}
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
                     个人资料
-                  </a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  </Link>
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
                     安全设置
-                  </a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  </Link>
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
                     API管理
-                  </a>
+                  </Link>
                   <hr className="my-1 border-slate-700" />
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
                     退出登录
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
@@ -121,21 +122,21 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 border-t border-slate-700">
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 交易
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </Link>
+              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 现货
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </Link>
+              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 合约
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </Link>
+              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 资产
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </Link>
+              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 理财
-              </a>
+              </Link>
               <div className="pt-4 pb-3 border-t border-slate-700">
                 <div className="flex items-center px-3 space-x-3">
                   <button className="btn-primary w-full">登录</button>

@@ -20,10 +20,13 @@ const TradingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // 新增：用于拖拽的宽度state
-  const [leftWidth, setLeftWidth] = useState("50%"); // 初始宽度
+  const [leftWidth, setLeftWidth] = useState(window.innerWidth / 2);
+  // const [leftWidth, setLeftWidth] = useState("50%");
   const containerRef = useRef(null);
 
   const onMouseDown = (e) => {
+    // 只允许大屏拖动
+    if (window.innerWidth < 1024) return;
     e.preventDefault();
     document.body.style.cursor = 'col-resize';
 
@@ -62,8 +65,16 @@ const TradingPage = () => {
     if (symbol) {
       loadData();
     }
-
   }, [symbol]);
+
+  useEffect(() => {
+    if (containerRef.current && window.innerWidth >= 1024) {
+      const containerWidth = containerRef.current.getBoundingClientRect().width;
+      setLeftWidth(containerWidth / 2);
+    }
+    // 只在初次挂载时设置一次
+    // eslint-disable-next-line
+  }, []);
 
   if (isLoading) {
     return (
@@ -109,15 +120,24 @@ const TradingPage = () => {
 
         <div
           ref={containerRef}
-          className="flex w-full items-stretch lg:col-span-12 mb-1"
+          className="flex flex-col lg:flex-row w-full items-stretch lg:col-span-12 mb-1"
           style={{ minHeight: 300, gap: 2 }}
         >
           {/* 交易 */}
-          <div style={{ width: leftWidth, minWidth: MIN_PANEL_WIDTH }}>
+          <div
+            className="flex-1"
+            style={
+              window.innerWidth >= 1024
+                ? { minWidth: MIN_PANEL_WIDTH, width: leftWidth }
+                : { width: '100%' }
+            }
+          >
             <TradingPanel pairData={pairData} symbol={symbol} />
           </div>
-          {/* 分割条 */}
-          <div
+
+          {/* 分割条：仅大屏显示 */}
+          {/* <div
+            className="hidden lg:block"
             style={{
               width: 4,
               background: '#fff',
@@ -129,14 +149,17 @@ const TradingPage = () => {
             onMouseDown={onMouseDown}
             onMouseEnter={e => (e.target.style.background = '#5c5c5c')}
             onMouseLeave={e => (e.target.style.background = '#fff')}
-          />
+          /> */}
+
           {/* 最新成交 */}
-          <div style={{ 
-            flex: 1,
-            minWidth: MIN_PANEL_WIDTH,
-            overflow: 'hidden',
-            overflowX: 'auto',
-          }}>
+          <div
+            className="flex-1"
+            style={
+              window.innerWidth >= 1024
+                ? { minWidth: MIN_PANEL_WIDTH }
+                : { width: '100%' }
+            }
+          >
             <RecentTrades pairData={pairData} symbol={symbol} />
           </div>
         </div>
