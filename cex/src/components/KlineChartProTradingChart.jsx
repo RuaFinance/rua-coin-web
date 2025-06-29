@@ -35,9 +35,27 @@ export default function KlineTradingChartPro() {
   const hasInitializedRef = useRef(false); // 防止 useEffect 重复执行
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const ro = new window.ResizeObserver(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    ro.observe(container);
+
+    return () => {
+      ro.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     if (hasInitializedRef.current) {
       return
     }
+    
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
 
     // 创建 Pro 实例，使用自定义 datafeed
     const chart = new KLineChartPro({
@@ -70,7 +88,10 @@ export default function KlineTradingChartPro() {
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <div id="k-line-chart" style={{ width: '100%', height: '100%' }} />
+      <div 
+        id="k-line-chart" className='klinecharts-pro' data-theme="light"
+        style={{ width: '100%', height: '100%' }}
+      />
     </div>
   );
 }

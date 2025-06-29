@@ -87,7 +87,7 @@ const TradingPage = () => {
   }
 
   return (
-    <main className="container mx-auto p-1">
+    <main className="container mx-auto p-1 flex flex-col h-full">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-1">
         {/* 左侧交易对列表 */}
         {/* <div className="lg:col-span-2">
@@ -95,8 +95,8 @@ const TradingPage = () => {
         </div> */}
 
         {/* 中间图表区域 */}
-        <div className="lg:col-span-9">
-          <div className="trading-page-trading-chart" >
+        <div className="lg:col-span-9 flex flex-col h-full min-h-0">
+          <div className="trading-page-trading-chart flex-1 min-h-0" >
           {/* <div className="h-[700px] mb-4 bg-amber-50"> */}
             {/* <CustomKlineTradingChart symbol={pairData?.symbol || 'BTC/USDT'} /> */}
             <KlineTradingChartPro/>
@@ -114,13 +114,13 @@ const TradingPage = () => {
         </div>
 
         {/* 右侧订单簿 */}
-        <div className="lg:col-span-3 h-[600px]">
-          <OrderBook pairData={pairData} />
+        <div className="lg:col-span-3 flex flex-col h-[700px]">
+          <OrderBook className="flex-1 min-h-0" pairData={pairData} symbol={symbol} />
         </div>
 
         <div
           ref={containerRef}
-          className="flex flex-col lg:flex-row w-full items-stretch lg:col-span-12 mb-1"
+          className="flex flex-col lg:flex-row w-full items-stretch lg:col-span-12"
           style={{ minHeight: 300, gap: 2 }}
         >
           {/* 交易 */}

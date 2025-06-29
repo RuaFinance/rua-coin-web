@@ -28,10 +28,10 @@ const TradingInterface = () => {
   return (
     <div className="flex h-screen">
       {/* 主内容区域 */}
-      <div className="flex-1 flex flex-col bg-red-600">
+      <div className="flex-1 flex flex-col">
 
         {/* 顶部标签栏 */}
-        <div className="flex items-center justify-between bg-black border-b-white border-b-[8px] p-2 rounded-xl">
+        <div className="flex items-center justify-between card border-b-[#424242] border-b-[0.5px] p-2 rounded-md">
           
           {/* 标签导航 */}
           <div className="flex">
@@ -42,7 +42,7 @@ const TradingInterface = () => {
                 className={`px-2 py-2 cursor-pointer text-sm ${
                   activeTab === tab.id
                     ? 'text-white hover:text-white font-bold'
-                    : 'text-[#909090] hover:text-white hover:bg-[#424242] hover:rounded-lg font-bold'
+                    : 'text-[#909090] hover:text-white hover:bg-[#424242] hover:rounded-md font-bold'
                 }`}
               >
                 {tab.label}
@@ -56,13 +56,13 @@ const TradingInterface = () => {
             {activeTab === 'currentOrders' && (
               <>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {tradeType}
                     <div className="ml-1 text-trading-page-common">▼</div>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {tradingPair}
                     <div className="ml-1 text-trading-page-common">▼</div>
                   </div>
@@ -72,19 +72,19 @@ const TradingInterface = () => {
             {activeTab === 'historyOrders' && (
               <>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {tradeType}
                     <div className="ml-1 text-gray-500">▼</div>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {orderByTime}
                     <div className="ml-1 text-gray-500">▼</div>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {tradingPair}
                     <div className="ml-1 text-gray-500">▼</div>
                   </div>
@@ -94,19 +94,19 @@ const TradingInterface = () => {
             {(activeTab === 'positions' || activeTab === 'historyPositions') && (
               <>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {tradeType}
                     <div className="ml-1 text-gray-500">▼</div>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {positionType}
                     <div className="ml-1 text-gray-500">▼</div>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-gray-300 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {tradingPair}
                     <div className="ml-1 text-gray-500">▼</div>
                   </div>
@@ -117,15 +117,15 @@ const TradingInterface = () => {
         </div>
         
         {/* 内容区域 */}
-        <div className="flex-1 p-1 bg-pink-400 rounded-xl">
+        <div className="flex-1 p-1 card rounded-md">
           {activeTab === 'currentOrders' && (
             <div className='text-trading-page-common'>
-              <div className="flex items-center space-x-2 mb-0">
+              <div className="flex items-center space-x-2 mb-0 px-1 py-2">
                 {orderTypes.map((orderType) => (
                   <div
                     key={orderType.id}
                     onClick={() => setActiveOrderType(orderType.id)}
-                    className={`px-3 py-1.5 rounded-lg text-sm ${
+                    className={`px-3 py-1.5 rounded-lg text-sm cursor-pointer ${
                       activeOrderType === orderType.id
                         ? 'bg-[#424242] text-white'
                         : 'bg-black text-[#909090] border border-[#424242] hover:bg-[#424242] hover:text-white'
@@ -135,8 +135,10 @@ const TradingInterface = () => {
                   </div>
                 ))}
               </div>
-              <div className="text-lg font-medium mb-4">当前委托</div>
-              <div>暂无委托数据</div>
+              <div className='px-2 py-2'>
+                <div className="text-lg font-medium mb-4">当前委托</div>
+                <div>暂无委托数据</div>
+              </div>
             </div>
           )}
           {activeTab === 'historyOrders' && (

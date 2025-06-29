@@ -77,21 +77,21 @@ const Header = () => {
 
               {isUserMenuOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-1 z-50"
+                  className="absolute right-0 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50"
                   onMouseLeave={() => setIsUserMenuOpen(false)}
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
                     个人资料
                   </Link>
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     安全设置
                   </Link>
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     API管理
                   </Link>
-                  <hr className="my-1 border-slate-700" />
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700 hover:text-white">
+                  {/* <hr className="my-1 border-slate-700" /> */}
+                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
                     退出登录
                   </Link>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
-const OrderBook = () => {
+const OrderBook = ({ pairData, symbol }) => {
   const [precision, setPrecision] = useState(2);
   const [orderBook, setOrderBook] = useState({
     bids: [],
@@ -86,7 +86,7 @@ const OrderBook = () => {
       {/* Column Headers */}
       <div className="grid grid-cols-3 gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs text-gray-400 font-medium border-b border-slate-700 mb-2 flex-shrink-0">
         <div className="text-left">价格(USDT)</div>
-        <div className="text-right">数量(BTC)</div>
+        <div className="text-right">数量({symbol})</div>
         <div className="text-right hidden sm:block">累计(USDT)</div>
         <div className="text-right sm:hidden">累计</div>
       </div>
@@ -164,13 +164,13 @@ const OrderBook = () => {
           <div>
             <div className="text-gray-400">买单总量</div>
             <div className="text-green-400 font-mono">
-              {orderBook.bids.reduce((sum, order) => sum + order.amount, 0).toFixed(4)} BTC
+              {orderBook.bids.reduce((sum, order) => sum + order.amount, 0).toFixed(4)} {symbol}
             </div>
           </div>
           <div>
             <div className="text-gray-400">卖单总量</div>
             <div className="text-red-400 font-mono">
-              {orderBook.asks.reduce((sum, order) => sum + order.amount, 0).toFixed(4)} BTC
+              {orderBook.asks.reduce((sum, order) => sum + order.amount, 0).toFixed(4)} {symbol}
             </div>
           </div>
         </div>

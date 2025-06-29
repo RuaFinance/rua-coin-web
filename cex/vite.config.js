@@ -10,6 +10,7 @@ export default defineConfig({
     port: 12000,
     allowedHosts: true,
     cors: true,
+    open: '/rua-coin-web/',
   },
   build: {
     outDir: 'dist',
