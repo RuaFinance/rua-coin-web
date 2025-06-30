@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, Record } from 'react';
 import { ConfigProvider, Flex, Radio, Select } from 'antd';
 import { SelectConfig } from '../config/AntdSelectConfig'
+import { RadioConfigTheme } from '../config/AntdRadioConfig'
+import { DownOutlined } from '@ant-design/icons';
 
 const TradingInterface = () => {
   // 标签页数据
@@ -9,6 +11,7 @@ const TradingInterface = () => {
     { id: 'historyOrders', label: '历史委托' },
     { id: 'positions', label: '当前仓位', count: 0 },
     { id: 'historyPositions', label: '历史仓位' },
+    { id: 'assert', label: '资产' },
   ];
 
   // 状态管理
@@ -33,6 +36,17 @@ const TradingInterface = () => {
     { value: 'options', label: '期权' }
   ];
 
+  const orderByTimeOrExecutionOption = [
+    { value: 'by_order_time', label: '按委托时间' },
+    { value: 'by_execution_time', label: '按成交时间' },
+  ];
+
+  const positionTypeOption = [
+    { value: 'all', label: '逐仓/全仓' },
+    { value: 'isolated_margin', label: '逐仓' },
+    { value: 'cross_margin', label: '全仓' },
+  ];
+
   const orderTypes = [
     { id: 'limit_market', label: '限价 | 市价' },
     { id: 'advanced_limit', label: '高级限价委托' },
@@ -40,6 +54,10 @@ const TradingInterface = () => {
     { id: 'trailing_stop', label: '移动止盈止损' },
     { id: 'planned_order', label: '计划委托' },
   ];
+
+  const handleOnClickActiveOrderType = (value) => {
+    setActiveOrderType(prev => prev === value ? null : value); // 相同值则重置
+  };
 
   return (
     <div className="flex h-screen">
@@ -85,9 +103,9 @@ const TradingInterface = () => {
                     >
                       <Select
                         defaultValue={tradeTypeOptions[0]}
-                        style={{ width: 120 }}
                         // onChange={handleChange}
                         options={tradeTypeOptions}
+                        suffixIcon={<DownOutlined className="text-white opacity-60" />}
                         styles={{
                           popup: {
                             root: {
@@ -105,28 +123,7 @@ const TradingInterface = () => {
                   <div className="text-trading-page-common px-3 py-1 rounded border border-[#424242] text-sm cursor-pointer flex items-center hover:border-blue-500">
                     {/* {tradingPair} */}
                     <ConfigProvider
-                      theme={{
-                        token: {
-                          // 主色（影响选中状态）
-                          // colorPrimary: '#ffffff',
-                          colorText: '#ffffff',
-                          controlOutline: '#ffffff',
-                          controlOutlineWidth: 2,
-                        },
-                        components: {
-                          Radio: {
-                            buttonSolidCheckedColor: '#ffffff',
-                            // 单选框按钮文本颜色	
-                            buttonColor: '#ffffff',
-
-                            // 未选中时的边框颜色
-                            colorBorder: '#424242',
-
-                            // 圆角（可选）
-                            borderRadius: 4,
-                          },
-                        },
-                      }}
+                      theme={RadioConfigTheme}
                     >
                       <Radio 
                         // className='ant-radio-button-wrapper:hover'
@@ -143,46 +140,148 @@ const TradingInterface = () => {
                 </div>
               </>
             )}
+
             {activeTab === 'historyOrders' && (
               <>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {tradeType}
-                    <div className="ml-1 text-gray-500">▼</div>
+                  <div className="text-trading-page-common py-0 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Select: SelectConfig,
+                        },
+                      }}
+                    >
+                      <Select
+                        defaultValue={tradeTypeOptions[0]}
+                        // onChange={handleChange}
+                        options={tradeTypeOptions}
+                        suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        styles={{
+                          popup: {
+                            root: {
+                              backgroundColor: '#000000',
+                              border: '1px solid #424242',
+                            },
+                          },
+                        }}
+                      />
+                    </ConfigProvider>
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="text-trading-page-common px-2 py-1 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                  <ConfigProvider
+                      theme={{
+                        components: {
+                          Select: SelectConfig,
+                        },
+                      }}
+                    >
+                      <Select
+                        defaultValue={orderByTimeOrExecutionOption[0]}
+                        // onChange={handleChange}
+                        options={orderByTimeOrExecutionOption}
+                        suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        styles={{
+                          popup: {
+                            root: {
+                              backgroundColor: '#000000',
+                              border: '1px solid #424242',
+                            },
+                          },
+                        }}
+                      />
+                    </ConfigProvider>
                   </div>
                 </div>
                 <div className="relative">
                   <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {orderByTime}
-                    <div className="ml-1 text-gray-500">▼</div>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {tradingPair}
-                    <div className="ml-1 text-gray-500">▼</div>
+                    <ConfigProvider
+                      theme={RadioConfigTheme}
+                    >
+                      <Radio 
+                        // className='ant-radio-button-wrapper:hover'
+                        checked={radioChecked1}
+                        onClick={() => setChecked(!radioChecked1)}
+                        value={tradingPair}
+                      >
+                        {tradingPair}
+                      </Radio>
+                    </ConfigProvider>
                   </div>
                 </div>
               </>
             )}
+
             {(activeTab === 'positions' || activeTab === 'historyPositions') && (
               <>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {tradeType}
-                    <div className="ml-1 text-gray-500">▼</div>
+                  <div className="text-trading-page-common px-0 py-1 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Select: SelectConfig,
+                        },
+                      }}
+                    >
+                      <Select
+                        defaultValue={tradeTypeOptions[0]}
+                        // onChange={handleChange}
+                        options={tradeTypeOptions}
+                        suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        styles={{
+                          popup: {
+                            root: {
+                              backgroundColor: '#000000',
+                              border: '1px solid #424242',
+                            },
+                          },
+                        }}
+                      />
+                    </ConfigProvider>
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="text-trading-page-common px-2 py-1 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Select: SelectConfig,
+                        },
+                      }}
+                    >
+                      <Select
+                        defaultValue={positionTypeOption[0]}
+                        // onChange={handleChange}
+                        options={positionTypeOption}
+                        suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        styles={{
+                          popup: {
+                            root: {
+                              backgroundColor: '#000000',
+                              border: '1px solid #424242',
+                            },
+                          },
+                        }}
+                      />
+                    </ConfigProvider>
                   </div>
                 </div>
                 <div className="relative">
                   <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {positionType}
-                    <div className="ml-1 text-gray-500">▼</div>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {tradingPair}
-                    <div className="ml-1 text-gray-500">▼</div>
+                    <ConfigProvider
+                      theme={RadioConfigTheme}
+                    >
+                      <Radio 
+                        // className='ant-radio-button-wrapper:hover'
+                        checked={radioChecked1}
+                        onClick={() => setChecked(!radioChecked1)}
+                        value={tradingPair}
+                      >
+                        {tradingPair}
+                      </Radio>
+                    </ConfigProvider>
                   </div>
                 </div>
               </>
@@ -198,10 +297,10 @@ const TradingInterface = () => {
                 {orderTypes.map((orderType) => (
                   <div
                     key={orderType.id}
-                    onClick={() => setActiveOrderType(orderType.id)}
+                    onClick={() => handleOnClickActiveOrderType(orderType.id)}
                     className={`px-3 py-1.5 rounded-lg text-sm cursor-pointer ${
                       activeOrderType === orderType.id
-                        ? 'bg-[#424242] text-white'
+                        ? 'bg-[#424242] border-[#424242] border-[1px] text-white'
                         : 'bg-black text-[#909090] border border-[#424242] hover:bg-[#424242] hover:text-white'
                     }`}
                   >
@@ -216,9 +315,26 @@ const TradingInterface = () => {
             </div>
           )}
           {activeTab === 'historyOrders' && (
-            <div className='text-trading-page-common px-2 py-2'>
-              <div className="text-lg font-medium mb-4">历史委托</div>
-              <div>暂无历史委托数据</div>
+            <div className='text-trading-page-common'>
+              <div className="flex items-center space-x-2 mb-0 px-1 py-2">
+                {orderTypes.map((orderType) => (
+                  <div
+                    key={orderType.id}
+                    onClick={() => handleOnClickActiveOrderType(orderType.id)}
+                    className={`px-3 py-1.5 rounded-lg text-sm cursor-pointer ${
+                      activeOrderType === orderType.id
+                        ? 'bg-[#424242] border-[#424242] border-[1px] text-white'
+                        : 'bg-black text-[#909090] border border-[#424242] hover:bg-[#424242] hover:text-white'
+                    }`}
+                  >
+                    {orderType.label}
+                  </div>
+                ))}
+              </div>
+              <div className='px-2 py-2'>
+                <div className="text-lg font-medium mb-4">当前委托</div>
+                <div>暂无委托数据</div>
+              </div>
             </div>
           )}
           {activeTab === 'positions' && (
@@ -231,6 +347,12 @@ const TradingInterface = () => {
             <div className='text-trading-page-common px-2 py-2'>
               <div className="text-lg font-medium mb-4">历史仓位</div>
               <div>暂无历史仓位数据</div>
+            </div>
+          )}
+          {activeTab === 'assert' && (
+            <div className='text-trading-page-common px-2 py-2'>
+              <div className="text-lg font-medium mb-4">资产</div>
+              <div>暂无资产数据</div>
             </div>
           )}
         </div>
