@@ -87,8 +87,8 @@ const TradingPage = () => {
   }
 
   return (
-    <main className="container mx-auto p-1 flex flex-col h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-1">
+    <main className="p-1 flex flex-col h-full min-h-screen bg-black">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-[0px]">
         {/* 左侧交易对列表 */}
         {/* <div className="lg:col-span-2">
           <TradingPairs />
@@ -118,19 +118,22 @@ const TradingPage = () => {
           <OrderBook className="flex-1 min-h-0" pairData={pairData} symbol={symbol} />
         </div>
 
+        {/* 分割线 */}
+        {/* <div className='col-span-12 split-line-x' /> */}
+
         <div
           ref={containerRef}
-          className="flex flex-col lg:flex-row w-full items-stretch lg:col-span-12"
+          className="flex flex-col lg:flex-row w-full items-stretch lg:col-span-12 border-b-[2px] border-b-[#424242]"
           style={{ minHeight: 300, gap: 2 }}
         >
           {/* 交易 */}
           <div
             className="flex-1"
-            style={
-              window.innerWidth >= 1024
-                ? { minWidth: MIN_PANEL_WIDTH, width: leftWidth }
-                : { width: '100%' }
-            }
+            // style={
+            //   window.innerWidth >= 1024
+            //     ? { minWidth: MIN_PANEL_WIDTH, width: leftWidth }
+            //     : { width: '100%' }
+            // }
           >
             <TradingPanel pairData={pairData} symbol={symbol} />
           </div>
@@ -151,6 +154,9 @@ const TradingPage = () => {
             onMouseLeave={e => (e.target.style.background = '#fff')}
           /> */}
 
+          {/* 分割线 */}
+          <div className='split-line-y'/>
+
           {/* 最新成交 */}
           <div
             className="flex-1"
@@ -163,17 +169,10 @@ const TradingPage = () => {
             <RecentTrades pairData={pairData} symbol={symbol} />
           </div>
         </div>
+
+        {/* 分割线 */}
+        {/* <div className='split-line-x' /> */}
   
-        {/* <div className="bg-red-400 lg:col-span-12 h-[300px]">
-          <div className="flex gap-2 border-b border-black bg-green-600">
-            <div>当前委托</div>
-            <div>历史委托</div>
-            <div>当前持仓</div>
-            <div>资产</div>
-            <div>策略</div>
-            <div>历史仓位</div>
-          </div>
-        </div> */}
         <div className='lg:col-span-12'>
           <TabbedInterface />
         </div>

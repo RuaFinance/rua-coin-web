@@ -124,6 +124,23 @@
   .text-trading-page-common {
     @apply text-white;
   }
+
+  .split-line-y {
+    width: 2px;
+    background-color: #424242;
+  }
+
+  .split-line-x {
+    @apply w-[100%];
+    height: 2px;
+    background-color: #424242;
+  }
+
+  .ant-radio-button-wrapper:hover {
+    border-color: #eb2b32 !important;
+    color: #ffffff !important;
+  }
+  
 }
 
 @font-face {

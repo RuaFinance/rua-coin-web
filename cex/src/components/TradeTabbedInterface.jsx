@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { ConfigProvider, Flex, Radio, Select } from 'antd';
+import { SelectConfig } from '../config/AntdSelectConfig'
 
 const TradingInterface = () => {
   // 标签页数据
@@ -17,6 +19,20 @@ const TradingInterface = () => {
   const [tradingPair, setTradingPair] = useState('当前交易品种');
   const [activeOrderType, setActiveOrderType] = useState('limit_market');
 
+  // 表单
+  const [radioChecked1, setChecked] = useState(false);
+
+  const selectRef = useRef(null);
+
+  const tradeTypeOptions = [
+    { value: 'all', label: '全部交易类型' },
+    { value: 'spot', label: '现货' },
+    { value: 'future', label: '永续' },
+    { value: 'delivery', label: '交割' },
+    { value: 'margin', label: '杠杆' },
+    { value: 'options', label: '期权' }
+  ];
+
   const orderTypes = [
     { id: 'limit_market', label: '限价 | 市价' },
     { id: 'advanced_limit', label: '高级限价委托' },
@@ -32,7 +48,7 @@ const TradingInterface = () => {
 
         {/* 顶部标签栏 */}
         <div className="flex items-center justify-between card border-b-[#424242] border-b-[0.5px] p-2 rounded-md">
-          
+
           {/* 标签导航 */}
           <div className="flex">
             {tabs.map((tab) => (
@@ -56,15 +72,73 @@ const TradingInterface = () => {
             {activeTab === 'currentOrders' && (
               <>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {tradeType}
-                    <div className="ml-1 text-trading-page-common">▼</div>
+                  <div 
+                    className="text-trading-page-common px-3 py-1 rounded text-sm cursor-pointer flex items-center"
+                  >
+                    {/* {tradeType} */}
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Select: SelectConfig,
+                        },
+                      }}
+                    >
+                      <Select
+                        defaultValue={tradeTypeOptions[0]}
+                        style={{ width: 120 }}
+                        // onChange={handleChange}
+                        options={tradeTypeOptions}
+                        styles={{
+                          popup: {
+                            root: {
+                              backgroundColor: '#000000',
+                              border: '1px solid #424242',
+                            },
+                          },
+                        }}
+                      />
+                    </ConfigProvider>
+                    
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="text-trading-page-common px-3 py-1 border border-[#424242] rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {tradingPair}
-                    <div className="ml-1 text-trading-page-common">▼</div>
+                  <div className="text-trading-page-common px-3 py-1 rounded border border-[#424242] text-sm cursor-pointer flex items-center hover:border-blue-500">
+                    {/* {tradingPair} */}
+                    <ConfigProvider
+                      theme={{
+                        token: {
+                          // 主色（影响选中状态）
+                          // colorPrimary: '#ffffff',
+                          colorText: '#ffffff',
+                          controlOutline: '#ffffff',
+                          controlOutlineWidth: 2,
+                        },
+                        components: {
+                          Radio: {
+                            buttonSolidCheckedColor: '#ffffff',
+                            // 单选框按钮文本颜色	
+                            buttonColor: '#ffffff',
+
+                            // 未选中时的边框颜色
+                            colorBorder: '#424242',
+
+                            // 圆角（可选）
+                            borderRadius: 4,
+                          },
+                        },
+                      }}
+                    >
+                      <Radio 
+                        // className='ant-radio-button-wrapper:hover'
+                        checked={radioChecked1}
+                        onClick={() => setChecked(!radioChecked1)}
+                        value={tradingPair}
+                      >
+                        {tradingPair}
+                      </Radio>
+                    </ConfigProvider>
+                    
+                    {/* <div className="ml-1 text-trading-page-common">▼</div> */}
                   </div>
                 </div>
               </>
@@ -142,19 +216,19 @@ const TradingInterface = () => {
             </div>
           )}
           {activeTab === 'historyOrders' && (
-            <div className='text-trading-page-common'>
+            <div className='text-trading-page-common px-2 py-2'>
               <div className="text-lg font-medium mb-4">历史委托</div>
               <div>暂无历史委托数据</div>
             </div>
           )}
           {activeTab === 'positions' && (
-            <div className='text-trading-page-common'>
+            <div className='text-trading-page-common px-2 py-2'>
               <div className="text-lg font-medium mb-4">当前持仓</div>
               <div>暂无仓位数据</div>
             </div>
           )}
           {activeTab === 'historyPositions' && (
-            <div className='text-trading-page-common'>
+            <div className='text-trading-page-common px-2 py-2'>
               <div className="text-lg font-medium mb-4">历史仓位</div>
               <div>暂无历史仓位数据</div>
             </div>

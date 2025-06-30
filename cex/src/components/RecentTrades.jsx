@@ -102,7 +102,7 @@ const RecentTrades = ({ pairData, symbol }) => {
       </div>
 
       {/* Summary Stats */}
-      <div className="mt-2 sm:mt-4 pt-2 sm:pt-4 border-t border-slate-700 flex-shrink-0">
+      <div className="mt-2 sm:mt-4 pt-2 sm:pt-4 border-t border-[#424242] flex-shrink-0">
         <div className="grid grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
           <div>
             <div className="text-gray-400 text-xs">买入成交量</div>
@@ -124,7 +124,7 @@ const RecentTrades = ({ pairData, symbol }) => {
           </div>
         </div>
         
-        <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-700/50">
+        <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-[#424242]">
           <div className="flex items-center justify-between">
             <span className="text-gray-400 text-xs">最新价格</span>
             <div className={`flex items-center space-x-1 ${

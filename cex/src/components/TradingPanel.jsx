@@ -464,12 +464,12 @@ const TradingPanel = ({ pairData, symbol }) => {
         </button>
 
         {/* Quick Actions */}
-        <div className="mt-4 pt-4 border-t border-slate-700">
+        <div className="mt-4 pt-4 border-t border-[#424242]">
           <div className="grid grid-cols-2 gap-2">
-            <button className="py-2 px-2 sm:px-3 text-xs bg-slate-700 text-gray-400 hover:text-white hover:bg-slate-600 rounded transition-colors">
+            <button className="py-2 px-2 sm:px-3 text-xs bg-[#1d1d1d] text-gray-400 hover:text-white hover:bg-slate-600 rounded transition-colors">
               止盈止损
             </button>
-            <button className="py-2 px-2 sm:px-3 text-xs bg-slate-700 text-gray-400 hover:text-white hover:bg-slate-600 rounded transition-colors">
+            <button className="py-2 px-2 sm:px-3 text-xs bg-[#1d1d1d] text-gray-400 hover:text-white hover:bg-slate-600 rounded transition-colors">
               OCO订单
             </button>
           </div>
