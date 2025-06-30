@@ -57,6 +57,23 @@ export default function KlineTradingChartPro({ symbol }) {
       window.dispatchEvent(new Event('resize'));
     }, 0);
 
+    // 样式注入，适配移动端
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .klinecharts-pro-period-bar {
+        overflow-x: auto !important;
+        scrollbar-width: none !important;
+      }
+      .klinecharts-pro-period-bar::-webkit-scrollbar {
+        display: none !important;
+      }
+      /* 针对 tools 区域的修复 */
+      .klinecharts-pro-period-bar > div:last-child {
+        min-width: unset !important;
+      }
+    `;
+    document.head.appendChild(style);
+
     // 创建 Pro 实例，使用自定义 datafeed
     const chart = new KLineChartPro({
       container: "k-line-chart",
