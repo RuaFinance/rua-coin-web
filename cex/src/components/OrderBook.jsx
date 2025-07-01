@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 const OrderBook = ({ pairData, symbol }) => {
   const [precision, setPrecision] = useState(2);

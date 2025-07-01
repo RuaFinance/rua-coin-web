@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { BarChart3, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { fetchKlineData } from '../api/trading';
 
 // 自定义K线图表组件，使用Canvas绘制

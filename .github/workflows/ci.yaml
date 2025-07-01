@@ -43,7 +43,7 @@ jobs:
       - name: Build project
         run: |
           cd cex
-          npm run build
+          VITE_DEPLOY_ENV=GIT npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

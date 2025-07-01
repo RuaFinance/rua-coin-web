@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { Clock, TrendingUp, TrendingDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 const RecentTrades = ({ pairData, symbol }) => {
   const [trades, setTrades] = useState([]);

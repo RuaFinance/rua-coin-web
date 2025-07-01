@@ -1,8 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
+
 import Layout from '../layouts/Layout';
 import HomePage from '../pages/HomePage';
-import TradingPage from '../pages/TradingPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import TradingPage from '../pages/TradingPage';
+
+import { BASE_URL } from './config';
 
 const router = createBrowserRouter(
   [{
@@ -24,7 +27,7 @@ const router = createBrowserRouter(
     ],
   }],
   {
-    basename: '/rua-coin-web'
+    basename: BASE_URL,
   },);
 
 export default router;

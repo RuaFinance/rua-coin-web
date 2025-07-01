@@ -1,8 +1,10 @@
-import { useState, useRef, Record } from 'react';
-import { ConfigProvider, Flex, Radio, Select } from 'antd';
-import { SelectConfig } from '../config/AntdSelectConfig'
-import { RadioConfigTheme } from '../config/AntdRadioConfig'
 import { DownOutlined } from '@ant-design/icons';
+import { ConfigProvider, Flex, Radio, Select } from 'antd';
+import { useState, useRef, Record } from 'react';
+
+import { RadioConfigTheme } from '../config/AntdRadioConfig'
+import { SelectConfig } from '../config/AntdSelectConfig'
+
 
 const TradingInterface = () => {
   // 标签页数据

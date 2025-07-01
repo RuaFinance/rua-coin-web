@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import TradingPairs from '../components/TradingPairs';
+
+import { fetchTradingPairData } from '../api/trading';
+import KlineTradingChartPro from '../components/KlineChartProTradingChart';
 // import TradingChart from '../components/TradingChart';
 // import CustomTradingChart from '../components/CustomTradingChart';
 // import MockTradingChart from '../components/MockTradingChart';
 // import CustomKlineTradingChart from '../components/CustomKlineTradingChart';
-import KlineTradingChartPro from '../components/KlineChartProTradingChart';
 import OrderBook from '../components/OrderBook';
-import TradingPanel from '../components/TradingPanel';
 import RecentTrades from '../components/RecentTrades';
-import { fetchTradingPairData } from '../api/trading';
 import TabbedInterface from '../components/TradeTabbedInterface';
+import TradingPairs from '../components/TradingPairs';
+import TradingPanel from '../components/TradingPanel';
 
 const MIN_PANEL_WIDTH = 216; // px
 
@@ -73,7 +74,7 @@ const TradingPage = () => {
       setLeftWidth(containerWidth / 2);
     }
     // 只在初次挂载时设置一次
-    // eslint-disable-next-line
+     
   }, []);
 
   if (isLoading) {

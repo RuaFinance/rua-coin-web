@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import { Calculator, Percent, DollarSign, TrendingUp, TrendingDown } from 'lucide-react';
+import React, { useState } from 'react';
+
 import WarningAlert from './MsgAlert';
 import SyntheticEventHandlers from './SyntheticEventHandlers';
 

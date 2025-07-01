@@ -1,10 +1,11 @@
 import React from 'react';
+
 import Header from './components/Header';
-import TradingPairs from './components/TradingPairs';
-import TradingChart from './components/TradingChart';
 import OrderBook from './components/OrderBook';
-import TradingPanel from './components/TradingPanel';
 import RecentTrades from './components/RecentTrades';
+import TradingChart from './components/TradingChart';
+import TradingPairs from './components/TradingPairs';
+import TradingPanel from './components/TradingPanel';
 
 function App() {
   return (

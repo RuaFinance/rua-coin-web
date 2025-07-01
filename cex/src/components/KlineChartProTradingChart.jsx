@@ -1,7 +1,8 @@
 // KlineChartProCustom.jsx
-import React, { useRef, useEffect } from 'react';
 import { KLineChartPro } from '@klinecharts/pro';
 import { dispose } from 'klinecharts';
+import React, { useRef, useEffect } from 'react';
+
 import '@klinecharts/pro/dist/klinecharts-pro.css';
 import { fetchMockBars } from '../api/market';
 import klineStyleConfig from '../config/KlineChartProConfig';

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
 import { init, dispose, registerLocale } from 'klinecharts'
+import React, { useEffect, useRef } from 'react'
+
 import { fetchMockBars } from '../api/market'
 
 registerLocale('zh-TW', {

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+
 import { fetchKlineData } from '../api/trading';
 
 const MockTradingChart = ({ symbol = 'BTC/USDT' }) => {

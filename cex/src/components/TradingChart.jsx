@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+
 import TradingViewWidget from './TradingViewWidget';
 
 const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
