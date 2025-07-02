@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout';
 import HomePage from '../pages/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import TradingPage from '../pages/TradingPage';
+import RegisterPage from '../pages/RegisterPage';
 
 import { BASE_URL } from './config';
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter(
       {
         path: 'trading/:symbol',
         element: <TradingPage />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
       },
       {
         path: '*',

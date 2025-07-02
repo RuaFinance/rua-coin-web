@@ -1,5 +1,5 @@
-import { DownOutlined } from '@ant-design/icons';
-import { ConfigProvider, Flex, Radio, Select } from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { ConfigProvider, Flex, Radio, Select, theme } from 'antd';
 import { useState, useRef, Record } from 'react';
 
 import { RadioConfigTheme } from '../config/AntdRadioConfig'
@@ -98,6 +98,7 @@ const TradingInterface = () => {
                     {/* {tradeType} */}
                     <ConfigProvider
                       theme={{
+                        algorithm: theme.darkAlgorithm,
                         components: {
                           Select: SelectConfig,
                         },
@@ -108,6 +109,7 @@ const TradingInterface = () => {
                         // onChange={handleChange}
                         options={tradeTypeOptions}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
                         styles={{
                           popup: {
                             root: {
@@ -149,6 +151,7 @@ const TradingInterface = () => {
                   <div className="text-trading-page-common py-0 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     <ConfigProvider
                       theme={{
+                        algorithm: theme.darkAlgorithm,
                         components: {
                           Select: SelectConfig,
                         },
@@ -159,6 +162,7 @@ const TradingInterface = () => {
                         // onChange={handleChange}
                         options={tradeTypeOptions}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
                         styles={{
                           popup: {
                             root: {
@@ -175,6 +179,7 @@ const TradingInterface = () => {
                   <div className="text-trading-page-common px-2 py-1 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                   <ConfigProvider
                       theme={{
+                        algorithm: theme.darkAlgorithm,
                         components: {
                           Select: SelectConfig,
                         },
@@ -185,6 +190,7 @@ const TradingInterface = () => {
                         // onChange={handleChange}
                         options={orderByTimeOrExecutionOption}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
                         styles={{
                           popup: {
                             root: {
@@ -222,6 +228,7 @@ const TradingInterface = () => {
                   <div className="text-trading-page-common px-0 py-1 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     <ConfigProvider
                       theme={{
+                        algorithm: theme.darkAlgorithm,
                         components: {
                           Select: SelectConfig,
                         },
@@ -232,6 +239,7 @@ const TradingInterface = () => {
                         // onChange={handleChange}
                         options={tradeTypeOptions}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
                         styles={{
                           popup: {
                             root: {
@@ -248,6 +256,7 @@ const TradingInterface = () => {
                   <div className="text-trading-page-common px-2 py-1 rounded text-sm cursor-pointer flex items-center hover:border-blue-500">
                     <ConfigProvider
                       theme={{
+                        algorithm: theme.darkAlgorithm,
                         components: {
                           Select: SelectConfig,
                         },
@@ -258,6 +267,7 @@ const TradingInterface = () => {
                         // onChange={handleChange}
                         options={positionTypeOption}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
+                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
                         styles={{
                           popup: {
                             root: {

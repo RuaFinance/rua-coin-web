@@ -1,16 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/rua-coin-web/' : '/';
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'production' ? '/rua-coin-web/' : '/',
+  base: BASE_URL,
   server: {
-    host: '0.0.0.0',
+    host: '::',
     port: 12000,
     allowedHosts: true,
     cors: true,
-    open: '/rua-coin-web/',
+    open: BASE_URL,
   },
   build: {
     outDir: 'dist',

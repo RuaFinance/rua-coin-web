@@ -29,6 +29,184 @@
     @apply bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-sm font-medium transition-colors duration-200;
   }
   
+  .btn-register {
+    --btn-bg: #3b82f6;
+    --btn-hover-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --btn-text: #ffffff;
+    --btn-hover-text: #ffffff;
+    
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .btn-register::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-register:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-text);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 
+      0 20px 25px -5px rgba(102, 126, 234, 0.4),
+      0 10px 10px -5px rgba(118, 75, 162, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .btn-register:hover::before {
+    left: 100%;
+  }
+  
+  .btn-register:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 10px 15px -3px rgba(102, 126, 234, 0.4),
+      0 4px 6px -2px rgba(118, 75, 162, 0.3);
+  }
+  
+  .btn-register:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .btn-register:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* 霓虹灯效果变体 */
+  .btn-register-neon {
+    --btn-bg: #0f172a;
+    /* --btn-bg: linear-gradient(90deg, #40a9ff 0%, #1890ff 100%); */
+
+    /* linear-gradient 渐变 */
+    --btn-hover-bg: linear-gradient(135deg, #00d4ff 0%, #ff0080 50%, #00d4ff 100%);
+    --btn-text: #ffffff;
+    --btn-hover-text: #ffffff;
+    
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid #00d4ff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  }
+  
+  .btn-register-neon:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-text);
+    border-color: #00d4ff;
+    transform: translateY(-2px);
+
+    /* 光晕以及辐射的面积 */
+    box-shadow: 
+      0 0 15px rgba(0, 212, 255, 0.6),
+      0 0 30px rgba(255, 0, 128, 0.4),
+      0 0 50px rgba(0, 212, 255, 0.2),
+      inset 0 0 20px rgba(0, 212, 255, 0.1);
+  }
+  
+  /* 火焰效果变体 */
+  .btn-register-fire {
+    --btn-bg: #1f2937;
+    --btn-hover-bg: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%);
+    --btn-text: #ffffff;
+    --btn-hover-text: #ffffff;
+    
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-register-fire:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-text);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 
+      0 20px 25px -5px rgba(255, 107, 53, 0.5),
+      0 10px 10px -5px rgba(247, 147, 30, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  /* 彩虹效果变体 */
+  .btn-register-rainbow {
+    --btn-bg: #1f2937;
+    --btn-hover-bg: linear-gradient(135deg, #ff0000 0%, #ff8000 14.28%, #ffff00 28.57%, #00ff00 42.85%, #0080ff 57.14%, #8000ff 71.42%, #ff0080 85.71%, #ff0000 100%);
+    --btn-text: #ffffff;
+    --btn-hover-text: #ffffff;
+    
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-register-rainbow:hover {
+    background: var(--btn-hover-bg);
+    background-size: 200% 200%;
+    color: var(--btn-hover-text);
+    border-color: transparent;
+    transform: translateY(-2px);
+    animation: rainbow-shift 2s ease-in-out infinite;
+    box-shadow: 
+      0 20px 25px -5px rgba(255, 0, 0, 0.3),
+      0 10px 10px -5px rgba(0, 128, 255, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  @keyframes rainbow-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
   .btn-success {
     @apply bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200;
   }
