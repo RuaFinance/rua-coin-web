@@ -2,9 +2,10 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Layout from '../layouts/Layout';
 import HomePage from '../pages/HomePage';
+import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import TradingPage from '../pages/TradingPage';
 import RegisterPage from '../pages/RegisterPage';
+import TradingPage from '../pages/TradingPage';
 
 import { BASE_URL } from './config';
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter(
       {
         path: 'register',
         element: <RegisterPage />,
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
       },
       {
         path: '*',

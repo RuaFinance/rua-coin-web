@@ -15,7 +15,7 @@ const klineStyleConfig = {
         "horizontal": {
             "show": true,
             "size": 1,
-            "color": "#EDEDED",
+            "color": "#EDEDED", // dark theme use this grid color #282828
             "style": "dashed",
             "dashedValue": [
                 2,
@@ -25,7 +25,7 @@ const klineStyleConfig = {
         "vertical": {
             "show": true,
             "size": 1,
-            "color": "#EDEDED",
+            "color": "#EDEDED", // dark theme use this grid color #282828
             "style": "dashed",
             "dashedValue": [
                 2,

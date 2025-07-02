@@ -107,7 +107,8 @@ export default function KlineTradingChartPro({ symbol }) {
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <div 
-        id="k-line-chart" className='klinecharts-pro' data-theme="light"
+        id="k-line-chart" className='klinecharts-pro' 
+        // data-theme="dark"
         style={{ width: '100%', height: '100%' }}
       />
     </div>

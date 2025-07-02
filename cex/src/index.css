@@ -132,17 +132,70 @@
       0 0 50px rgba(0, 212, 255, 0.2),
       inset 0 0 20px rgba(0, 212, 255, 0.1);
   }
+
+  .btn-register-blue {
+    --btn-bg: #0f172a;
+    --btn-hover-bg: linear-gradient(135deg, #00d4ff 0%, #0f172a 40%, #0f172b 60%, #00d4ff 100%);
+    --btn-text: #ffffff;
+    --btn-hover-text: #ffffff;
+    
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid #00d4ff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-register-blue-sm {
+    --btn-bg: #0f172a;
+    --btn-hover-bg: linear-gradient(135deg, #00d4ff 0%, #0f172a 50%, #00d4ff 100%);
+    --btn-text: #ffffff;
+    --btn-hover-text: #ffffff;
+    
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid #00d4ff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-register-blue-sm:hover,
+  .btn-register-blue:hover {
+    background: var(--btn-hover-bg);
+    color: var(--btn-hover-text);
+    border-color: #00d4ff;
+    transform: translateY(-2px);
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 212, 255, 0.5),
+      0 10px 10px -5px rgba(0, 212, 255, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
   
   /* 火焰效果变体 */
   .btn-register-fire {
-    --btn-bg: #1f2937;
+    --btn-bg: #0f172a;
     --btn-hover-bg: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%);
     --btn-text: #ffffff;
     --btn-hover-text: #ffffff;
     
     background: var(--btn-bg);
     color: var(--btn-text);
-    border: 2px solid transparent;
+    border: 2px solid #00d4ff;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     font-weight: 600;
@@ -277,8 +330,13 @@
     @apply hover:bg-slate-700/50 cursor-pointer transition-colors duration-150 px-3 py-1;
   }
   
+  /* linear-gradient(135deg, #00d4ff 0%, #0f172a 40%, #0f172b 60%, #00d4ff 100%); */
+  
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent;
+    background: linear-gradient(135deg, #00d4ff 0%, #016dff 40%, #016df2 60%, #00d4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .trading-page-trading-chart {
@@ -366,4 +424,104 @@
   src: url('/fonts/JetBrainsMono-2.304/fonts/webfonts/JetBrainsMono-Bold.woff2') format('woff2');
   font-weight: 700;  /* 加粗字重 */
   font-display: swap;
+}
+
+/* 登录页面输入框样式 */
+/* 手机区号选择器样式 */
+/* .phone-country-select .ant-select-selector,
+.phone-country-select .ant-select-selector:focus,
+.phone-country-select.ant-select-focused .ant-select-selector {
+  border: 1px solid white !important;
+  border-radius: 8px 0 0 8px !important;
+  box-shadow: none !important;
+  background-color: white !important;
+} */
+
+/* .phone-country-select:hover .ant-select-selector {
+  border: 1px solid black !important;
+} */
+
+/* 手机号输入框样式 */
+.border-white.ant-input {
+  border: 1px solid white !important;
+  border-radius: 0 8px 8px 0 !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  color: black !important;
+}
+
+/* .border-white.ant-input:focus,
+.border-white.ant-input:hover {
+  border: 1px solid black !important;
+  border-radius: 0 8px 8px 0 !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  color: black !important;
+} */
+
+/* .border-white.ant-input:hover {
+  border: 1px solid black !important;
+} */
+
+/* 邮箱输入框样式 */
+.border-gray-600.ant-input,
+.border-gray-600.ant-input:focus,
+.border-gray-600.ant-input:hover {
+  border: 1px solid white !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  color: black !important;
+}
+
+.border-gray-600.ant-input:hover {
+  border: 1px solid black !important;
+}
+
+/* 密码输入框样式 */
+.ant-input-password.border-gray-600,
+.ant-input-password.border-gray-600:focus,
+.ant-input-password.border-gray-600:hover {
+  border: 1px solid white !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  background-color: white !important;
+}
+
+.ant-input-password.border-gray-600:hover {
+  border: 1px solid black !important;
+}
+
+.ant-input-password.border-gray-600 .ant-input {
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+}
+
+/* 输入框内的文字颜色 */
+.phone-country-select .ant-select-selection-item {
+  color: black !important;
+}
+
+.phone-country-select .ant-select-selection-placeholder {
+  color: #666 !important;
+}
+
+/* 手机号输入整体容器的hover效果 */
+/* .bg-white.rounded-lg:hover .phone-country-select .ant-select-selector {
+  border: 1px solid black !important;
+} */
+
+/* .bg-white.rounded-lg:hover .border-white.ant-input {
+  border: 1px solid black !important;
+} */
+
+/* 确保下拉框选项的样式 */
+.phone-country-select .ant-select-dropdown .ant-select-item {
+  color: black !important;
+}
+
+.phone-country-select .ant-select-dropdown .ant-select-item-option-selected {
+  background-color: #f0f0f0 !important;
+  color: black !important;
 }

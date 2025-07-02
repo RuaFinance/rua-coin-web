@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Radio, Button, Input, Select, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
+import { Radio, Button, Input, Select, notification } from 'antd';
 import { ArrowLeft, Mail } from 'lucide-react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { countriesCN, countriesEN } from '../config/CountriesList';
 
 const { Option } = Select;
@@ -266,7 +267,7 @@ const RegisterPage = () => {
   return (
     <>
       {contextHolder}
-      <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-black flex justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
@@ -276,14 +277,14 @@ const RegisterPage = () => {
               <div key={step} className="flex items-center">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                   step <= currentStep 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-[#3f96ff] text-white' 
                     : 'bg-gray-700 text-gray-400'
                 }`}>
                   {step}
                 </div>
                 {step < 3 && (
                   <div className={`w-12 h-0.5 mx-2 ${
-                    step < currentStep ? 'bg-blue-600' : 'bg-gray-700'
+                    step < currentStep ? 'bg-[#3f96ff]' : 'bg-gray-700'
                   }`} />
                 )}
               </div>
@@ -317,12 +318,25 @@ const RegisterPage = () => {
                 (currentStep === 2 && !formData.accountType) ||
                 (currentStep === 3 && !formData.email)
               }
-              className="btn-register-neon"
+              className="btn-register-blue"
             >
               {currentStep === 3 
                 ? (selectedLanguage === 'CN' ? '提交' : 'Submit')
                 : (selectedLanguage === 'CN' ? '下一步' : 'Next')
               }
+            </button>
+          </div>
+          
+          {/* 登录提示 */}
+          <div className="text-center pt-4 text-sm">
+            <span className="text-gray-400">
+              {selectedLanguage === 'CN' ? '已有账户？' : 'Already have an account?'}
+            </span>
+            <button 
+              onClick={() => navigate('/login')}
+              className="text-blue-400 hover:text-blue-300 ml-1"
+            >
+              {selectedLanguage === 'CN' ? '立即登录' : 'Login now'}
             </button>
           </div>
         </div>

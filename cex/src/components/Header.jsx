@@ -1,7 +1,7 @@
+import { DownOutlined } from '@ant-design/icons';
 import { Menu, X, User, Bell, Search } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { DownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -403,12 +403,14 @@ const Header = () => {
 
             {/* Login/Register Buttons */}
             <div className="hidden md:flex items-center space-x-2">
-              <button className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors">
+              <button 
+                onClick={() => navigate('/login')}
+                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors border-[2px] border-transparent hover:border-[#00d4ff] hover:border-[2px] rounded-lg"              >
                 登录
               </button>
               <button 
                 onClick={() => navigate('/register')}
-                className="btn-register-neon text-sm"
+                className="btn-register-blue text-sm"
               >
                 注册
               </button>
@@ -497,7 +499,12 @@ const Header = () => {
               </Link>
               <div className="pt-4 pb-3 border-t border-slate-700">
                 <div className="flex items-center px-3 space-x-3">
-                  <button className="btn-primary w-full">登录</button>
+                  <button 
+                    onClick={() => navigate('/login')}
+                    className="btn-primary w-full"
+                  >
+                    登录
+                  </button>
                 </div>
                 <div className="flex items-center px-3 space-x-3 mt-2">
                   <button 
