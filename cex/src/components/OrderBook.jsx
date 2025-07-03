@@ -62,7 +62,7 @@ const OrderBook = ({ pairData, symbol }) => {
   };
 
   return (
-    <div className="card h-full flex flex-col">
+    <div className="card-dark h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-2 pl-3 flex-shrink-0">
         <h2 className="text-lg font-semibold text-white">订单簿</h2>

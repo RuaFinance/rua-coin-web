@@ -58,7 +58,7 @@ const RecentTrades = ({ pairData, symbol }) => {
   };
 
   return (
-    <div className="card h-full flex flex-col">
+    <div className="card-dark h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <h2 className="text-lg font-semibold text-white">最新成交</h2>

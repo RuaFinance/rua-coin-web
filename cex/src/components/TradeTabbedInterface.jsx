@@ -67,7 +67,7 @@ const TradingInterface = () => {
       <div className="flex-1 flex flex-col">
 
         {/* 顶部标签栏 */}
-        <div className="flex items-center justify-between card border-b-[#424242] border-b-[0.5px] p-2 rounded-md">
+        <div className="flex items-center justify-between card-dark border-b-[#424242] border-b-[0.5px] p-2 rounded-md">
 
           {/* 标签导航 */}
           <div className="flex">
@@ -302,7 +302,7 @@ const TradingInterface = () => {
         </div>
         
         {/* 内容区域 */}
-        <div className="flex-1 p-1 card rounded-md">
+        <div className="flex-1 p-1 card-dark rounded-md">
           {activeTab === 'currentOrders' && (
             <div className='text-trading-page-common'>
               <div className="flex items-center space-x-2 mb-0 px-1 py-2">

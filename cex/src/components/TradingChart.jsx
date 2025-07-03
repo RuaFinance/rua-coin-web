@@ -49,7 +49,7 @@ const TradingChart = ({ symbol = 'BTCUSDT', exchange = 'BINANCE' }) => {
   // }, []);
 
   return (
-    <div className="card h-full flex flex-col">
+    <div className="card-dark h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-2 flex-shrink-0">
         <div className="flex items-center space-x-2 sm:space-x-4 min-w-0">

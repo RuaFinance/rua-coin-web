@@ -1,10 +1,15 @@
-import { TrendingUp, TrendingDown, Star } from 'lucide-react';
+import { TrendingUp, TrendingDown, Star, ArrowUpDown, Volume2, BarChart3 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { formatUrl } from '../router/config';
+import { symbolSet } from '../config/SymbolSetConfig';
 
 const TradingPairs = () => {
   const [selectedTab, setSelectedTab] = useState('热门');
   const [favorites, setFavorites] = useState(new Set());
+  const [sortBy, setSortBy] = useState('none');
+  const [sortOrder, setSortOrder] = useState('desc');
   const navigate = useNavigate();
 
   // 模拟交易对数据
@@ -36,6 +41,26 @@ const TradingPairs = () => {
 
   const tabs = ['热门', '涨幅榜', '跌幅榜', '新币', '自选'];
 
+  // 获取币种logo的函数
+  const getCoinLogo = (symbol) => {
+    // 从交易对中提取基础币种符号 (BTC/USDT -> BTC, BTC3L/USDT -> BTC)
+    const baseCurrency = symbol.split('/')[0];
+    
+    // 处理杠杆币种，去掉3L、3S等后缀
+    const cleanSymbol = baseCurrency.replace(/3[LS]$/, '');
+    
+    // 构建完整的交易对符号来检查
+    const fullSymbol = `${cleanSymbol}/USDT`;
+    
+    // 检查symbolSet中是否包含该币种
+    if (symbolSet.has(fullSymbol)) {
+      return formatUrl(`/asserts/logo/${cleanSymbol}.png`);
+    }
+    
+    // 如果没有找到，返回默认的none.png
+    return formatUrl('/asserts/logo/none.png');
+  };
+
   const toggleFavorite = (symbol) => {
     const newFavorites = new Set(favorites);
     if (newFavorites.has(symbol)) {
@@ -46,19 +71,59 @@ const TradingPairs = () => {
     setFavorites(newFavorites);
   };
 
+  const handleSort = (column) => {
+    if (sortBy === column) {
+      setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc');
+    } else {
+      setSortBy(column);
+      setSortOrder('desc');
+    }
+  };
+
+  const getSortedPairs = (pairs) => {
+    if (sortBy === 'none') {
+      return [...pairs]; // 返回原始顺序
+    }
+    
+    return [...pairs].sort((a, b) => {
+      let aValue = a[sortBy];
+      let bValue = b[sortBy];
+      
+      if (sortBy === 'symbol') {
+        aValue = a.symbol.toLowerCase();
+        bValue = b.symbol.toLowerCase();
+      } else if (sortBy === 'volume') {
+        aValue = parseFloat(a.volume.replace(/[GM]/g, ''));
+        bValue = parseFloat(b.volume.replace(/[GM]/g, ''));
+      }
+      
+      if (sortOrder === 'desc') {
+        return bValue > aValue ? 1 : -1;
+      } else {
+        return aValue > bValue ? 1 : -1;
+      }
+    });
+  };
+
   const getFilteredPairs = () => {
+    let filteredPairs;
     switch (selectedTab) {
       case '涨幅榜':
-        return [...tradingPairs].sort((a, b) => b.change - a.change);
+        filteredPairs = [...tradingPairs].filter(pair => pair.change > 0).sort((a, b) => b.change - a.change);
+        return filteredPairs;
       case '跌幅榜':
-        return [...tradingPairs].sort((a, b) => a.change - b.change);
+        filteredPairs = [...tradingPairs].filter(pair => pair.change < 0).sort((a, b) => a.change - b.change);
+        return filteredPairs;
       case '自选':
-        return tradingPairs.filter(pair => favorites.has(pair.symbol));
+        filteredPairs = tradingPairs.filter(pair => favorites.has(pair.symbol));
+        break;
       case '新币':
-        return tradingPairs.slice(4); // 模拟新币
-      default:
-        return tradingPairs;
+        filteredPairs = tradingPairs.slice(4);
+        break;
+      default: // 热门
+        filteredPairs = tradingPairs;
     }
+    return getSortedPairs(filteredPairs);
   };
 
   const handleCoinClick = (symbol) => {
@@ -71,7 +136,7 @@ const TradingPairs = () => {
     const interval = setInterval(() => {
       setTradingPairs(prev => prev.map(pair => ({
         ...pair,
-        price: pair.price * (1 + (Math.random() - 0.5) * 0.002), // ±0.1% 随机变化
+        price: pair.price * (1 + (Math.random() - 0.5) * 0.002),
         change: pair.change + (Math.random() - 0.5) * 0.1,
       })));
     }, 500);
@@ -80,21 +145,29 @@ const TradingPairs = () => {
   }, []);
 
   return (
-    <div className="card h-full flex flex-col bg-white">
+    <div className="trading-pairs-container">
       {/* Header */}
-      <div className="flex-shrink-0 mb-4">
-        <h2 className="text-lg font-semibold text-[#202630] mb-3">交易对</h2>
+      <div className="trading-pairs-header">
+        <div className="flex items-center gap-3 mt-3 mb-1">
+          {/* <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
+            <BarChart3 className="h-6 w-6 text-white" />
+          </div> */}
+          <h2 className="section-title pl-3">交易对</h2>
+        </div>
         
         {/* Tabs */}
-        <div className="flex space-x-1 overflow-x-auto">
+        <div className="flex border-b border-gray-200">
           {tabs.map((tab) => (
             <button
               key={tab}
-              onClick={() => setSelectedTab(tab)}
-              className={`px-2 py-1 text-xs sm:text-sm rounded-md transition-colors whitespace-nowrap flex-shrink-0 ${
+              onClick={() => {
+                setSelectedTab(tab);
+                setSortBy('none'); // 重置排序状态
+              }}
+              className={`py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
                 selectedTab === tab
-                  ? 'bg-white text-[#202630] font-bold'
-                  : 'text-[#202630] hover:text-[#202630] hover:bg-[#ececec]'
+                  ? 'border-blue-500 text-gray-900'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
               {tab}
@@ -104,44 +177,57 @@ const TradingPairs = () => {
       </div>
 
       {/* Desktop Table Header */}
-      <div className="hidden lg:grid lg:grid-cols-12 gap-2 px-3 py-2 text-xs text-gray-400 font-medium  flex-shrink-0">
-        <div className="col-span-1"></div>
-        <div className="col-span-3">交易对</div>
-        <div className="col-span-2 text-right">价格</div>
-        <div className="col-span-2 text-right">涨跌幅</div>
-        <div className="col-span-2 text-right">24h量</div>
-        <div className="col-span-2 text-right">操作</div>
+      <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <div className="col-span-1 flex items-center justify-center">
+          {/* <Star className="h-[18px] w-[18px] text-gray-400" /> */}
+        </div>
+        <div className="col-span-3 flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('symbol')}>
+          <span className="text-sm font-medium text-gray-700">交易对</span>
+          <ArrowUpDown className="h-3 w-3" />
+        </div>
+        <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('price')}>
+          <span className="text-sm font-medium text-gray-700">价格</span>
+          <ArrowUpDown className="h-3 w-3" />
+        </div>
+        <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('change')}>
+          <span className="text-sm font-medium text-gray-700">涨跌幅</span>
+          <ArrowUpDown className="h-3 w-3" />
+        </div>
+        <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('volume')}>
+          <span className="text-sm font-medium text-gray-700">24h量</span>
+          <Volume2 className="h-3 w-3" />
+        </div>
+        <div className="col-span-2 flex items-center justify-end">
+          <span className="text-sm font-medium text-gray-700">操作</span>
+        </div>
       </div>
 
       {/* Mobile/Tablet Header */}
-      <div className="lg:hidden grid grid-cols-4 gap-2 px-3 py-2 text-xs text-gray-400 font-medium border-b  flex-shrink-0">
-        <div>交易对</div>
-        <div className="text-right">价格</div>
-        <div className="text-right">涨跌幅</div>
-        <div className="text-right">操作</div>
+      <div className="lg:hidden grid grid-cols-4 gap-2 px-4 py-3 bg-gray-50 border-b border-gray-200">
+        <div className="text-sm font-medium text-gray-700">交易对</div>
+        <div className="text-sm font-medium text-gray-700 text-right">价格</div>
+        <div className="text-sm font-medium text-gray-700 text-right">涨跌幅</div>
+        <div className="text-sm font-medium text-gray-700 text-right">操作</div>
       </div>
 
       {/* Trading Pairs List */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="space-y-1">
+      <div>
+        <div className="divide-y divide-gray-100">
           {getFilteredPairs().map((pair, index) => (
             <div key={pair.symbol}>
               {/* Desktop Layout */}
               <div 
-                key={pair.symbol} 
-                className="hidden lg:grid lg:grid-cols-12 gap-2 px-3 py-2 text-sm trading-pair"
+                className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-4 trading-pair group"
                 onClick={() => handleCoinClick(pair.symbol)}
               >
-                <div className="col-span-1 flex items-center">
+                <div className="col-span-1 flex items-center justify-center">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFavorite(pair.symbol);
                     }}
-                    className={`p-1 rounded ${
-                      favorites.has(pair.symbol)
-                        ? 'text-yellow-400 hover:text-yellow-300'
-                        : 'text-gray-500 hover:text-gray-400'
+                    className={`favorite-star p-1 rounded-full ${
+                      favorites.has(pair.symbol) ? 'active' : 'text-gray-400 hover:text-yellow-400'
                     }`}
                   >
                     <Star className="h-[18px] w-[18px]" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
@@ -149,44 +235,55 @@ const TradingPairs = () => {
                 </div>
                 
                 <div className="col-span-3 flex items-center">
-                  <div>
-                    <div className="font-medium text-[#202630]">{pair.symbol.split('/')[0]}</div>
-                    <div className="text-xs text-gray-400">{pair.symbol.split('/')[1]}</div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                      <img 
+                        src={getCoinLogo(pair.symbol)} 
+                        alt={pair.symbol.split('/')[0]}
+                        className="w-6 h-6 object-contain"
+                        onError={(e) => {
+                          e.target.src = formatUrl('/asserts/logo/none.png');
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">{pair.symbol.split('/')[0]}</div>
+                      <div className="text-xs text-gray-500">{pair.symbol.split('/')[1]}</div>
+                    </div>
                   </div>
                 </div>
                 
                 <div className="col-span-2 text-right">
-                  <div className="font-mono text-[#202630] text-sm">
+                  <div className="font-mono text-gray-900 font-semibold">
                     ${pair.price.toLocaleString(undefined, { 
                       minimumFractionDigits: pair.price < 1 ? 4 : 2,
                       maximumFractionDigits: pair.price < 1 ? 4 : 2
                     })}
                   </div>
+                  <div className="text-xs text-gray-500">
+                    ${pair.low.toFixed(2)} - ${pair.high.toFixed(2)}
+                  </div>
                 </div>
                 
                 <div className="col-span-2 text-right">
-                  <div className={`flex items-center justify-end space-x-1 ${
-                    pair.change >= 0 ? 'price-up' : 'price-down'
+                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium ${
+                    pair.change >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                   }`}>
-                    {pair.change >= 0 ? (
-                      <TrendingUp className="h-3 w-3" />
-                    ) : (
-                      <TrendingDown className="h-3 w-3" />
-                    )}
-                    <span className="font-mono text-sm">
+                    {pair.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                    <span className="font-mono">
                       {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
                     </span>
                   </div>
                 </div>
                 
                 <div className="col-span-2 text-right">
-                  <div className="text-[#202630] font-mono text-xs">
-                    {pair.volume}
+                  <div className="flex items-center justify-end gap-1 text-gray-700">
+                    <span className="font-mono text-sm">{pair.volume}</span>
                   </div>
                 </div>
                 
                 <div className="col-span-2 text-right">
-                  <button className="btn-primary text-xs px-2 py-1">
+                  <button className="btn-trade">
                     交易
                   </button>
                 </div>
@@ -194,56 +291,59 @@ const TradingPairs = () => {
 
               {/* Mobile/Tablet Layout */}
               <div
-                className="lg:hidden grid grid-cols-12 gap-1 px-2 py-2 text-sm trading-pair"
+                className="lg:hidden grid grid-cols-12 gap-2 px-4 py-3 trading-pair group"
                 onClick={() => handleCoinClick(pair.symbol)}
               >
-                {/* 币种 - 占3列 */}
-                <div className="col-span-3 flex items-center space-x-1">
+                <div className="col-span-3 flex items-center space-x-2">
                   <button
-                    onClick={() => toggleFavorite(pair.symbol)}
-                    className={`${
-                      favorites.has(pair.symbol)
-                        ? 'text-yellow-400 hover:text-yellow-300'
-                        : 'text-gray-500 hover:text-gray-400'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(pair.symbol);
+                    }}
+                    className={`favorite-star ${
+                      favorites.has(pair.symbol) ? 'active' : 'text-gray-400'
                     }`}
                   >
                     <Star className="h-3 w-3" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
                   </button>
+                  <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                    <img 
+                      src={getCoinLogo(pair.symbol)} 
+                      alt={pair.symbol.split('/')[0]}
+                      className="w-5 h-5 object-contain"
+                      onError={(e) => {
+                        e.target.src = formatUrl('/asserts/logo/none.png');
+                      }}
+                    />
+                  </div>
                   <div>
-                    <div className="font-medium text-[#202630] text-xs">{pair.symbol.split('/')[0]}</div>
-                    <div className="text-xs text-gray-400">{pair.symbol.split('/')[1]}</div>
+                    <div className="font-semibold text-gray-900 text-sm">{pair.symbol.split('/')[0]}</div>
+                    <div className="text-xs text-gray-500">{pair.symbol.split('/')[1]}</div>
                   </div>
                 </div>
                 
-                {/* 价格 - 占3列 */}
                 <div className="col-span-3 text-right">
-                  <div className="font-mono text-[#202630] text-xs">
+                  <div className="font-mono text-gray-900 font-semibold text-sm">
                     ${pair.price < 1 ? pair.price.toFixed(4) : pair.price.toFixed(2)}
                   </div>
-                  <div className="text-gray-400 text-xs hidden sm:block">{pair.volume}</div>
+                  <div className="text-xs text-gray-500 font-mono">{pair.volume}</div>
                 </div>
                 
-                {/* 涨跌幅 - 占3列 */}
                 <div className="col-span-3 text-right">
-                  <div className={`flex items-center justify-end space-x-1 ${
-                    pair.change >= 0 ? 'price-up' : 'price-down'
+                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                    pair.change >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                   }`}>
-                    {pair.change >= 0 ? (
-                      <TrendingUp className="h-3 w-3" />
-                    ) : (
-                      <TrendingDown className="h-3 w-3" />
-                    )}
-                    <span className="font-mono text-xs whitespace-nowrap">
+                    {pair.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                    <span className="font-mono">
                       {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
                     </span>
                   </div>
                 </div>
                 
-                {/* 操作 - 占3列 */}
                 <div className="col-span-3 text-right">
                   <button
-                    className="btn-primary text-xs px-2 py-1"
-                    onClick={e => {
+                    className="btn-trade text-xs px-3 py-1"
+                    onClick={(e) => {
                       e.stopPropagation();
                       handleCoinClick(pair.symbol);
                     }}
