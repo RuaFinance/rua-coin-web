@@ -34,7 +34,7 @@ const RegisterPage = () => {
   };
 
   const handleNext = () => {
-    if (currentStep === 1 && !formData.residence) {
+    if (currentStep === 1 && !formData.residence.trim()) {
       api.warning({
         message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
         description: selectedLanguage === 'CN' ? '请选择您的居住地' : 'Please select your residence',
@@ -52,7 +52,7 @@ const RegisterPage = () => {
       });
       return;
     }
-    if (currentStep === 2 && !formData.accountType) {
+    if (currentStep === 2 && !formData.accountType.trim()) {
       api.warning({
         message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
         description: selectedLanguage === 'CN' ? '请选择账户类型' : 'Please select account type',
@@ -61,7 +61,7 @@ const RegisterPage = () => {
       });
       return;
     }
-    if (currentStep === 3 && !formData.email) {
+    if (currentStep === 3 && !formData.email.trim()) {
       api.warning({
         message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
         description: selectedLanguage === 'CN' ? '请输入邮箱地址' : 'Please enter your email address',
@@ -277,14 +277,14 @@ const RegisterPage = () => {
               <div key={step} className="flex items-center">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                   step <= currentStep 
-                    ? 'bg-[#3f96ff] text-white' 
+                    ? 'bg-white text-black' 
                     : 'bg-gray-700 text-gray-400'
                 }`}>
                   {step}
                 </div>
                 {step < 3 && (
                   <div className={`w-12 h-0.5 mx-2 ${
-                    step < currentStep ? 'bg-[#3f96ff]' : 'bg-gray-700'
+                    step < currentStep ? 'bg-white' : 'bg-gray-700'
                   }`} />
                 )}
               </div>
@@ -313,11 +313,6 @@ const RegisterPage = () => {
             
             <button
               onClick={handleNext}
-              disabled={
-                (currentStep === 1 && !formData.residence) ||
-                (currentStep === 2 && !formData.accountType) ||
-                (currentStep === 3 && !formData.email)
-              }
               className="btn-register-blue"
             >
               {currentStep === 3 

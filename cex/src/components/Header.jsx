@@ -212,13 +212,13 @@ const Header = () => {
                 )}
               </div>
               
-              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 合约
               </Link>
-              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 资产
               </Link>
-              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 理财
               </Link>
             </nav>
@@ -384,17 +384,17 @@ const Header = () => {
                   onMouseLeave={() => setIsUserMenuOpen(false)}
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
+                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
                     个人资料
                   </Link>
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     安全设置
                   </Link>
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     API管理
                   </Link>
                   {/* <hr className="my-1 border-slate-700" /> */}
-                  <Link href="#" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
+                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
                     退出登录
                   </Link>
                 </div>
