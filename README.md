@@ -30,3 +30,7 @@ jojo@jojodeMacBook-Pro cex % npm run dev
   ➜  Network: http://198.18.0.1:12000/
   ➜  Network: http://198.19.249.3:12000/
 ```
+
+## Change Log
+
+[CHANGELOG.md](https://github.com/RuaFinance/rua-coin-web/blob/main/CHANGELOG.md)

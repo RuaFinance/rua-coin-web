@@ -45,4 +45,3 @@ export const symbolSet = new Set([
     'BTC3L/USDT',
     'ETH3S/USDT'
 ]);
-  
