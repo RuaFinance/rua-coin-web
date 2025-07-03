@@ -405,7 +405,7 @@
   .trading-pairs-header {
     /* @apply bg-gradient-to-r from-gray-50 to-gray-100 p-4 border-b border-gray-200; */
     @apply bg-gray-50 p-4;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    /* background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); */
   }
 
   .trading-pair {

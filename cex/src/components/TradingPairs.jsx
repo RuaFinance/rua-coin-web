@@ -1,3 +1,17 @@
+// Copyright 2025 chenjjiaa
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { TrendingUp, TrendingDown, Star, ArrowUpDown, Volume2, BarChart3 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -195,7 +209,6 @@ const TradingPairs = () => {
         </div>
         <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('volume')}>
           <span className="text-sm font-medium text-gray-700">24h量</span>
-          <Volume2 className="h-3 w-3" />
         </div>
         <div className="col-span-2 flex items-center justify-end">
           <span className="text-sm font-medium text-gray-700">操作</span>

@@ -11,16 +11,3 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
-
-import './index.css'
-import router from './router'
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
