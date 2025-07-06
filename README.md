@@ -1,4 +1,4 @@
-# rua-coin-web
+# web
 
 ## Run project
 
@@ -33,4 +33,4 @@ jojo@jojodeMacBook-Pro cex % npm run dev
 
 ## Change Log
 
-[CHANGELOG.md](https://github.com/RuaFinance/rua-coin-web/blob/main/CHANGELOG.md)
+[CHANGELOG.md](https://github.com/RuaFinance/web/blob/main/CHANGELOG.md)

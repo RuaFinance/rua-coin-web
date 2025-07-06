@@ -19,7 +19,7 @@
  * is defined within the `ci.yaml` file.
  */
 const DEPLOY_ENV = import.meta.env.VITE_DEPLOY_ENV;
-export const BASE_URL = DEPLOY_ENV === 'GIT' ? '/rua-coin-web' : '';
+export const BASE_URL = DEPLOY_ENV === 'GIT' ? '/web' : '';
 
 /**
  * @example
@@ -27,7 +27,7 @@ export const BASE_URL = DEPLOY_ENV === 'GIT' ? '/rua-coin-web' : '';
  * import { formatUrl } from '../router/config';
  * 
  * const url = formatUrl('/asserts/apple-beb23ea0201e.png');
- * console.log(url); // /rua-coin-web/asserts/apple-beb23ea0201e.png
+ * console.log(url); // /web/asserts/apple-beb23ea0201e.png
  * ```
  */
 export const formatUrl = (path: string): string => {
