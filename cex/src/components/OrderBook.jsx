@@ -86,7 +86,7 @@ const OrderBook = ({ pairData, symbol }) => {
           <select
             value={precision}
             onChange={(e) => setPrecision(Number(e.target.value))}
-            className="bg-slate-700 border border-slate-600 rounded px-2 py-1 text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-[#1d1d1d] border border-slate-600 rounded px-2 py-1 text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value={0}>0</option>
             <option value={1}>0.1</option>
@@ -135,7 +135,7 @@ const OrderBook = ({ pairData, symbol }) => {
         </div>
 
         {/* Current Price */}
-        <div className="flex items-center justify-center py-2 sm:py-3 mb-2 sm:mb-2 bg-slate-700/50 rounded-lg flex-shrink-0">
+        <div className="flex items-center justify-center py-2 sm:py-3 mb-2 sm:mb-2 bg-[#1d1d1d] rounded-lg flex-shrink-0">
           <div className="flex items-center space-x-1 sm:space-x-2">
             <span className="text-lg sm:text-2xl font-mono text-green-400">
               {formatPrice(43250.50)}

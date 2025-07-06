@@ -142,7 +142,7 @@ const LanguageSwitcher = ({ className = '' }) => {
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+        className="flex items-center space-x-2 px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200 rounded-md hover:bg-[#1d1d1d] focus:outline-none focus:ring-2 focus:ring-[#424242] focus:ring-offset-2 focus:ring-offset-gray-900"
         aria-label={t('header:language')}
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -173,14 +173,14 @@ const LanguageSwitcher = ({ className = '' }) => {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 z-50 animate-in fade-in-0 zoom-in-95 duration-200"
+          className="absolute right-0 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg border border-[#424242] z-50 animate-in fade-in-0 zoom-in-95 duration-200"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="language-menu"
         >
-          <div className="py-2">
+          <div className="pt-2">
             {/* 弹窗标题 */}
-            <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-700">
+            <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-[#424242]">
               {t('header:language')}
             </div>
             
@@ -190,9 +190,9 @@ const LanguageSwitcher = ({ className = '' }) => {
                 key={language.code}
                 onClick={() => handleLanguageChange(language.code)}
                 onKeyDown={(e) => handleKeyDown(e, language.code)}
-                className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-700 transition-colors duration-150 focus:outline-none focus:bg-gray-700 ${
+                className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[#3a3a3a] transition-colors duration-150 focus:outline-none focus:bg-[#3a3a3a] ${
                   currentLanguage === language.code 
-                    ? 'bg-gray-700 text-white' 
+                    ? 'bg-[#3a3a3a] text-white' 
                     : 'text-gray-300'
                 }`}
                 role="menuitem"

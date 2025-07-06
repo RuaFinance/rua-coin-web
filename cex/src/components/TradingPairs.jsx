@@ -219,7 +219,7 @@ const TradingPairs = () => {
           <span className="text-sm font-medium text-gray-700">{t('components:tradingPairs.volume')}</span>
         </div>
         <div className="col-span-2 flex items-center justify-end">
-          <span className="text-sm font-medium text-gray-700 pr-5">{t('common:actions', '操作')}</span>
+          <span className="text-sm font-medium text-gray-700 pr-1">{t('common:actions', '操作')}</span>
         </div>
       </div>
 
@@ -305,7 +305,10 @@ const TradingPairs = () => {
                 
                 <div className="col-span-2 text-right">
                   <button className="btn-trade">
-                    {t('common:trade')}
+                    <span className="material-symbols-outlined">
+                      candlestick_chart
+                    </span>
+                    <span className="tooltip">{t('common:trade')}</span>
                   </button>
                 </div>
               </div>
@@ -363,13 +366,16 @@ const TradingPairs = () => {
                 
                 <div className="col-span-3 text-right">
                   <button
-                    className="btn-trade text-xs px-3 py-1"
+                    className="btn-trade text-xs px-2 py-1"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleCoinClick(pair.symbol);
                     }}
                   >
-                    交易
+                    <span className="material-symbols-outlined">
+                      candlestick_chart
+                    </span>
+                    <span className="tooltip">{t('common:trade')}</span>
                   </button>
                 </div>
               </div>
