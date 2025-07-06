@@ -1,0 +1,265 @@
+/* Copyright 2025 chenjjiaa
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Footer 基础样式 */
+.footer-container {
+  position: relative;
+  z-index: 10;
+}
+
+/* Footer 渐变背景 */
+.footer-gradient {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+}
+
+/* Footer 链接悬停效果 */
+.footer-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* Footer 社交媒体图标动画 */
+.footer-social-icon {
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.footer-social-icon:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* Footer 分割线动画 */
+.footer-divider {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  animation: footer-divider-slide 3s infinite;
+}
+
+@keyframes footer-divider-slide {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Footer 内容淡入动画 */
+.footer-content-fade-in {
+  animation: footer-fade-in 0.6s ease-out;
+}
+
+@keyframes footer-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer 响应式网格 */
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Footer 移动端折叠动画 */
+.footer-mobile-collapse {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.footer-mobile-collapse.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.footer-mobile-collapse.expanded {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* Footer 认证徽章样式 */
+.footer-certification {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.footer-certification:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Footer 风险提示样式 */
+.footer-risk-disclosure {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+/* Footer APP下载按钮样式 */
+.footer-app-download {
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+  border: 1px solid #4b5563;
+  transition: all 0.3s ease;
+}
+
+.footer-app-download:hover {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  border-color: #6b7280;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer 法律链接样式 */
+.footer-legal-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.footer-legal-link:hover {
+  color: #3b82f6;
+  transform: translateX(2px);
+}
+
+/* Footer 联系信息样式 */
+.footer-contact-info {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.footer-contact-info:hover {
+  transform: translateX(5px);
+  color: #3b82f6;
+}
+
+/* Footer 加载动画 */
+.footer-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #3b82f6;
+  animation: footer-spin 1s ease-in-out infinite;
+}
+
+@keyframes footer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer 滚动条样式 */
+.footer-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 #1f2937;
+}
+
+.footer-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.footer-scrollbar::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.footer-scrollbar::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 3px;
+}
+
+.footer-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Footer 打印样式 */
+@media print {
+  .footer-container {
+    display: none !important;
+  }
+}
+
+/* Footer 高对比度模式 */
+@media (prefers-contrast: high) {
+  .footer-container {
+    border-top: 2px solid #ffffff;
+  }
+  
+  .footer-link {
+    text-decoration: underline;
+  }
+}
+
+/* Footer 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+  .footer-container * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

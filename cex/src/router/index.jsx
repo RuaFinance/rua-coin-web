@@ -20,6 +20,7 @@ import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import RegisterPage from '../pages/RegisterPage';
 import TradingPage from '../pages/TradingPage';
+import FooterTestPage from '../pages/FooterTestPage';
 
 import { BASE_URL } from './config';
 
@@ -43,6 +44,10 @@ const router = createBrowserRouter(
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'footer-test',
+        element: <FooterTestPage />,
       },
       {
         path: '*',

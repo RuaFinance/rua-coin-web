@@ -201,7 +201,7 @@ const TradingPairs = () => {
         </div>
         <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('price')}>
           <span className="text-sm font-medium text-gray-700">价格</span>
-          <ArrowUpDown className="h-3 w-3" />
+          <span className="pr-3"><ArrowUpDown className="h-3 w-3" /></span>
         </div>
         <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('change')}>
           <span className="text-sm font-medium text-gray-700">涨跌幅</span>
@@ -211,7 +211,7 @@ const TradingPairs = () => {
           <span className="text-sm font-medium text-gray-700">24h量</span>
         </div>
         <div className="col-span-2 flex items-center justify-end">
-          <span className="text-sm font-medium text-gray-700">操作</span>
+          <span className="text-sm font-medium text-gray-700 pr-5">操作</span>
         </div>
       </div>
 
