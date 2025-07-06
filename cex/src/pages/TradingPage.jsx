@@ -14,6 +14,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { fetchTradingPairData } from '../api/trading';
 import KlineTradingChartPro from '../components/KlineChartProTradingChart';
@@ -30,6 +31,7 @@ import TradingPanel from '../components/TradingPanel';
 const MIN_PANEL_WIDTH = 216; // px
 
 const TradingPage = () => {
+  const { t } = useTranslation(['pages', 'common']);
   const { symbol } = useParams();
   const [pairData, setPairData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -96,6 +98,7 @@ const TradingPage = () => {
       <div className="container mx-auto p-4 text-white">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <span className="ml-3 text-lg">{t('common:loading')}</span>
         </div>
       </div>
     );
@@ -112,20 +115,8 @@ const TradingPage = () => {
         {/* 中间图表区域 */}
         <div className="lg:col-span-9 flex flex-col h-full min-h-0">
           <div className="trading-page-trading-chart flex-1 min-h-0" >
-          {/* <div className="h-[700px] mb-4 bg-amber-50"> */}
-            {/* <CustomKlineTradingChart symbol={pairData?.symbol || 'BTC/USDT'} /> */}
             <KlineTradingChartPro symbol={symbol}/>
           </div>
-          
-          {/* 底部交易面板和最新成交 */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <TradingPanel pairData={pairData} />
-            </div>
-            <div>
-              <RecentTrades pairData={pairData} />
-            </div>
-          </div> */}
         </div>
 
         {/* 右侧订单簿 */}

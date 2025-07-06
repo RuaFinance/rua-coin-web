@@ -1,0 +1,19 @@
+{
+  "trade": "Trade",
+  "buy": "Buy",
+  "sell": "Sell",
+  "price": "Price",
+  "amount": "Amount",
+  "total": "Total",
+  "orderBook": "Order Book",
+  "recentTrades": "Recent Trades",
+  "openOrders": "Open Orders",
+  "tradeHistory": "Trade History",
+  "available": "Available",
+  "balance": "Balance",
+  "fee": "Fee",
+  "submitOrder": "Submit Order",
+  "cancelOrder": "Cancel Order",
+  "stop_loss": "Stop Loss",
+  "oco_order": "OCO Order"
+} 

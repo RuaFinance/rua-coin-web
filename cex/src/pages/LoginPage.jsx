@@ -17,6 +17,7 @@ import { Button, ConfigProvider, Input, Checkbox, notification, Select } from 'a
 import { ArrowLeft, Mail, Lock, Phone } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { SelectLightConfig } from '../config/AntdSelectConfig';
 import { phoneCountriesCN } from '../config/PhoneCountriesList';
@@ -25,6 +26,7 @@ import { formatUrl } from '../router/config';
 const { Option } = Select;
 
 const LoginPage = () => {
+  const { t } = useTranslation(['pages', 'common']);
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification({
     placement: 'topRight',
@@ -67,8 +69,8 @@ const LoginPage = () => {
     if (activeTab === 'phone') {
       if (!formData.phone) {
         api.warning({
-          message: '登录提示',
-          description: '请输入手机号',
+          message: t('pages:login.loginTip'),
+          description: t('pages:login.enterPhone'),
           icon: <SmileOutlined style={{ color: '#faad14' }} />,
           placement: 'topRight',
         });
@@ -77,8 +79,8 @@ const LoginPage = () => {
     } else if (activeTab === 'email') {
       if (!formData.email) {
         api.warning({
-          message: '登录提示',
-          description: '请输入邮箱地址',
+          message: t('pages:login.loginTip'),
+          description: t('pages:login.enterEmail'),
           icon: <SmileOutlined style={{ color: '#faad14' }} />,
           placement: 'topRight',
         });
@@ -88,8 +90,8 @@ const LoginPage = () => {
     
     if (!formData.password) {
       api.warning({
-        message: '登录提示',
-        description: '请输入密码',
+        message: t('pages:login.loginTip'),
+        description: t('pages:login.enterPassword'),
         icon: <SmileOutlined style={{ color: '#faad14' }} />,
         placement: 'topRight',
       });
@@ -103,8 +105,8 @@ const LoginPage = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       api.success({
-        message: '登录成功',
-        description: '欢迎回到 RuaCoin！',
+        message: t('pages:login.loginSuccess'),
+        description: t('pages:login.welcomeBack'),
         icon: <SmileOutlined style={{ color: '#52c41a' }} />,
         placement: 'topRight',
       });
@@ -114,8 +116,8 @@ const LoginPage = () => {
       
     } catch (error) {
       api.error({
-        message: '登录失败',
-        description: '账号或密码错误，请重试',
+        message: t('pages:login.loginFailed'),
+        description: t('pages:login.accountOrPasswordError'),
         placement: 'topRight',
       });
     } finally {
@@ -130,8 +132,8 @@ const LoginPage = () => {
   const handleThirdPartyLogin = (provider) => {
     // TODO: 实现第三方登录逻辑
     api.info({
-      message: '第三方登录',
-      description: `${provider} 登录功能开发中...`,
+      message: t('pages:login.thirdPartyLogin'),
+      description: `${provider} ${t('pages:login.developingFeature')}`,
       placement: 'topRight',
     });
   };
@@ -147,7 +149,7 @@ const LoginPage = () => {
             : 'border-transparent text-gray-400 hover:text-gray-300'
         }`}
       >
-        手机
+        {t('pages:login.phoneTab')}
       </button>
       <button
         onClick={() => setActiveTab('email')}
@@ -157,7 +159,7 @@ const LoginPage = () => {
             : 'border-transparent text-gray-400 hover:text-gray-300'
         }`}
       >
-        邮箱 / 子账户
+        {t('pages:login.emailTab')}
       </button>
       <button
         onClick={() => setActiveTab('qrcode')}
@@ -167,7 +169,7 @@ const LoginPage = () => {
             : 'border-transparent text-gray-400 hover:text-gray-300'
         }`}
       >
-        二维码
+        {t('pages:login.qrcodeTab')}
       </button>
     </div>
   );
@@ -264,7 +266,7 @@ const LoginPage = () => {
       <div className="w-48 h-48 mx-auto bg-white rounded-lg flex items-center justify-center mb-4">
         <QrcodeOutlined className="text-6xl text-gray-400" />
       </div>
-      <p className="text-gray-400">使用手机扫描二维码登录</p>
+      <p className="text-gray-400">{t('pages:login.qrcodeInstruction', '使用手机扫描二维码登录')}</p>
     </div>
   );
 
@@ -275,9 +277,9 @@ const LoginPage = () => {
         <div className="max-w-md w-full space-y-8">
           {/* Header */}
           <div className="text-left">
-            <h1 className="text-5xl text-white">登陆</h1>
+            <h1 className="text-5xl text-white">{t('pages:login.title')}</h1>
             <div className="mt-4">
-              <p className="text-gray-400 mt-2">登录您的账户开始交易</p>
+              <p className="text-gray-400 mt-2">{t('pages:login.subtitle', '登录您的账户开始交易')}</p>
             </div>
           </div>
 
@@ -294,7 +296,7 @@ const LoginPage = () => {
                 {/* 密码输入 */}
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    密码
+                    {t('pages:login.password')}
                   </label>
                   <Input.Password
                    size="large"
@@ -313,10 +315,10 @@ const LoginPage = () => {
                     onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
                     className="text-gray-300"
                   >
-                    记住我
+                    {t('pages:login.rememberMe')}
                   </Checkbox>
                   <Link to="#" className="text-blue-400 hover:text-blue-300 text-sm">
-                    忘记密码？
+                    {t('pages:login.forgotPassword')}
                   </Link>
                 </div>
 
@@ -326,7 +328,7 @@ const LoginPage = () => {
                   disabled={loading}
                   className="w-full h-12 btn-register-blue"
                 >
-                  {loading ? '登录中...' : '登录'}
+                  {loading ? t('common:loading') : t('pages:login.loginButton')}
                 </button>
               </div>
             ) : (
@@ -340,7 +342,7 @@ const LoginPage = () => {
                 {/* 自定义分割线 */}
                 <div className="flex items-center my-6">
                   <div className="flex-1 h-px bg-gray-600"></div>
-                  <span className="px-4 text-gray-400 text-sm">或使用其他方式</span>
+                  <span className="px-4 text-gray-400 text-sm">{t('pages:login.orUseOtherMethods', '或使用其他方式')}</span>
                   <div className="flex-1 h-px bg-gray-600"></div>
                 </div>
 
@@ -382,9 +384,9 @@ const LoginPage = () => {
 
             {/* 注册提示 */}
             <div className="text-center pt-4 text-sm">
-              <span className="text-gray-400">还没有账户？</span>
+              <span className="text-gray-400">{t('pages:login.noAccount')}</span>
               <Link to="/register" className="text-blue-400 hover:text-blue-300 ml-1">
-                立即注册
+                {t('pages:login.registerNow')}
               </Link>
             </div>
             
@@ -395,7 +397,7 @@ const LoginPage = () => {
                 className="flex items-center space-x-2 px-0 py-2 text-gray-400 hover:text-white transition-colors"
               >
                 <ArrowLeft className="h-4 w-4" />
-                <span>返回首页</span>
+                <span>{t('pages:login.backToHome')}</span>
               </button>
             </div>
           </div>

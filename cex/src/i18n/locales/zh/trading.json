@@ -1,0 +1,19 @@
+{
+  "trade": "交易",
+  "buy": "买入",
+  "sell": "卖出",
+  "price": "价格",
+  "amount": "数量",
+  "total": "总计",
+  "orderBook": "委托簿",
+  "recentTrades": "最新成交",
+  "openOrders": "当前委托",
+  "tradeHistory": "成交历史",
+  "available": "可用",
+  "balance": "余额",
+  "fee": "手续费",
+  "submitOrder": "提交订单",
+  "cancelOrder": "撤销订单",
+  "stop_loss": "止盈止损",
+  "oco_order": "OCO订单"
+} 

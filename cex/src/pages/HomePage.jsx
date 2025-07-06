@@ -15,6 +15,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, TrendingDown, Activity, DollarSign, BarChart3, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { fetchMarketOverview, fetchPopularCoins } from '../api/market';
 import TradingPairs from '../components/TradingPairs';
@@ -22,6 +23,7 @@ import { formatUrl } from '../router/config';
 import { symbolSet } from '../config/SymbolSetConfig';
 
 const HomePage = () => {
+  const { t } = useTranslation(['pages', 'common']);
   const [marketData, setMarketData] = useState(null);
   const [popularCoins, setPopularCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,6 +76,7 @@ const HomePage = () => {
       <div className="container mx-auto p-4 text-white">
         <div className="flex justify-center items-center h-64">
           <div className="loading-spinner h-12 w-12"></div>
+          <span className="ml-3 text-lg">{t('pages:home.loadingData')}</span>
         </div>
       </div>
     );
@@ -87,13 +90,13 @@ const HomePage = () => {
           {/* <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
             <BarChart3 className="h-6 w-6 text-white" />
           </div> */}
-          <h1 className="section-title pl-1">市场概览</h1>
+          <h1 className="section-title pl-1">{t('pages:home.marketOverview')}</h1>
         </div>
         <div className="responsive-grid">
           <div className="market-overview-card-inner group">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-3">
-                <div className="text-sm text-gray-500 font-medium">总市值</div>
+                <div className="text-sm text-gray-500 font-medium">{t('pages:home.totalMarketCap')}</div>
                 <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
                   marketData?.marketCapChange >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                 }`}>
@@ -110,7 +113,7 @@ const HomePage = () => {
           <div className="market-overview-card-inner group">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-3">
-                <div className="text-sm text-gray-500 font-medium">24h成交量</div>
+                <div className="text-sm text-gray-500 font-medium">{t('pages:home.volume24h')}</div>
                 <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
                   marketData?.volumeChange >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                 }`}>
@@ -127,7 +130,7 @@ const HomePage = () => {
           <div className="market-overview-card-inner group">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-3">
-                <div className="text-sm text-gray-500 font-medium">BTC占比</div>
+                <div className="text-sm text-gray-500 font-medium">{t('pages:home.btcDominance')}</div>
                 <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
                   marketData?.btcDominanceChange >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                 }`}>
@@ -144,7 +147,7 @@ const HomePage = () => {
           <div className="market-overview-card-inner group">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-3">
-                <div className="text-sm text-gray-500 font-medium">活跃币种</div>
+                <div className="text-sm text-gray-500 font-medium">{t('pages:home.activeCoins')}</div>
                 <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
                   <span>--</span>
                 </div>
@@ -164,7 +167,7 @@ const HomePage = () => {
           {/* <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
             <TrendingUp className="h-6 w-6 text-white" />
           </div> */}
-          <h1 className="section-title pl-1">热门币种</h1>
+          <h1 className="section-title pl-1">{t('pages:home.hotCoins')}</h1>
         </div>
         <div className="responsive-grid">
           {popularCoins.map((coin) => (

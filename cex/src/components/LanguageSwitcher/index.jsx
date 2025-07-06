@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
+/**
+ * LanguageSwitcher 组件导出
+ * 
+ * 提供多语言切换功能的组件，支持：
+ * - Icon + 弹窗方式切换语言
+ * - 运行时动态切换
+ * - 语言设置持久化
+ * - 响应式设计
+ * - 键盘导航支持
+ * 
+ * @module LanguageSwitcher
+ */
 
-import './index.css'
-import router from './router'
-
-// 初始化 i18n
-import './i18n'
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
+export { default } from './LanguageSwitcher';
+export { default as LanguageSwitcher } from './LanguageSwitcher'; 

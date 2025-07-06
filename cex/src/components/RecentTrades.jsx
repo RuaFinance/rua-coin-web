@@ -14,8 +14,10 @@
 
 import { Clock, TrendingUp, TrendingDown } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const RecentTrades = ({ pairData, symbol }) => {
+  const { t } = useTranslation(['components', 'common']);
   const [trades, setTrades] = useState([]);
 
   // 生成模拟交易数据
@@ -75,18 +77,18 @@ const RecentTrades = ({ pairData, symbol }) => {
     <div className="card-dark h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
-        <h2 className="text-lg font-semibold text-white">最新成交</h2>
+        <h2 className="text-lg font-semibold text-white">{t('components:recentTrades.title')}</h2>
         <div className="flex items-center space-x-2 text-xs text-gray-400">
           <Clock className="h-4 w-4" />
-          <span className="hidden sm:block">实时更新</span>
+          <span className="hidden sm:block">{t('components:recentTrades.realTimeUpdate')}</span>
         </div>
       </div>
 
       {/* Column Headers */}
       <div className="grid grid-cols-3 gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs text-gray-400 font-medium border-b border-slate-700 mb-2 flex-shrink-0">
-        <div className="text-left">价格(USDT)</div>
-        <div className="text-right">数量({symbol})</div>
-        <div className="text-right">时间</div>
+        <div className="text-left">{t('components:recentTrades.priceUsdt')}</div>
+        <div className="text-right">{t('components:recentTrades.amount')}({symbol})</div>
+        <div className="text-right">{t('components:recentTrades.time')}</div>
       </div>
 
       {/* Trades List */}
@@ -119,7 +121,7 @@ const RecentTrades = ({ pairData, symbol }) => {
       <div className="mt-2 sm:mt-4 pt-2 sm:pt-4 border-t border-[#424242] flex-shrink-0">
         <div className="grid grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
           <div>
-            <div className="text-gray-400 text-xs">买入成交量</div>
+            <div className="text-gray-400 text-xs">{t('components:recentTrades.buyVolume')}</div>
             <div className="text-green-400 font-mono">
               {trades
                 .filter(t => t.side === 'buy')
@@ -128,7 +130,7 @@ const RecentTrades = ({ pairData, symbol }) => {
             </div>
           </div>
           <div>
-            <div className="text-gray-400 text-xs">卖出成交量</div>
+            <div className="text-gray-400 text-xs">{t('components:recentTrades.sellVolume')}</div>
             <div className="text-red-400 font-mono">
               {trades
                 .filter(t => t.side === 'sell')
@@ -140,7 +142,7 @@ const RecentTrades = ({ pairData, symbol }) => {
         
         <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-[#424242]">
           <div className="flex items-center justify-between">
-            <span className="text-gray-400 text-xs">最新价格</span>
+            <span className="text-gray-400 text-xs">{t('components:recentTrades.latestPrice')}</span>
             <div className={`flex items-center space-x-1 ${
               trades[0]?.side === 'buy' ? 'text-green-400' : 'text-red-400'
             }`}>

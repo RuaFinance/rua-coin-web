@@ -17,8 +17,32 @@ import { Menu, X, User, Bell, Search } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
+  const { t } = useTranslation(['common', 'header']);
+  
+  // Header 间距配置 - 统一管理所有间距
+  const headerSpacing = {
+    // 主要导航区域间距
+    navLeftMargin: 'md:ml-6',        // 导航与logo的间距 (从ml-8改为ml-6)
+    navItemsSpacing: 'md:space-x-2', // 导航项之间的间距 (从space-x-8改为space-x-6)
+    
+    // 搜索框区域间距
+    searchBoxMargin: 'ml-auto mr-4', // 搜索框左右margin (ml-auto让搜索框向右靠拢)
+    searchBoxMaxWidth: 'max-w-[270px]', // 搜索框最大宽度设为270px
+    searchClearButtonColor: 'text-gray-400 hover:text-gray-700', // 清除按钮颜色
+    searchTextColor: 'text-black', // 搜索框文本颜色
+    
+    // 右侧区域间距
+    rightSideSpacing: 'space-x-4',   // 右侧元素间距
+    
+    // 移动端间距
+    mobileNavSpacing: 'space-y-1',   // 移动端导航项间距
+    mobileButtonSpacing: 'space-x-2', // 移动端按钮间距
+  };
+  
   // 菜单状态管理
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -176,9 +200,9 @@ const Header = () => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:ml-8 md:flex md:space-x-8">
+            <nav className={`hidden ${headerSpacing.navLeftMargin} md:flex ${headerSpacing.navItemsSpacing}`}>
               <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                交易
+                {t('header:trade')}
               </Link>
 
               <div className="relative">
@@ -189,7 +213,7 @@ const Header = () => {
                   }}
                   className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1"
                 >
-                  <span>现货</span>
+                  <span>{t('header:spot')}</span>
                   <DownOutlined className="text-xs" />
                 </button>
 
@@ -202,11 +226,11 @@ const Header = () => {
                   >
                     {isLoadingSpotPairs ? (
                       <div className="px-4 py-2 text-sm text-gray-400">
-                        加载中...
+                        {t('common:loading')}
                       </div>
                     ) : spotTradingPairs.length === 0 ? (
                       <div className="px-4 py-2 text-sm text-gray-400">
-                        暂无交易对
+                        {t('common:noData')}
                       </div>
                     ) : (
                       spotTradingPairs
@@ -227,19 +251,19 @@ const Header = () => {
               </div>
               
               <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                合约
+                {t('header:futures')}
               </Link>
               <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                资产
+                {t('header:assets')}
               </Link>
               <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                理财
+                {t('header:earn')}
               </Link>
             </nav>
           </div>
 
           {/* Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
+          <div className={`hidden md:flex flex-none ${headerSpacing.searchBoxMaxWidth} ${headerSpacing.searchBoxMargin}`}>
             <div className="relative w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 {/* 
@@ -266,14 +290,14 @@ const Header = () => {
                     setIsSearchFocused(false);
                   }
                 }}
-                className="block w-full pl-10 pr-10 py-2 rounded-md card-inner-form text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent"
-                placeholder="搜索交易对"
+                className={`block w-full pl-10 pr-10 py-2 rounded-md card-inner-form ${headerSpacing.searchTextColor} placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent`}
+                placeholder={t('header:searchPlaceholder')}
               />
               {/* 清除按钮 */}
               {searchValue && (
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-2 flex items-center text-gray-400 hover:text-white"
+                  className={`absolute inset-y-0 right-2 flex items-center ${headerSpacing.searchClearButtonColor}`}
                   onMouseDown={e => {
                     e.preventDefault();
                     setSearchValue('');
@@ -290,9 +314,9 @@ const Header = () => {
                 <div className="absolute top-full left-0 right-0 mt-1 bg-[#1d1d1d] rounded-lg shadow-lg z-50 border border-gray-700"
                   onMouseDown={e => e.preventDefault()}>
                   <div className="p-3 border-b border-gray-700">
-                    <h3 className="text-sm font-medium text-gray-300 mb-2">热门搜索</h3>
+                    <h3 className="text-sm font-medium text-gray-300 mb-2">{t('header:hotSearches')}</h3>
                     {isLoadingHotSearches ? (
-                      <div className="text-sm text-gray-400">加载中...</div>
+                      <div className="text-sm text-gray-400">{t('header:loading')}</div>
                     ) : (
                       <div className="space-y-1">
                         {hotSearches
@@ -318,7 +342,7 @@ const Header = () => {
                               className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-md transition-colors flex items-center justify-between"
                             >
                               <span>{item.pair}</span>
-                              <span className="text-xs text-gray-500">现货</span>
+                              <span className="text-xs text-gray-500">{t('header:spotLabel')}</span>
                             </button>
                           ))
                         }
@@ -330,16 +354,16 @@ const Header = () => {
                             item.symbol.toLowerCase().includes(searchValue.toLowerCase())
                           );
                         }).length === 0 && (
-                          <div className="text-sm text-gray-400">未找到相关交易对</div>
+                          <div className="text-sm text-gray-400">{t('header:notFoundTradingPairs')}</div>
                         )}
                       </div>
                     )}
                   </div>
                   {/* 搜索历史 */}
                   <div className="p-3">
-                    <h3 className="text-sm font-medium text-gray-300 mb-2">搜索历史</h3>
+                    <h3 className="text-sm font-medium text-gray-300 mb-2">{t('header:searchHistory')}</h3>
                     {searchHistory.length === 0 ? (
-                      <div className="text-sm text-gray-400">暂无搜索历史</div>
+                      <div className="text-sm text-gray-400">{t('header:noSearchHistory')}</div>
                     ) : (
                       <div className="space-y-1">
                         {searchHistory.map((item, idx) => (
@@ -362,7 +386,7 @@ const Header = () => {
                             localStorage.removeItem('ruacoin_search_history');
                           }}
                         >
-                          清空历史
+                          {t('header:clearHistory')}
                         </button>
                       </div>
                     )}
@@ -373,7 +397,10 @@ const Header = () => {
           </div>
 
           {/* Right side */}
-          <div className="flex items-center space-x-4">
+          <div className={`flex items-center ${headerSpacing.rightSideSpacing}`}>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+            
             {/* Notifications */}
             <button className="p-2 text-gray-400 hover:text-white transition-colors">
               <Bell className="h-5 w-5" />
@@ -389,7 +416,7 @@ const Header = () => {
                 className="flex items-center space-x-2 p-2 text-gray-400 hover:text-white transition-colors"
               >
                 <User className="h-5 w-5" />
-                <span className="hidden md:block text-sm">账户</span>
+                <span className="hidden md:block text-sm">{t('header:user')}</span>
               </button>
 
               {isUserMenuOpen && (
@@ -399,34 +426,34 @@ const Header = () => {
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
                   <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
-                    个人资料
+                    {t('header:profile')}
                   </Link>
                   <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
-                    安全设置
+                    {t('header:security')}
                   </Link>
                   <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
-                    API管理
+                    {t('header:apiManagement')}
                   </Link>
                   {/* <hr className="my-1 border-slate-700" /> */}
                   <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
-                    退出登录
+                    {t('header:logout')}
                   </Link>
                 </div>
               )}
             </div>
 
             {/* Login/Register Buttons */}
-            <div className="hidden md:flex items-center space-x-2">
+            <div className={`hidden md:flex items-center ${headerSpacing.mobileButtonSpacing}`}>
               <button 
                 onClick={() => navigate('/login')}
                 className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors border-[2px] border-transparent hover:border-[#00d4ff] hover:border-[2px] rounded-lg"              >
-                登录
+                {t('header:login')}
               </button>
               <button 
                 onClick={() => navigate('/register')}
                 className="btn-register-blue text-sm"
               >
-                注册
+                {t('header:register')}
               </button>
             </div>
 
@@ -457,19 +484,19 @@ const Header = () => {
                   onBlur={() => {
                     setTimeout(() => setIsSearchFocused(false), 200);
                   }}
-                  className="block w-full pl-10 pr-3 py-2 rounded-md card-inner-form text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent"
-                  placeholder="搜索交易对"
+                  className={`block w-full pl-10 pr-3 py-2 rounded-md card-inner-form ${headerSpacing.searchTextColor} placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent`}
+                  placeholder={t('header:mobileSearchPlaceholder')}
                 />
 
                 {/* Mobile 热门搜索下拉框 */}
                 {isSearchFocused && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-[#1d1d1d] rounded-lg shadow-lg z-50 border border-gray-700">
                     <div className="p-3 border-b border-gray-700">
-                      <h3 className="text-sm font-medium text-gray-300 mb-2">热门搜索</h3>
+                      <h3 className="text-sm font-medium text-gray-300 mb-2">{t('header:hotSearches')}</h3>
                       {isLoadingHotSearches ? (
-                        <div className="text-sm text-gray-400">加载中...</div>
+                        <div className="text-sm text-gray-400">{t('header:loading')}</div>
                       ) : hotSearches.length === 0 ? (
-                        <div className="text-sm text-gray-400">暂无热门搜索</div>
+                        <div className="text-sm text-gray-400">{t('header:noHotSearches')}</div>
                       ) : (
                         <div className="space-y-1">
                           {hotSearches.slice(0, 4).map((item) => (
@@ -484,7 +511,7 @@ const Header = () => {
                               className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-md transition-colors flex items-center justify-between"
                             >
                               <span>{item.pair}</span>
-                              <span className="text-xs text-gray-500">现货</span>
+                              <span className="text-xs text-gray-500">{t('header:spotLabel')}</span>
                             </button>
                           ))}
                         </div>
@@ -495,37 +522,37 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="px-2 pt-2 pb-3 space-y-1 border-t border-slate-700">
+            <div className={`px-2 pt-2 pb-3 ${headerSpacing.mobileNavSpacing} border-t border-slate-700`}>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                交易
+                {t('header:trade')}
               </Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                现货
+                {t('header:spot')}
               </Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                合约
+                {t('header:futures')}
               </Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                资产
+                {t('header:assets')}
               </Link>
               <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                理财
+                {t('header:earn')}
               </Link>
               <div className="pt-4 pb-3 border-t border-slate-700">
-                <div className="flex items-center px-3 space-x-3">
+                <div className={`flex items-center px-3 ${headerSpacing.mobileButtonSpacing}`}>
                   <button 
                     onClick={() => navigate('/login')}
                     className="btn-primary w-full"
                   >
-                    登录
+                    {t('header:login')}
                   </button>
                 </div>
-                <div className="flex items-center px-3 space-x-3 mt-2">
+                <div className={`flex items-center px-3 ${headerSpacing.mobileButtonSpacing} mt-2`}>
                   <button 
                     onClick={() => navigate('/register')}
                     className="btn-primary w-full"
                   >
-                    注册
+                    {t('header:register')}
                   </button>
                 </div>
               </div>

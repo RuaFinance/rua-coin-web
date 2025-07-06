@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
+/**
+ * LanguageRouter 组件导出
+ * 
+ * 提供多语言路由增强功能，支持：
+ * - 多语言 URL 路径
+ * - 自动语言检测和切换
+ * - 路由与语言同步
+ * - 重定向处理
+ * 
+ * @module LanguageRouter
+ */
 
-import './index.css'
-import router from './router'
-
-// 初始化 i18n
-import './i18n'
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
+export { default } from './LanguageRouter';
+export { default as LanguageRouter } from './LanguageRouter'; 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Header from './components/Header';
 import OrderBook from './components/OrderBook';
@@ -22,6 +23,8 @@ import TradingPairs from './components/TradingPairs';
 import TradingPanel from './components/TradingPanel';
 
 function App() {
+  const { t } = useTranslation(['common']);
+  
   return (
     <div className="min-h-screen">
       <Header />
@@ -161,26 +164,26 @@ function App() {
         <div className="mt-8 space-y-6">
           {/* Market Overview */}
           <div className="card">
-            <h2 className="text-xl font-bold text-white mb-4">市场概览</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t('common:marketOverview')}</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">$1.2T</div>
-                <div className="text-sm text-gray-400">总市值</div>
+                <div className="text-sm text-gray-400">{t('common:totalMarketCap')}</div>
                 <div className="text-green-400 text-sm">+2.45%</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">$89.5B</div>
-                <div className="text-sm text-gray-400">24h成交量</div>
+                <div className="text-sm text-gray-400">{t('common:volume24h')}</div>
                 <div className="text-red-400 text-sm">-1.23%</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">48.2%</div>
-                <div className="text-sm text-gray-400">BTC占比</div>
+                <div className="text-sm text-gray-400">{t('common:btcDominance')}</div>
                 <div className="text-green-400 text-sm">+0.15%</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">2,456</div>
-                <div className="text-sm text-gray-400">活跃币种</div>
+                <div className="text-sm text-gray-400">{t('common:activeCoins')}</div>
                 <div className="text-gray-400 text-sm">--</div>
               </div>
             </div>
@@ -188,7 +191,7 @@ function App() {
           
           {/* Hot Coins */}
           <div className="card">
-            <h2 className="text-xl font-bold text-white mb-4">热门币种</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t('common:hotCoins')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { symbol: 'BTC', name: 'Bitcoin', price: 43250.50, change: 2.45, icon: '₿' },

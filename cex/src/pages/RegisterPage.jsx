@@ -17,12 +17,15 @@ import { Radio, Button, Input, Select, notification } from 'antd';
 import { ArrowLeft, Mail } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { countriesCN, countriesEN } from '../config/CountriesList';
+import { getCurrentLanguage } from '../i18n';
 
 const { Option } = Select;
 
 const RegisterPage = () => {
+  const { t, i18n } = useTranslation(['pages', 'common']);
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification({
     placement: 'topRight',
@@ -34,24 +37,17 @@ const RegisterPage = () => {
     email: ''
   });
   const [radioChecked1, setChecked] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('CN');
-
-  // 语言选项
-  const languageOptions = [
-    { code: 'CN', name: '中文', flag: '🇨🇳' },
-    { code: 'EN', name: 'English', flag: '🇺🇸' },
-  ];
 
   // 获取当前语言的国家列表
   const getCurrentCountries = () => {
-    return selectedLanguage === 'CN' ? countriesCN : countriesEN;
+    return getCurrentLanguage() === 'zh' ? countriesCN : countriesEN;
   };
 
   const handleNext = () => {
     if (currentStep === 1 && !formData.residence.trim()) {
       api.warning({
-        message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
-        description: selectedLanguage === 'CN' ? '请选择您的居住地' : 'Please select your residence',
+        message: t('pages:register.registerNotice'),
+        description: t('pages:register.pleaseSelectResidence'),
         icon: <SmileOutlined style={{ color: '#faad14' }} />,
         placement: 'topRight',
       });
@@ -59,8 +55,8 @@ const RegisterPage = () => {
     }
     if (currentStep === 1 && !radioChecked1) {
       api.warning({
-        message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
-        description: selectedLanguage === 'CN' ? '请同意服务条款及隐私政策' : 'Please agree to the Terms of Service and Privacy Policy',
+        message: t('pages:register.registerNotice'),
+        description: t('pages:register.pleaseAgreeTerms'),
         icon: <SmileOutlined style={{ color: '#faad14' }} />,
         placement: 'topRight',
       });
@@ -68,8 +64,8 @@ const RegisterPage = () => {
     }
     if (currentStep === 2 && !formData.accountType.trim()) {
       api.warning({
-        message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
-        description: selectedLanguage === 'CN' ? '请选择账户类型' : 'Please select account type',
+        message: t('pages:register.registerNotice'),
+        description: t('pages:register.pleaseSelectAccountType'),
         icon: <SmileOutlined style={{ color: '#faad14' }} />,
         placement: 'topRight',
       });
@@ -77,8 +73,8 @@ const RegisterPage = () => {
     }
     if (currentStep === 3 && !formData.email.trim()) {
       api.warning({
-        message: selectedLanguage === 'CN' ? '注册提示' : 'Registration Notice',
-        description: selectedLanguage === 'CN' ? '请输入邮箱地址' : 'Please enter your email address',
+        message: t('pages:register.registerNotice'),
+        description: t('pages:register.pleaseEnterEmail'),
         icon: <SmileOutlined style={{ color: '#faad14' }} />,
         placement: 'topRight',
       });
@@ -102,8 +98,8 @@ const RegisterPage = () => {
 
   const handleSubmit = () => {
     api.success({
-      message: selectedLanguage === 'CN' ? '注册成功' : 'Registration Successful',
-      description: selectedLanguage === 'CN' ? '注册信息已提交，请查收验证邮件' : 'Registration information submitted, please check your email for verification',
+      message: t('pages:register.registerSuccess', '注册成功'),
+      description: t('pages:register.registrationSubmitted'),
       icon: <SmileOutlined style={{ color: '#52c41a' }} />,
       placement: 'topRight',
     });
@@ -114,45 +110,16 @@ const RegisterPage = () => {
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-white mb-2">
-          {selectedLanguage === 'CN' ? '您居住地是哪里？' : 'Where is your residence?'}
+          {t('pages:register.residenceQuestion')}
         </h2>
         <p className="text-gray-400">
-          {selectedLanguage === 'CN' 
-            ? '为了给您提供更好的服务，请选择您当前的居住地'
-            : 'To provide you with better service, please select your current residence'
-          }
+          {t('pages:register.residenceDescription')}
         </p>
       </div>
       
-      {/* 语言选择 */}
-      <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          选择语言 / Select Language
-        </label>
-        <Select
-          value={selectedLanguage}
-          onChange={(value) => {
-            setSelectedLanguage(value);
-            // 清空已选择的居住地，因为语言改变了
-            setFormData({ ...formData, residence: '' });
-          }}
-          className="w-full mb-4"
-          size="large"
-        >
-          {languageOptions.map(lang => (
-            <Option key={lang.code} value={lang.code}>
-              <span className="flex items-center space-x-2">
-                <span>{lang.flag}</span>
-                <span>{lang.name}</span>
-              </span>
-            </Option>
-          ))}
-        </Select>
-      </div>
-      
       <div>
         <Select
-          placeholder={selectedLanguage === 'CN' ? "请选择您的居住地" : "Please select your residence"}
+          placeholder={t('pages:register.selectResidence')}
           value={formData.residence}
           onChange={(value) => setFormData({ ...formData, residence: value })}
           className="w-full"
@@ -177,10 +144,10 @@ const RegisterPage = () => {
           className="text-gray-300"
           onClick={() => setChecked(!radioChecked1)}
         >
-          {selectedLanguage === 'CN' 
-            ? <>我同意 RuaCoin 的<a href="#" className="text-blue-400 hover:text-blue-300">服务条款</a>及<a href="#" className="text-blue-400 hover:text-blue-300">隐私政策</a></>
-            : <>I agree to RuaCoin's <a href="#" className="text-blue-400 hover:text-blue-300">Terms of Service</a> and <a href="#" className="text-blue-400 hover:text-blue-300">Privacy Policy</a></>
-          }
+          {t('pages:register.agreeTerms')}
+          <a href="#" className="text-blue-400 hover:text-blue-300">{t('pages:register.termsOfService')}</a>
+          {t('pages:register.and')}
+          <a href="#" className="text-blue-400 hover:text-blue-300">{t('pages:register.privacyPolicy')}</a>
         </Radio>
       </div>
     </div>
@@ -190,7 +157,7 @@ const RegisterPage = () => {
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-white mb-2">
-          {selectedLanguage === 'CN' ? '请选择账户类型' : 'Please select account type'}
+          {t('pages:register.selectAccountType')}
         </h2>
       </div>
       
@@ -205,13 +172,10 @@ const RegisterPage = () => {
               <Radio value="personal" className="text-white">
                 <div className="ml-2">
                   <div className="font-medium text-white">
-                    {selectedLanguage === 'CN' ? '个人或机构账户' : 'Personal or Institutional Account'}
+                    {t('pages:register.personalAccount')}
                   </div>
                   <div className="text-sm text-gray-400 mt-1">
-                    {selectedLanguage === 'CN' 
-                      ? '此类账户适用于寻求交易、发送、接收以及管理数字货币资产的个人或机构。'
-                      : 'This type of account is suitable for individuals or institutions seeking to trade, send, receive, and manage digital currency assets.'
-                    }
+                    {t('pages:register.personalAccountDesc')}
                   </div>
                 </div>
               </Radio>
@@ -221,13 +185,10 @@ const RegisterPage = () => {
               <Radio value="smsf" className="text-white">
                 <div className="ml-2">
                   <div className="font-medium text-white">
-                    {selectedLanguage === 'CN' ? '自管养老金 (SMSF)' : 'Self-Managed Super Fund (SMSF)'}
+                    {t('pages:register.smsfAccount')}
                   </div>
                   <div className="text-sm text-gray-400 mt-1">
-                    {selectedLanguage === 'CN' 
-                      ? '此类账户适用于作为自管养老金 (SMSF) 受托人的个人或公司。如果您是代表您的 SMSF 进行投资，请选择此类账户。'
-                      : 'This type of account is suitable for individuals or companies acting as trustees of a Self-Managed Super Fund (SMSF). If you are investing on behalf of your SMSF, please select this account type.'
-                    }
+                    {t('pages:register.smsfAccountDesc')}
                   </div>
                 </div>
               </Radio>
@@ -242,20 +203,17 @@ const RegisterPage = () => {
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-white mb-2">
-          {selectedLanguage === 'CN' ? '输入您的邮箱地址' : 'Enter your email address'}
+          {t('pages:register.enterEmailAddress')}
         </h2>
         <p className="text-gray-400">
-          {selectedLanguage === 'CN' 
-            ? '请确保该邮箱能接收验证码'
-            : 'Please ensure this email can receive verification codes'
-          }
+          {t('pages:register.emailVerificationTip')}
         </p>
       </div>
       
       <div>
         <Input
           size="large"
-          placeholder={selectedLanguage === 'CN' ? "请输入邮箱地址" : "Please enter your email address"}
+          placeholder={t('pages:register.pleaseEnterEmail')}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           prefix={<Mail className="text-gray-400" />}
@@ -278,79 +236,88 @@ const RegisterPage = () => {
     }
   };
 
+  const getStepTitle = () => {
+    switch (currentStep) {
+      case 1:
+        return t('pages:register.residence');
+      case 2:
+        return t('pages:register.accountType');
+      case 3:
+        return t('common:email');
+      default:
+        return t('pages:register.residence');
+    }
+  };
+
   return (
     <>
       {contextHolder}
       <div className="min-h-screen bg-black flex justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-3xl font-bold gradient-text">RuaCoin</h1>
-          <div className="mt-4 flex items-center justify-center space-x-2">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                  step <= currentStep 
-                    ? 'bg-white text-black' 
-                    : 'bg-gray-700 text-gray-400'
-                }`}>
+          {/* Header */}
+          <div className="text-left">
+            <h1 className="text-5xl text-white">{t('pages:register.title')}</h1>
+            <div className="mt-4">
+              <p className="text-gray-400 mt-2">{getStepTitle()}</p>
+            </div>
+          </div>
+
+          {/* Progress */}
+          <div className="flex items-center justify-center mb-8">
+            {[1, 2, 3].map((step, index) => (
+              <React.Fragment key={step}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                    currentStep >= step
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-600 text-gray-400'
+                  }`}
+                >
                   {step}
                 </div>
-                {step < 3 && (
-                  <div className={`w-12 h-0.5 mx-2 ${
-                    step < currentStep ? 'bg-white' : 'bg-gray-700'
-                  }`} />
+                {index < 2 && (
+                  <div
+                    className={`w-16 h-1 mx-2 ${
+                      currentStep > step ? 'bg-blue-600' : 'bg-gray-600'
+                    }`}
+                  />
                 )}
-              </div>
+              </React.Fragment>
             ))}
           </div>
-        </div>
 
-        {/* Form */}
-        <div className="bg-[#1d1d1d] rounded-lg p-8">
-          {renderCurrentStep()}
-          
-          {/* Navigation Buttons */}
-          <div className="flex justify-between items-center pt-8">
-            <button
-              onClick={handleBack}
-              className="flex items-center space-x-2 px-0 py-2 text-gray-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span>
-                {currentStep === 1 
-                  ? (selectedLanguage === 'CN' ? '返回首页' : 'Back to Home')
-                  : (selectedLanguage === 'CN' ? '上一步' : 'Previous')
-                }
-              </span>
-            </button>
-            
-            <button
-              onClick={handleNext}
-              className="btn-register-blue"
-            >
-              {currentStep === 3 
-                ? (selectedLanguage === 'CN' ? '提交' : 'Submit')
-                : (selectedLanguage === 'CN' ? '下一步' : 'Next')
-              }
-            </button>
-          </div>
-          
-          {/* 登录提示 */}
-          <div className="text-center pt-4 text-sm">
-            <span className="text-gray-400">
-              {selectedLanguage === 'CN' ? '已有账户？' : 'Already have an account?'}
-            </span>
-            <button 
-              onClick={() => navigate('/login')}
-              className="text-blue-400 hover:text-blue-300 ml-1"
-            >
-              {selectedLanguage === 'CN' ? '立即登录' : 'Login now'}
-            </button>
+          {/* Form */}
+          <div className="bg-[#1d1d1d] rounded-lg p-8">
+            {renderCurrentStep()}
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between items-center pt-8">
+              <button
+                onClick={handleBack}
+                className="flex items-center space-x-2 px-6 py-2 text-gray-400 hover:text-white transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span>{currentStep === 1 ? t('pages:login.backToHome') : t('pages:register.previous')}</span>
+              </button>
+
+              <button
+                onClick={handleNext}
+                className="px-8 py-3 btn-register-blue"
+              >
+                {currentStep === 3 ? t('pages:register.submit') : t('pages:register.next')}
+              </button>
+            </div>
+
+            {/* Login link */}
+            <div className="text-center pt-6 text-sm">
+              <span className="text-gray-400">{t('pages:register.alreadyHaveAccount')}</span>
+              <a href="/login" className="text-blue-400 hover:text-blue-300 ml-1">
+                {t('pages:register.loginNow')}
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

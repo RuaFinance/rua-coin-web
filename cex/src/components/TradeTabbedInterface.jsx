@@ -14,65 +14,78 @@
 
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { ConfigProvider, Flex, Radio, Select, theme } from 'antd';
-import { useState, useRef, Record } from 'react';
+import { useState, useRef, Record, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { RadioConfigTheme } from '../config/AntdRadioConfig'
 import { SelectConfig } from '../config/AntdSelectConfig'
 
 
 const TradingInterface = () => {
+  const { t } = useTranslation(['components', 'common']);
+  
   // 标签页数据
   const tabs = [
-    { id: 'currentOrders', label: '当前委托', count: 0 },
-    { id: 'historyOrders', label: '历史委托' },
-    { id: 'positions', label: '当前仓位', count: 0 },
-    { id: 'historyPositions', label: '历史仓位' },
-    { id: 'assert', label: '资产' },
+    { id: 'currentOrders', label: t('components:tradeTabbedInterface.currentOrders'), count: 0 },
+    { id: 'historyOrders', label: t('components:tradeTabbedInterface.historyOrders') },
+    { id: 'positions', label: t('components:tradeTabbedInterface.positions'), count: 0 },
+    { id: 'historyPositions', label: t('components:tradeTabbedInterface.historyPositions') },
+    { id: 'assert', label: t('components:tradeTabbedInterface.assets') },
   ];
 
   // 状态管理
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const [tradeType, setTradeType] = useState('全部交易类型');
-  const [positionType, setPositionType] = useState('逐仓/全仓');
-  const [orderByTime, setOrderByTime] = useState('按委托时间');
-  const [tradingPair, setTradingPair] = useState('当前交易品种');
-  const [activeOrderType, setActiveOrderType] = useState('limit_market');
-
-  // 表单
+  const [selectedTradeType, setSelectedTradeType] = useState('all');
+  const [selectedPositionType, setSelectedPositionType] = useState('all');
+  const [selectedOrderByTime, setSelectedOrderByTime] = useState('by_order_time');
   const [radioChecked1, setChecked] = useState(false);
+  const [activeOrderType, setActiveOrderType] = useState('limit_market');
 
   const selectRef = useRef(null);
 
+  // 动态生成选项，确保语言切换时更新
   const tradeTypeOptions = [
-    { value: 'all', label: '全部交易类型' },
-    { value: 'spot', label: '现货' },
-    { value: 'future', label: '永续' },
-    { value: 'delivery', label: '交割' },
-    { value: 'margin', label: '杠杆' },
-    { value: 'options', label: '期权' }
+    { value: 'all', label: t('components:tradeTabbedInterface.allTradeTypes') },
+    { value: 'spot', label: t('components:tradeTabbedInterface.spot') },
+    { value: 'future', label: t('components:tradeTabbedInterface.futures') },
+    { value: 'delivery', label: t('components:tradeTabbedInterface.delivery') },
+    { value: 'margin', label: t('components:tradeTabbedInterface.margin') },
+    { value: 'options', label: t('components:tradeTabbedInterface.options') }
   ];
 
   const orderByTimeOrExecutionOption = [
-    { value: 'by_order_time', label: '按委托时间' },
-    { value: 'by_execution_time', label: '按成交时间' },
+    { value: 'by_order_time', label: t('components:tradeTabbedInterface.byOrderTime') },
+    { value: 'by_execution_time', label: t('components:tradeTabbedInterface.byExecutionTime') },
   ];
 
   const positionTypeOption = [
-    { value: 'all', label: '逐仓/全仓' },
-    { value: 'isolated_margin', label: '逐仓' },
-    { value: 'cross_margin', label: '全仓' },
+    { value: 'all', label: t('components:tradeTabbedInterface.isolatedCross') },
+    { value: 'isolated_margin', label: t('components:tradeTabbedInterface.isolated') },
+    { value: 'cross_margin', label: t('components:tradeTabbedInterface.cross') },
   ];
 
   const orderTypes = [
-    { id: 'limit_market', label: '限价 | 市价' },
-    { id: 'advanced_limit', label: '高级限价委托' },
-    { id: 'tp_sl', label: '止盈止损' },
-    { id: 'trailing_stop', label: '移动止盈止损' },
-    { id: 'planned_order', label: '计划委托' },
+    { id: 'limit_market', label: t('components:tradeTabbedInterface.limitMarket') },
+    { id: 'advanced_limit', label: t('components:tradeTabbedInterface.advancedLimit') },
+    { id: 'tp_sl', label: t('components:tradeTabbedInterface.takeProfitStopLoss') },
+    { id: 'trailing_stop', label: t('components:tradeTabbedInterface.trailingStop') },
+    { id: 'planned_order', label: t('components:tradeTabbedInterface.plannedOrder') },
   ];
 
   const handleOnClickActiveOrderType = (value) => {
     setActiveOrderType(prev => prev === value ? null : value); // 相同值则重置
+  };
+
+  const handleTradeTypeChange = (value) => {
+    setSelectedTradeType(value);
+  };
+
+  const handlePositionTypeChange = (value) => {
+    setSelectedPositionType(value);
+  };
+
+  const handleOrderByTimeChange = (value) => {
+    setSelectedOrderByTime(value);
   };
 
   return (
@@ -109,7 +122,6 @@ const TradingInterface = () => {
                   <div 
                     className="text-trading-page-common px-3 py-1 rounded text-sm cursor-pointer flex items-center"
                   >
-                    {/* {tradeType} */}
                     <ConfigProvider
                       theme={{
                         algorithm: theme.darkAlgorithm,
@@ -119,11 +131,11 @@ const TradingInterface = () => {
                       }}
                     >
                       <Select
-                        defaultValue={tradeTypeOptions[0]}
-                        // onChange={handleChange}
+                        value={selectedTradeType}
+                        onChange={handleTradeTypeChange}
                         options={tradeTypeOptions}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
-                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
+                        popupMatchSelectWidth={false}
                         styles={{
                           popup: {
                             root: {
@@ -139,21 +151,17 @@ const TradingInterface = () => {
                 </div>
                 <div className="relative">
                   <div className="text-trading-page-common px-3 py-1 rounded border border-[#424242] text-sm cursor-pointer flex items-center hover:border-blue-500">
-                    {/* {tradingPair} */}
                     <ConfigProvider
                       theme={RadioConfigTheme}
                     >
                       <Radio 
-                        // className='ant-radio-button-wrapper:hover'
                         checked={radioChecked1}
                         onClick={() => setChecked(!radioChecked1)}
-                        value={tradingPair}
+                        value={t('components:tradeTabbedInterface.currentTradingPair')}
                       >
-                        {tradingPair}
+                        {t('components:tradeTabbedInterface.currentTradingPair')}
                       </Radio>
                     </ConfigProvider>
-                    
-                    {/* <div className="ml-1 text-trading-page-common">▼</div> */}
                   </div>
                 </div>
               </>
@@ -172,11 +180,11 @@ const TradingInterface = () => {
                       }}
                     >
                       <Select
-                        defaultValue={tradeTypeOptions[0]}
-                        // onChange={handleChange}
+                        value={selectedTradeType}
+                        onChange={handleTradeTypeChange}
                         options={tradeTypeOptions}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
-                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
+                        popupMatchSelectWidth={false}
                         styles={{
                           popup: {
                             root: {
@@ -200,11 +208,11 @@ const TradingInterface = () => {
                       }}
                     >
                       <Select
-                        defaultValue={orderByTimeOrExecutionOption[0]}
-                        // onChange={handleChange}
+                        value={selectedOrderByTime}
+                        onChange={handleOrderByTimeChange}
                         options={orderByTimeOrExecutionOption}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
-                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
+                        popupMatchSelectWidth={false}
                         styles={{
                           popup: {
                             root: {
@@ -223,12 +231,11 @@ const TradingInterface = () => {
                       theme={RadioConfigTheme}
                     >
                       <Radio 
-                        // className='ant-radio-button-wrapper:hover'
                         checked={radioChecked1}
                         onClick={() => setChecked(!radioChecked1)}
-                        value={tradingPair}
+                        value={t('components:tradeTabbedInterface.currentTradingPair')}
                       >
-                        {tradingPair}
+                        {t('components:tradeTabbedInterface.currentTradingPair')}
                       </Radio>
                     </ConfigProvider>
                   </div>
@@ -249,11 +256,11 @@ const TradingInterface = () => {
                       }}
                     >
                       <Select
-                        defaultValue={tradeTypeOptions[0]}
-                        // onChange={handleChange}
+                        value={selectedTradeType}
+                        onChange={handleTradeTypeChange}
                         options={tradeTypeOptions}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
-                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
+                        popupMatchSelectWidth={false}
                         styles={{
                           popup: {
                             root: {
@@ -277,11 +284,11 @@ const TradingInterface = () => {
                       }}
                     >
                       <Select
-                        defaultValue={positionTypeOption[0]}
-                        // onChange={handleChange}
+                        value={selectedPositionType}
+                        onChange={handlePositionTypeChange}
                         options={positionTypeOption}
                         suffixIcon={<DownOutlined className="text-white opacity-60" />}
-                        popupMatchSelectWidth={false} // 下拉菜单和选择器同宽
+                        popupMatchSelectWidth={false}
                         styles={{
                           popup: {
                             root: {
@@ -300,12 +307,11 @@ const TradingInterface = () => {
                       theme={RadioConfigTheme}
                     >
                       <Radio 
-                        // className='ant-radio-button-wrapper:hover'
                         checked={radioChecked1}
                         onClick={() => setChecked(!radioChecked1)}
-                        value={tradingPair}
+                        value={t('components:tradeTabbedInterface.currentTradingPair')}
                       >
-                        {tradingPair}
+                        {t('components:tradeTabbedInterface.currentTradingPair')}
                       </Radio>
                     </ConfigProvider>
                   </div>
@@ -335,8 +341,8 @@ const TradingInterface = () => {
                 ))}
               </div>
               <div className='px-2 py-2'>
-                <div className="text-lg font-medium mb-4">当前委托</div>
-                <div>暂无委托数据</div>
+                <div className="text-lg font-medium mb-4">{t('components:tradeTabbedInterface.currentOrders')}</div>
+                <div>{t('components:tradeTabbedInterface.noData')}</div>
               </div>
             </div>
           )}
@@ -358,27 +364,27 @@ const TradingInterface = () => {
                 ))}
               </div>
               <div className='px-2 py-2'>
-                <div className="text-lg font-medium mb-4">当前委托</div>
-                <div>暂无委托数据</div>
+                <div className="text-lg font-medium mb-4">{t('components:tradeTabbedInterface.historyOrders')}</div>
+                <div>{t('components:tradeTabbedInterface.noData')}</div>
               </div>
             </div>
           )}
           {activeTab === 'positions' && (
             <div className='text-trading-page-common px-2 py-2'>
-              <div className="text-lg font-medium mb-4">当前持仓</div>
-              <div>暂无仓位数据</div>
+              <div className="text-lg font-medium mb-4">{t('components:tradeTabbedInterface.positions')}</div>
+              <div>{t('components:tradeTabbedInterface.noData')}</div>
             </div>
           )}
           {activeTab === 'historyPositions' && (
             <div className='text-trading-page-common px-2 py-2'>
-              <div className="text-lg font-medium mb-4">历史仓位</div>
-              <div>暂无历史仓位数据</div>
+              <div className="text-lg font-medium mb-4">{t('components:tradeTabbedInterface.historyPositions')}</div>
+              <div>{t('components:tradeTabbedInterface.noData')}</div>
             </div>
           )}
           {activeTab === 'assert' && (
             <div className='text-trading-page-common px-2 py-2'>
-              <div className="text-lg font-medium mb-4">资产</div>
-              <div>暂无资产数据</div>
+              <div className="text-lg font-medium mb-4">{t('components:tradeTabbedInterface.assets')}</div>
+              <div>{t('components:tradeTabbedInterface.noData')}</div>
             </div>
           )}
         </div>

@@ -14,11 +14,13 @@
 
 import { Calculator, Percent, DollarSign, TrendingUp, TrendingDown } from 'lucide-react';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import WarningAlert from './MsgAlert';
 import SyntheticEventHandlers from './SyntheticEventHandlers';
 
 const TradingPanel = ({ pairData, symbol }) => {
+  const { t } = useTranslation(['common', 'trading']);
   const [orderType, setOrderType] = useState('limit'); // limit, market, stop
   const [side, setSide] = useState('buy'); // buy, sell
   const [price, setPrice] = useState('50000.00');
@@ -197,7 +199,7 @@ const TradingPanel = ({ pairData, symbol }) => {
     <div className="card-dark h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
-        <h2 className="text-lg font-semibold text-white">交易</h2>
+        <h2 className="text-lg font-semibold text-white">{t('trading:trade')}</h2>
         <div className="flex items-center space-x-1">
           {/* <button className="p-1 text-gray-400 hover:text-white transition-colors">
             <Calculator className="h-4 w-4" />
@@ -218,7 +220,7 @@ const TradingPanel = ({ pairData, symbol }) => {
           >
             <div className="flex items-center justify-center space-x-1">
               <TrendingUp className="h-4 w-4" />
-              <span>买入</span>
+              <span>{t('trading:buy')}</span>
             </div>
           </button>
           <button
@@ -231,7 +233,7 @@ const TradingPanel = ({ pairData, symbol }) => {
           >
             <div className="flex items-center justify-center space-x-1">
               <TrendingDown className="h-4 w-4" />
-              <span>卖出</span>
+              <span>{t('trading:sell')}</span>
             </div>
           </button>
         </div>
@@ -276,7 +278,7 @@ const TradingPanel = ({ pairData, symbol }) => {
               duration-200
             ">
               {/* 前缀：价格 */}
-              <span className="text-gray-400 whitespace-nowrap mr-2">价格</span>
+              <span className="text-gray-400 whitespace-nowrap mr-2">{t('trading:price')}</span>
 
               {/* 输入框本体：右对齐 */}
               <input
@@ -330,7 +332,7 @@ const TradingPanel = ({ pairData, symbol }) => {
             duration-200
           ">
             {/* 前缀：数量 */}
-            <span className="text-gray-400 whitespace-nowrap mr-2">数量</span>
+            <span className="text-gray-400 whitespace-nowrap mr-2">{t('trading:amount')}</span>
 
             {/* 输入框本体：右对齐 */}
             <input
@@ -400,7 +402,7 @@ const TradingPanel = ({ pairData, symbol }) => {
             duration-200
           ">
             {/* 前缀：总额 */}
-            <span className="text-gray-400 whitespace-nowrap mr-2">总额</span>
+            <span className="text-gray-400 whitespace-nowrap mr-2">{t('trading:total')}</span>
 
             {/* 输入框本体：右对齐 */}
             <input
@@ -438,7 +440,7 @@ const TradingPanel = ({ pairData, symbol }) => {
         {/* Available Balance */}
         <div className="mb-4 p-3 bg-[#1d1d1d] rounded-lg">
           <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-400">可用余额</span>
+            <span className="text-gray-400">{t('trading:available')}:</span>
             <span className="text-white font-mono text-xs sm:text-sm">
               {getAvailableBalance().toFixed(8)} {getBalanceSymbol()}
             </span>
@@ -448,7 +450,7 @@ const TradingPanel = ({ pairData, symbol }) => {
         {/* Order Summary */}
         <div className="mb-4 space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-400">手续费:</span>
+            <span className="text-gray-400">{t('trading:fee')}:</span>
             <span className="text-white font-mono text-xs sm:text-sm">{calculateFee()} USDT</span>
           </div>
           {total && (
@@ -475,17 +477,17 @@ const TradingPanel = ({ pairData, symbol }) => {
           }`}
           disabled={!amount || (!price && orderType !== 'market')}
         >
-          {side === 'buy' ? '买入' : '卖出'} {symbol}
+          {t('trading:buy')} {symbol}
         </button>
 
         {/* Quick Actions */}
         <div className="mt-4 pt-4 border-t border-[#424242]">
           <div className="grid grid-cols-2 gap-2">
             <button className="py-2 px-2 sm:px-3 text-xs bg-[#1d1d1d] text-gray-400 hover:text-white hover:bg-slate-600 rounded transition-colors">
-              止盈止损
+              {t('trading:stop_loss')}
             </button>
             <button className="py-2 px-2 sm:px-3 text-xs bg-[#1d1d1d] text-gray-400 hover:text-white hover:bg-slate-600 rounded transition-colors">
-              OCO订单
+              {t('trading:oco_order')}
             </button>
           </div>
         </div>

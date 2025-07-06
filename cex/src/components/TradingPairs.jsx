@@ -15,12 +15,14 @@
 import { TrendingUp, TrendingDown, Star, ArrowUpDown, Volume2, BarChart3 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { formatUrl } from '../router/config';
 import { symbolSet } from '../config/SymbolSetConfig';
 
 const TradingPairs = () => {
-  const [selectedTab, setSelectedTab] = useState('热门');
+  const { t } = useTranslation(['components', 'common']);
+  const [selectedTab, setSelectedTab] = useState('hot');
   const [favorites, setFavorites] = useState(new Set());
   const [sortBy, setSortBy] = useState('none');
   const [sortOrder, setSortOrder] = useState('desc');
@@ -53,7 +55,13 @@ const TradingPairs = () => {
     { symbol: 'ETH3S/USDT', price: 0.0567, change: -12.34, volume: '32M', high: 0.065, low: 0.052, favorite: false }
   ]);
 
-  const tabs = ['热门', '涨幅榜', '跌幅榜', '新币', '自选'];
+  const tabs = [
+    { key: 'hot', label: t('components:tradingPairs.hot') },
+    { key: 'gainers', label: t('components:tradingPairs.gainers') },
+    { key: 'losers', label: t('components:tradingPairs.losers') },
+    { key: 'newCoins', label: t('components:tradingPairs.newCoins') },
+    { key: 'favorites', label: t('components:tradingPairs.favorites') }
+  ];
 
   // 获取币种logo的函数
   const getCoinLogo = (symbol) => {
@@ -122,19 +130,19 @@ const TradingPairs = () => {
   const getFilteredPairs = () => {
     let filteredPairs;
     switch (selectedTab) {
-      case '涨幅榜':
+      case 'gainers':
         filteredPairs = [...tradingPairs].filter(pair => pair.change > 0).sort((a, b) => b.change - a.change);
         return filteredPairs;
-      case '跌幅榜':
+      case 'losers':
         filteredPairs = [...tradingPairs].filter(pair => pair.change < 0).sort((a, b) => a.change - b.change);
         return filteredPairs;
-      case '自选':
+      case 'favorites':
         filteredPairs = tradingPairs.filter(pair => favorites.has(pair.symbol));
         break;
-      case '新币':
+      case 'newCoins':
         filteredPairs = tradingPairs.slice(4);
         break;
-      default: // 热门
+      default: // hot
         filteredPairs = tradingPairs;
     }
     return getSortedPairs(filteredPairs);
@@ -166,25 +174,25 @@ const TradingPairs = () => {
           {/* <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
             <BarChart3 className="h-6 w-6 text-white" />
           </div> */}
-          <h2 className="section-title pl-3">交易对</h2>
+          <h2 className="section-title pl-3">{t('components:tradingPairs.title')}</h2>
         </div>
         
         {/* Tabs */}
         <div className="flex border-b border-gray-200">
           {tabs.map((tab) => (
             <button
-              key={tab}
+              key={tab.key}
               onClick={() => {
-                setSelectedTab(tab);
+                setSelectedTab(tab.key);
                 setSortBy('none'); // 重置排序状态
               }}
               className={`py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
-                selectedTab === tab
+                selectedTab === tab.key
                   ? 'border-blue-500 text-gray-900'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              {tab}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -196,31 +204,31 @@ const TradingPairs = () => {
           {/* <Star className="h-[18px] w-[18px] text-gray-400" /> */}
         </div>
         <div className="col-span-3 flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('symbol')}>
-          <span className="text-sm font-medium text-gray-700">交易对</span>
+          <span className="text-sm font-medium text-gray-700">{t('components:tradingPairs.pair')}</span>
           <ArrowUpDown className="h-3 w-3" />
         </div>
         <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('price')}>
-          <span className="text-sm font-medium text-gray-700">价格</span>
+          <span className="text-sm font-medium text-gray-700">{t('components:tradingPairs.price')}</span>
           <span className="pr-3"><ArrowUpDown className="h-3 w-3" /></span>
         </div>
         <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('change')}>
-          <span className="text-sm font-medium text-gray-700">涨跌幅</span>
+          <span className="text-sm font-medium text-gray-700">{t('components:tradingPairs.change')}</span>
           <ArrowUpDown className="h-3 w-3" />
         </div>
         <div className="col-span-2 flex items-center justify-end gap-2 cursor-pointer hover:text-blue-600 transition-colors" onClick={() => handleSort('volume')}>
-          <span className="text-sm font-medium text-gray-700">24h量</span>
+          <span className="text-sm font-medium text-gray-700">{t('components:tradingPairs.volume')}</span>
         </div>
         <div className="col-span-2 flex items-center justify-end">
-          <span className="text-sm font-medium text-gray-700 pr-5">操作</span>
+          <span className="text-sm font-medium text-gray-700 pr-5">{t('common:actions', '操作')}</span>
         </div>
       </div>
 
       {/* Mobile/Tablet Header */}
       <div className="lg:hidden grid grid-cols-4 gap-2 px-4 py-3 bg-gray-50 border-b border-gray-200">
-        <div className="text-sm font-medium text-gray-700">交易对</div>
-        <div className="text-sm font-medium text-gray-700 text-right">价格</div>
-        <div className="text-sm font-medium text-gray-700 text-right">涨跌幅</div>
-        <div className="text-sm font-medium text-gray-700 text-right">操作</div>
+        <div className="text-sm font-medium text-gray-700">{t('components:tradingPairs.pair')}</div>
+        <div className="text-sm font-medium text-gray-700 text-right">{t('components:tradingPairs.price')}</div>
+        <div className="text-sm font-medium text-gray-700 text-right">{t('components:tradingPairs.change')}</div>
+        <div className="text-sm font-medium text-gray-700 text-right">{t('common:actions', '操作')}</div>
       </div>
 
       {/* Trading Pairs List */}
@@ -297,7 +305,7 @@ const TradingPairs = () => {
                 
                 <div className="col-span-2 text-right">
                   <button className="btn-trade">
-                    交易
+                    {t('common:trade')}
                   </button>
                 </div>
               </div>

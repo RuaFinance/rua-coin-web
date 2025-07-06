@@ -28,6 +28,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Twitter, 
   Facebook, 
@@ -53,6 +54,7 @@ import { formatUrl } from '../router/config';
 import '../styles/footer.css';
 
 const Footer = () => {
+  const { t } = useTranslation(['components', 'common']);
   const [expandedSections, setExpandedSections] = useState({
     products: false,
     services: false,
@@ -69,47 +71,47 @@ const Footer = () => {
 
   const footerData = {
     products: {
-      title: "产品",
+      title: t('components:footer.products'),
       items: [
-        { name: "现货交易", href: "/trading/BTC", icon: TrendingUp },
-        { name: "合约交易", href: "#", icon: TrendingUp },
-        { name: "杠杆交易", href: "#", icon: TrendingUp },
-        { name: "理财", href: "#", icon: TrendingUp },
-        { name: "矿池", href: "#", icon: TrendingUp },
-        { name: "NFT", href: "#", icon: TrendingUp }
+        { name: t('components:footer.spotTrading'), href: "/trading/BTC", icon: TrendingUp },
+        { name: t('components:footer.futuresTrading'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.marginTrading'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.earn'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.pool'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.nft'), href: "#", icon: TrendingUp }
       ]
     },
     services: {
-      title: "服务",
+      title: t('components:footer.services'),
       items: [
-        { name: "API文档", href: "#", icon: BookOpen },
-        { name: "开发者中心", href: "#", icon: BookOpen },
-        { name: "机构服务", href: "#", icon: Users },
-        { name: "企业服务", href: "#", icon: Users },
-        { name: "流动性服务", href: "#", icon: TrendingUp },
-        { name: "托管服务", href: "#", icon: Shield }
+        { name: t('components:footer.apiDocs'), href: "#", icon: BookOpen },
+        { name: t('components:footer.developerCenter'), href: "#", icon: BookOpen },
+        { name: t('components:footer.institutionalServices'), href: "#", icon: Users },
+        { name: t('components:footer.enterpriseServices'), href: "#", icon: Users },
+        { name: t('components:footer.liquidityServices'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.custodyServices'), href: "#", icon: Shield }
       ]
     },
     support: {
-      title: "支持",
+      title: t('components:footer.support'),
       items: [
-        { name: "帮助中心", href: "#", icon: HelpCircle },
-        { name: "联系我们", href: "#", icon: Mail },
-        { name: "用户反馈", href: "#", icon: Users },
-        { name: "状态页面", href: "#", icon: TrendingUp },
-        { name: "下载APP", href: "#", icon: Download },
-        { name: "移动端", href: "#", icon: Smartphone }
+        { name: t('components:footer.helpCenter'), href: "#", icon: HelpCircle },
+        { name: t('components:footer.contactUs'), href: "#", icon: Mail },
+        { name: t('components:footer.userFeedback'), href: "#", icon: Users },
+        { name: t('components:footer.statusPage'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.downloadApp'), href: "#", icon: Download },
+        { name: t('components:footer.mobile'), href: "#", icon: Smartphone }
       ]
     },
     company: {
-      title: "公司",
+      title: t('components:footer.company'),
       items: [
-        { name: "关于我们", href: "#", icon: Users },
-        { name: "新闻公告", href: "#", icon: BookOpen },
-        { name: "招聘信息", href: "#", icon: Users },
-        { name: "合作伙伴", href: "#", icon: Users },
-        { name: "投资者关系", href: "#", icon: TrendingUp },
-        { name: "媒体资源", href: "#", icon: BookOpen }
+        { name: t('components:footer.aboutUs'), href: "#", icon: Users },
+        { name: t('components:footer.news'), href: "#", icon: BookOpen },
+        { name: t('components:footer.careers'), href: "#", icon: Users },
+        { name: t('components:footer.partners'), href: "#", icon: Users },
+        { name: t('components:footer.investorRelations'), href: "#", icon: TrendingUp },
+        { name: t('components:footer.mediaResources'), href: "#", icon: BookOpen }
       ]
     }
   };
@@ -123,18 +125,18 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-    { name: "服务条款", href: "#" },
-    { name: "隐私政策", href: "#" },
-    { name: "Cookie政策", href: "#" },
-    { name: "风险披露", href: "#" },
-    { name: "反洗钱政策", href: "#" },
-    { name: "用户协议", href: "#" }
+    { name: t('common:termsOfService'), href: "#" },
+    { name: t('common:privacyPolicy'), href: "#" },
+    { name: t('common:cookiePolicy'), href: "#" },
+    { name: t('common:riskDisclosure'), href: "#" },
+    { name: t('common:amlPolicy'), href: "#" },
+    { name: t('common:userAgreement'), href: "#" }
   ];
 
   const contactInfo = [
     { icon: Mail, text: "support@ruacoin.com", href: "mailto:support@ruacoin.com" },
     { icon: Phone, text: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, text: "新加坡", href: "#" }
+    { icon: MapPin, text: t('common:singapore'), href: "#" }
   ];
 
   const FooterSection = ({ title, items, sectionKey }) => (
@@ -175,7 +177,7 @@ const Footer = () => {
               <h2 className="text-2xl font-bold gradient-text">RuaCoin</h2>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              全球领先的数字资产交易平台，为用户提供安全、便捷、专业的加密货币交易服务。
+              {t('components:footer.description')}
             </p>
             
             {/* 社交媒体链接 */}
@@ -199,7 +201,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href={contact.href}
-                  className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200 text-sm footer-contact-info"
+                  className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200 text-sm"
                 >
                   <contact.icon size={14} />
                   <span>{contact.text}</span>
@@ -208,80 +210,95 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 产品 */}
-          <FooterSection 
-            title={footerData.products.title}
-            items={footerData.products.items}
-            sectionKey="products"
-          />
-
-          {/* 服务 */}
-          <FooterSection 
-            title={footerData.services.title}
-            items={footerData.services.items}
-            sectionKey="services"
-          />
-
-          {/* 支持 */}
-          <FooterSection 
-            title={footerData.support.title}
-            items={footerData.support.items}
-            sectionKey="support"
-          />
-
-          {/* 公司 */}
-          <FooterSection 
-            title={footerData.company.title}
-            items={footerData.company.items}
-            sectionKey="company"
-          />
+          {/* 产品和服务栏目 */}
+          {Object.entries(footerData).map(([key, section]) => (
+            <div key={key} className="lg:col-span-1">
+              <FooterSection 
+                title={section.title}
+                items={section.items}
+                sectionKey={key}
+              />
+            </div>
+          ))}
         </div>
 
-        {/* 下载APP区域 */}
-        <div className="mt-12 pt-8 border-t border-gray-800 footer-divider">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
-            <div className="text-center lg:text-left mb-6 lg:mb-0">
-              <h3 className="text-lg font-semibold mb-2">下载RuaCoin APP</h3>
-              <p className="text-gray-400 text-sm">随时随地交易，掌握市场动态</p>
+        {/* APP下载区域 */}
+        <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="flex flex-col lg:flex-row items-center justify-between space-y-6 lg:space-y-0">
+            <div className="text-center lg:text-left">
+              <h3 className="text-xl font-semibold text-white mb-2">
+                {t('components:footer.downloadApp')}
+              </h3>
+              <p className="text-gray-400 text-sm">
+                {t('components:footer.downloadAppDescription', '随时随地进行数字资产交易')}
+              </p>
             </div>
+            
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors duration-200 footer-app-download"
+                className="inline-flex items-center px-6 py-3 border border-gray-600 rounded-lg text-white hover:border-white transition-colors duration-200"
               >
-                <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-                  <span className="text-black font-bold text-xs">A</span>
-                </div>
+                <Download size={20} className="mr-2" />
                 <div className="text-left">
-                  <div className="text-xs text-gray-400">Download on</div>
+                  <div className="text-xs text-gray-400">{t('common:downloadOn')}</div>
                   <div className="text-sm font-semibold">App Store</div>
                 </div>
               </a>
+              
               <a
                 href="#"
-                className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors duration-200 footer-app-download"
+                className="inline-flex items-center px-6 py-3 border border-gray-600 rounded-lg text-white hover:border-white transition-colors duration-200"
               >
-                <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-                  <span className="text-black font-bold text-xs">G</span>
-                </div>
+                <Download size={20} className="mr-2" />
                 <div className="text-left">
-                  <div className="text-xs text-gray-400">Get it on</div>
+                  <div className="text-xs text-gray-400">{t('common:downloadOn')}</div>
                   <div className="text-sm font-semibold">Google Play</div>
                 </div>
               </a>
             </div>
           </div>
         </div>
+
+        {/* 认证和合规信息 */}
+        <div className="mt-8 pt-8 border-t border-gray-800">
+          <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+            <div className="text-center lg:text-left">
+              <h4 className="text-sm font-semibold text-white mb-2">
+                {t('components:footer.licenses')}
+              </h4>
+              <div className="flex flex-wrap items-center justify-center lg:justify-start space-x-4 text-xs text-gray-400">
+                <span className="flex items-center">
+                  <Shield size={12} className="mr-1" />
+                  {t('components:footer.certifications')}
+                </span>
+                <span className="flex items-center">
+                  <Globe size={12} className="mr-1" />
+                  {t('components:footer.globalService', '全球服务')}
+                </span>
+              </div>
+            </div>
+            
+            <div className="text-center lg:text-right">
+              <h4 className="text-sm font-semibold text-white mb-2">
+                {t('components:footer.followUs')}
+              </h4>
+              <div className="text-xs text-gray-400">
+                {t('components:footer.socialMedia')}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* 底部法律信息 */}
+      {/* 底部版权和法律信息 */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
             {/* 版权信息 */}
             <div className="text-gray-400 text-sm">
-              <p>&copy; 2025 RuaCoin. 保留所有权利。</p>
-              <p className="mt-1">RuaCoin Technology Pte. Ltd. | 注册号: 202500000A</p>
+              <p>&copy; 2025 RuaCoin. {t('components:footer.allRightsReserved')}</p>
+              <p className="mt-1">RuaCoin Technology Pte. Ltd. | {t('common:registrationNumber')}: 202500000A</p>
             </div>
 
             {/* 法律链接 */}
@@ -302,33 +319,35 @@ const Footer = () => {
           <div className="mt-6 pt-6 border-t border-gray-800">
             <div className="text-center text-gray-500 text-xs leading-relaxed footer-risk-disclosure">
               <p>
-                风险提示：加密货币交易存在高风险，价格波动剧烈。在投资前请充分了解相关风险，
-                并根据自身财务状况谨慎投资。过往表现不代表未来收益。
+                <strong>{t('components:footer.riskWarning')}: </strong>
+                {t('components:footer.riskContent1')}
               </p>
               <p className="mt-2">
-                本网站提供的所有信息仅供参考，不构成投资建议。请咨询专业投资顾问。
+                {t('components:footer.riskContent2')}
               </p>
             </div>
           </div>
 
           {/* 认证和合规信息 */}
           <div className="mt-6 pt-6 border-t border-gray-800">
-            <div className="flex flex-wrap items-center justify-center space-x-6 text-gray-400">
-              <div className="flex items-center space-x-2 footer-certification">
-                <Shield size={16} />
-                <span className="text-xs">SSL加密保护</span>
-              </div>
-              <div className="flex items-center space-x-2 footer-certification">
-                <Globe size={16} />
-                <span className="text-xs">全球服务</span>
-              </div>
-              <div className="flex items-center space-x-2 footer-certification">
-                <Users size={16} />
-                <span className="text-xs">24/7客户支持</span>
-              </div>
-              <div className="flex items-center space-x-2 footer-certification">
-                <TrendingUp size={16} />
-                <span className="text-xs">实时行情</span>
+            <div className="text-center">
+              <div className="flex flex-wrap items-center justify-center space-x-6 text-xs text-gray-500">
+                <span className="flex items-center">
+                  <Shield size={12} className="mr-1" />
+                  SSL {t('common:encryption')}
+                </span>
+                <span className="flex items-center">
+                  <Users size={12} className="mr-1" />
+                  24/7 {t('common:customerSupport')}
+                </span>
+                <span className="flex items-center">
+                  <TrendingUp size={12} className="mr-1" />
+                  {t('common:realTimeData')}
+                </span>
+                <span className="flex items-center">
+                  <Globe size={12} className="mr-1" />
+                  {t('common:globalService')}
+                </span>
               </div>
             </div>
           </div>

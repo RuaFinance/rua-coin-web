@@ -14,9 +14,14 @@
 
 import { Alert } from 'antd';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const WarningAlert = () => (
-  <Alert message="Please enter a valid number." type="warning" />
-);
+const WarningAlert = () => {
+  const { t } = useTranslation(['components', 'common']);
+  
+  return (
+    <Alert message={t('components:msgAlert.pleaseEnterValidNumber')} type="warning" />
+  );
+};
 
 export default WarningAlert;

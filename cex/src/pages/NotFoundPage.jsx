@@ -14,10 +14,12 @@
 
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { formatUrl } from '../router/config';
 
 const NotFoundPage = () => {
+  const { t } = useTranslation(['pages', 'common']);
 
   return (
     <div className="bg-[#f1f2f3]" >
@@ -29,7 +31,7 @@ const NotFoundPage = () => {
           <Link to="/" 
             className="rollback-btn font-bold"
           >
-            返回到首页
+            {t('pages:notFound.backToHome')}
           </Link>
         </div>
 

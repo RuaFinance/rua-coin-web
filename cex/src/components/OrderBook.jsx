@@ -14,8 +14,10 @@
 
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const OrderBook = ({ pairData, symbol }) => {
+  const { t } = useTranslation(['components', 'common']);
   const [precision, setPrecision] = useState(2);
   const [orderBook, setOrderBook] = useState({
     bids: [],
@@ -79,7 +81,7 @@ const OrderBook = ({ pairData, symbol }) => {
     <div className="card-dark h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-2 pl-3 flex-shrink-0">
-        <h2 className="text-lg font-semibold text-white">订单簿</h2>
+        <h2 className="text-lg font-semibold text-white">{t('components:orderBook.title')}</h2>
         <div className="flex items-center space-x-2">
           <select
             value={precision}
@@ -99,10 +101,10 @@ const OrderBook = ({ pairData, symbol }) => {
 
       {/* Column Headers */}
       <div className="grid grid-cols-3 gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs text-gray-400 font-medium border-b border-slate-700 mb-2 flex-shrink-0">
-        <div className="text-left">价格(USDT)</div>
-        <div className="text-right">数量({symbol})</div>
-        <div className="text-right hidden sm:block">累计(USDT)</div>
-        <div className="text-right sm:hidden">累计</div>
+        <div className="text-left">{t('components:orderBook.priceUsdt')}</div>
+        <div className="text-right">{t('components:orderBook.amount')}({symbol})</div>
+        <div className="text-right hidden sm:block">{t('components:orderBook.totalUsdt')}</div>
+        <div className="text-right sm:hidden">{t('components:orderBook.total')}</div>
       </div>
 
       <div className="flex-1 overflow-hidden flex flex-col">
@@ -176,13 +178,13 @@ const OrderBook = ({ pairData, symbol }) => {
       <div className="mt-2 sm:mt-4 pt-2 sm:pt-4 border-t border-slate-700 flex-shrink-0">
         <div className="grid grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
           <div>
-            <div className="text-gray-400">买单总量</div>
+            <div className="text-gray-400">{t('components:orderBook.buyOrdersTotal')}</div>
             <div className="text-green-400 font-mono">
               {orderBook.bids.reduce((sum, order) => sum + order.amount, 0).toFixed(4)} {symbol}
             </div>
           </div>
           <div>
-            <div className="text-gray-400">卖单总量</div>
+            <div className="text-gray-400">{t('components:orderBook.sellOrdersTotal')}</div>
             <div className="text-red-400 font-mono">
               {orderBook.asks.reduce((sum, order) => sum + order.amount, 0).toFixed(4)} {symbol}
             </div>

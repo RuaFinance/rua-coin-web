@@ -1,0 +1,15 @@
+{
+  "marketOverview": "Market Overview",
+  "hotCoins": "Hot Coins",
+  "totalMarketCap": "Total Market Cap",
+  "volume24h": "24h Volume",
+  "btcDominance": "BTC Dominance",
+  "activeCoins": "Active Coins",
+  "tradingPairs": "Trading Pairs",
+  "price": "Price",
+  "change": "Change",
+  "volume": "Volume",
+  "loading": "Loading...",
+  "noData": "No data",
+  "error": "Failed to load"
+} 

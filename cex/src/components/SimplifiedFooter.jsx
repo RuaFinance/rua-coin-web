@@ -22,20 +22,23 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Shield, Globe, Users, TrendingUp } from 'lucide-react';
 
 const SimplifiedFooter = () => {
+  const { t } = useTranslation(['components', 'common']);
+
   const legalLinks = [
-    { name: "服务条款", href: "#" },
-    { name: "隐私政策", href: "#" },
-    { name: "风险披露", href: "#" }
+    { name: t('common:termsOfService'), href: "#" },
+    { name: t('common:privacyPolicy'), href: "#" },
+    { name: t('common:riskDisclosure'), href: "#" }
   ];
 
   const certifications = [
-    { name: "SSL加密保护", icon: Shield },
-    { name: "全球服务", icon: Globe },
-    { name: "24/7客户支持", icon: Users },
-    { name: "实时行情", icon: TrendingUp }
+    { name: t('components:footer.sslEncryption', 'SSL加密保护'), icon: Shield },
+    { name: t('common:globalService'), icon: Globe },
+    { name: t('components:footer.customerSupport24x7', '24/7客户支持'), icon: Users },
+    { name: t('common:realTimeData'), icon: TrendingUp }
   ];
 
   return (
@@ -46,7 +49,9 @@ const SimplifiedFooter = () => {
           {/* Logo和版权 */}
           <div className="text-center lg:text-left">
             <Link to="/" className="text-xl font-bold gradient-text">RuaCoin</Link>
-            <p className="text-gray-400 text-sm mt-2">&copy; 2025 RuaCoin. 保留所有权利。</p>
+            <p className="text-gray-400 text-sm mt-2">
+              &copy; 2025 RuaCoin. {t('components:footer.allRightsReserved')}
+            </p>
           </div>
 
           {/* 认证信息 */}
@@ -77,8 +82,8 @@ const SimplifiedFooter = () => {
         <div className="mt-6 pt-6 border-t border-gray-800">
           <div className="text-center text-gray-500 text-xs leading-relaxed">
             <p>
-              风险提示：加密货币交易存在高风险，价格波动剧烈。在投资前请充分了解相关风险，
-              并根据自身财务状况谨慎投资。过往表现不代表未来收益。
+              <strong>{t('components:footer.riskWarning')}: </strong>
+              {t('components:footer.riskContent1')}
             </p>
           </div>
         </div>
