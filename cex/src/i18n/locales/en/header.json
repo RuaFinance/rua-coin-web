@@ -21,6 +21,8 @@
   "searchHistory": "Search History",
   "noSearchHistory": "No search history",
   "clearHistory": "Clear History",
+  "searchLanguages": "Search languages...",
+  "noLanguagesFound": "No languages found",
   "spotLabel": "Spot",
   "notFoundTradingPairs": "No matching trading pairs found",
   "profile": "Profile",

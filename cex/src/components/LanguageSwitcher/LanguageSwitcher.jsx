@@ -14,7 +14,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Globe, Check, ChevronDown } from 'lucide-react';
+import { Globe, Check, ChevronDown, Search } from 'lucide-react';
 import { 
   SUPPORTED_LANGUAGES, 
   changeLanguage, 
@@ -46,8 +46,10 @@ const LanguageSwitcher = ({ className = '' }) => {
   const { t, i18n } = useTranslation(['common', 'header']);
   const [isOpen, setIsOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(getCurrentLanguage());
+  const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   // 监听语言变化
   useEffect(() => {
@@ -96,18 +98,44 @@ const LanguageSwitcher = ({ className = '' }) => {
     const handleEscapeKey = (event) => {
       if (event.key === 'Escape' && isOpen) {
         setIsOpen(false);
+        setSearchTerm(''); // 清空搜索
         buttonRef.current?.focus();
       }
     };
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscapeKey);
+      // 聚焦搜索框
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 100);
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [isOpen]);
+
+  // 关闭下拉框时清空搜索
+  useEffect(() => {
+    if (!isOpen) {
+      setSearchTerm('');
+    }
+  }, [isOpen]);
+
+  // 过滤语言列表
+  const getFilteredLanguages = () => {
+    if (!searchTerm.trim()) {
+      return Object.values(SUPPORTED_LANGUAGES);
+    }
+    
+    const term = searchTerm.toLowerCase();
+    return Object.values(SUPPORTED_LANGUAGES).filter(language =>
+      language.name.toLowerCase().includes(term) ||
+      language.nativeName.toLowerCase().includes(term) ||
+      language.code.toLowerCase().includes(term)
+    );
+  };
 
   // 切换语言
   const handleLanguageChange = async (languageCode) => {
@@ -116,6 +144,7 @@ const LanguageSwitcher = ({ className = '' }) => {
       if (success) {
         setCurrentLanguage(languageCode);
         setIsOpen(false);
+        setSearchTerm(''); // 清空搜索
         
         // 显示切换成功提示（可选）
         console.log(`Language switched to: ${getLanguageNativeName(languageCode)}`);
@@ -184,43 +213,69 @@ const LanguageSwitcher = ({ className = '' }) => {
               {t('header:language')}
             </div>
             
-            {/* 语言选项列表 */}
-            {Object.values(SUPPORTED_LANGUAGES).map((language) => (
-              <button
-                key={language.code}
-                onClick={() => handleLanguageChange(language.code)}
-                onKeyDown={(e) => handleKeyDown(e, language.code)}
-                className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[#3a3a3a] transition-colors duration-150 focus:outline-none focus:bg-[#3a3a3a] ${
-                  currentLanguage === language.code 
-                    ? 'bg-[#3a3a3a] text-white' 
-                    : 'text-gray-300'
-                }`}
-                role="menuitem"
-                aria-selected={currentLanguage === language.code}
-              >
-                <div className="flex items-center space-x-3">
-                  {/* 语言旗帜 */}
-                  <span className="text-lg flex-shrink-0">
-                    {language.flag}
-                  </span>
-                  
-                  {/* 语言名称 */}
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium">
-                      {language.nativeName}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {language.name}
-                    </span>
-                  </div>
+            {/* 搜索框 */}
+            <div className="p-3 border-b border-[#424242]">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search className="h-4 w-4 text-gray-400" />
                 </div>
-                
-                {/* 选中状态指示器 */}
-                {currentLanguage === language.code && (
-                  <Check size={16} className="text-blue-400 flex-shrink-0" />
-                )}
-              </button>
-            ))}
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder={t('header:searchLanguages')}
+                  className="block w-full pl-10 pr-3 py-2 text-sm bg-white border 
+                  border-[#424242] rounded-md text-black placeholder-gray-400 focus:outline-none"
+                />
+              </div>
+            </div>
+            
+            {/* 语言选项列表 */}
+            <div className="max-h-48 overflow-y-auto">
+              {getFilteredLanguages().length > 0 ? (
+                getFilteredLanguages().map((language) => (
+                  <button
+                    key={language.code}
+                    onClick={() => handleLanguageChange(language.code)}
+                    onKeyDown={(e) => handleKeyDown(e, language.code)}
+                    className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[#3a3a3a] transition-colors duration-150 focus:outline-none focus:bg-[#3a3a3a] ${
+                      currentLanguage === language.code 
+                        ? 'bg-[#3a3a3a] text-white' 
+                        : 'text-gray-300'
+                    }`}
+                    role="menuitem"
+                    aria-selected={currentLanguage === language.code}
+                  >
+                    <div className="flex items-center space-x-3">
+                      {/* 语言旗帜 */}
+                      <span className="text-lg flex-shrink-0">
+                        {language.flag}
+                      </span>
+                      
+                      {/* 语言名称 */}
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">
+                          {language.nativeName}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          {language.name}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* 选中状态指示器 */}
+                    {currentLanguage === language.code && (
+                      <Check size={16} className="text-blue-400 flex-shrink-0" />
+                    )}
+                  </button>
+                ))
+              ) : (
+                <div className="px-4 py-3 text-center text-sm text-gray-400">
+                  {t('header:noLanguagesFound')}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

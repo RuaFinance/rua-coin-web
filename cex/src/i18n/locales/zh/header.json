@@ -21,6 +21,8 @@
   "searchHistory": "搜索历史",
   "noSearchHistory": "暂无搜索历史",
   "clearHistory": "清空历史",
+  "searchLanguages": "搜索语言...",
+  "noLanguagesFound": "未找到语言",
   "spotLabel": "现货",
   "notFoundTradingPairs": "未找到相关交易对",
   "profile": "个人资料",
