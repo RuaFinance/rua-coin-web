@@ -36,7 +36,9 @@
     "high24h": "24h High",
     "low24h": "24h Low",
     "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites"
+    "removeFromFavorites": "Remove from Favorites",
+    "noFavorites": "No favorites yet",
+    "noFavoritesDescription": "Click the star icon to add trading pairs to your favorites"
   },
   "tradingChart": {
     "title": "Trading Chart",

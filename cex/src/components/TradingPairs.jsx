@@ -233,155 +233,175 @@ const TradingPairs = () => {
 
       {/* Trading Pairs List */}
       <div>
-        <div className="divide-y divide-gray-100">
-          {getFilteredPairs().map((pair, index) => (
-            <div key={pair.symbol}>
-              {/* Desktop Layout */}
-              <div 
-                className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-4 trading-pair group"
-                onClick={() => handleCoinClick(pair.symbol)}
-              >
-                <div className="col-span-1 flex items-center justify-center">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(pair.symbol);
-                    }}
-                    className={`favorite-star p-1 rounded-full ${
-                      favorites.has(pair.symbol) ? 'active' : 'text-gray-400 hover:text-yellow-400'
-                    }`}
-                  >
-                    <Star className="h-[18px] w-[18px]" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
-                  </button>
+        {/* 无自选提示 */}
+        {selectedTab === 'favorites' && getFilteredPairs().length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 px-6">
+            <div className="text-center">
+              <div className="mb-4">
+                <Star className="h-16 w-16 text-gray-300 mx-auto" />
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                {t('components:tradingPairs.noFavorites')}
+              </h3>
+              <p className="text-gray-500 text-sm">
+                {t('components:tradingPairs.noFavoritesDescription')}
+              </p>
+            </div>
+          </div>
+        )}
+        
+        {/* 有数据时显示列表 */}
+        {getFilteredPairs().length > 0 && (
+          <div className="divide-y divide-gray-100">
+            {getFilteredPairs().map((pair, index) => (
+              <div key={pair.symbol}>
+                {/* Desktop Layout */}
+                <div 
+                  className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-4 trading-pair group"
+                  onClick={() => handleCoinClick(pair.symbol)}
+                >
+                  <div className="col-span-1 flex items-center justify-center">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(pair.symbol);
+                      }}
+                      className={`favorite-star p-1 rounded-full ${
+                        favorites.has(pair.symbol) ? 'active' : 'text-gray-400 hover:text-yellow-400'
+                      }`}
+                    >
+                      <Star className="h-[18px] w-[18px]" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
+                    </button>
+                  </div>
+                  
+                  <div className="col-span-3 flex items-center">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <img 
+                          src={getCoinLogo(pair.symbol)} 
+                          alt={pair.symbol.split('/')[0]}
+                          className="w-6 h-6 object-contain"
+                          onError={(e) => {
+                            e.target.src = formatUrl('/asserts/logo/none.png');
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900">{pair.symbol.split('/')[0]}</div>
+                        <div className="text-xs text-gray-500">{pair.symbol.split('/')[1]}</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="col-span-2 text-right">
+                    <div className="font-mono text-gray-900 font-semibold">
+                      ${pair.price.toLocaleString(undefined, { 
+                        minimumFractionDigits: pair.price < 1 ? 4 : 2,
+                        maximumFractionDigits: pair.price < 1 ? 4 : 2
+                      })}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      ${pair.low.toFixed(2)} - ${pair.high.toFixed(2)}
+                    </div>
+                  </div>
+                  
+                  <div className="col-span-2 text-right">
+                    <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium ${
+                      pair.change >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                    }`}>
+                      {pair.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                      <span className="font-mono">
+                        {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="col-span-2 text-right">
+                    <div className="flex items-center justify-end gap-1 text-gray-700">
+                      <span className="font-mono text-sm">{pair.volume}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="col-span-2 text-right">
+                    <button className="btn-trade">
+                      <span className="material-symbols-outlined">
+                        candlestick_chart
+                      </span>
+                      <span className="tooltip">{t('common:trade')}</span>
+                    </button>
+                  </div>
                 </div>
-                
-                <div className="col-span-3 flex items-center">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+
+                {/* Mobile/Tablet Layout */}
+                <div
+                  className="lg:hidden grid grid-cols-12 gap-2 px-4 py-3 trading-pair group"
+                  onClick={() => handleCoinClick(pair.symbol)}
+                >
+                  <div className="col-span-3 flex items-center space-x-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(pair.symbol);
+                      }}
+                      className={`favorite-star ${
+                        favorites.has(pair.symbol) ? 'active' : 'text-gray-400'
+                      }`}
+                    >
+                      <Star className="h-3 w-3" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
+                    </button>
+                    <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                       <img 
                         src={getCoinLogo(pair.symbol)} 
                         alt={pair.symbol.split('/')[0]}
-                        className="w-6 h-6 object-contain"
+                        className="w-5 h-5 object-contain"
                         onError={(e) => {
                           e.target.src = formatUrl('/asserts/logo/none.png');
                         }}
                       />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">{pair.symbol.split('/')[0]}</div>
+                      <div className="font-semibold text-gray-900 text-sm">{pair.symbol.split('/')[0]}</div>
                       <div className="text-xs text-gray-500">{pair.symbol.split('/')[1]}</div>
                     </div>
                   </div>
-                </div>
-                
-                <div className="col-span-2 text-right">
-                  <div className="font-mono text-gray-900 font-semibold">
-                    ${pair.price.toLocaleString(undefined, { 
-                      minimumFractionDigits: pair.price < 1 ? 4 : 2,
-                      maximumFractionDigits: pair.price < 1 ? 4 : 2
-                    })}
+                  
+                  <div className="col-span-3 text-right">
+                    <div className="font-mono text-gray-900 font-semibold text-sm">
+                      ${pair.price < 1 ? pair.price.toFixed(4) : pair.price.toFixed(2)}
+                    </div>
+                    <div className="text-xs text-gray-500 font-mono">{pair.volume}</div>
                   </div>
-                  <div className="text-xs text-gray-500">
-                    ${pair.low.toFixed(2)} - ${pair.high.toFixed(2)}
+                  
+                  <div className="col-span-3 text-right">
+                    <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                      pair.change >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                    }`}>
+                      {pair.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                      <span className="font-mono">
+                        {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
+                      </span>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="col-span-2 text-right">
-                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-sm font-medium ${
-                    pair.change >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                  }`}>
-                    {pair.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    <span className="font-mono">
-                      {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="col-span-2 text-right">
-                  <div className="flex items-center justify-end gap-1 text-gray-700">
-                    <span className="font-mono text-sm">{pair.volume}</span>
-                  </div>
-                </div>
-                
-                <div className="col-span-2 text-right">
-                  <button className="btn-trade">
-                    <span className="material-symbols-outlined">
-                      candlestick_chart
-                    </span>
-                    <span className="tooltip">{t('common:trade')}</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Mobile/Tablet Layout */}
-              <div
-                className="lg:hidden grid grid-cols-12 gap-2 px-4 py-3 trading-pair group"
-                onClick={() => handleCoinClick(pair.symbol)}
-              >
-                <div className="col-span-3 flex items-center space-x-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(pair.symbol);
-                    }}
-                    className={`favorite-star ${
-                      favorites.has(pair.symbol) ? 'active' : 'text-gray-400'
-                    }`}
-                  >
-                    <Star className="h-3 w-3" fill={favorites.has(pair.symbol) ? 'currentColor' : 'none'} />
-                  </button>
-                  <div className="w-6 h-6 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                    <img 
-                      src={getCoinLogo(pair.symbol)} 
-                      alt={pair.symbol.split('/')[0]}
-                      className="w-5 h-5 object-contain"
-                      onError={(e) => {
-                        e.target.src = formatUrl('/asserts/logo/none.png');
+                  
+                  <div className="col-span-3 text-right">
+                    <button
+                      className="btn-trade text-xs px-2 py-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCoinClick(pair.symbol);
                       }}
-                    />
+                    >
+                      <span className="material-symbols-outlined">
+                        candlestick_chart
+                      </span>
+                      <span className="tooltip">{t('common:trade')}</span>
+                    </button>
                   </div>
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm">{pair.symbol.split('/')[0]}</div>
-                    <div className="text-xs text-gray-500">{pair.symbol.split('/')[1]}</div>
-                  </div>
-                </div>
-                
-                <div className="col-span-3 text-right">
-                  <div className="font-mono text-gray-900 font-semibold text-sm">
-                    ${pair.price < 1 ? pair.price.toFixed(4) : pair.price.toFixed(2)}
-                  </div>
-                  <div className="text-xs text-gray-500 font-mono">{pair.volume}</div>
-                </div>
-                
-                <div className="col-span-3 text-right">
-                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                    pair.change >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                  }`}>
-                    {pair.change >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    <span className="font-mono">
-                      {pair.change >= 0 ? '+' : ''}{pair.change.toFixed(2)}%
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="col-span-3 text-right">
-                  <button
-                    className="btn-trade text-xs px-2 py-1"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCoinClick(pair.symbol);
-                    }}
-                  >
-                    <span className="material-symbols-outlined">
-                      candlestick_chart
-                    </span>
-                    <span className="tooltip">{t('common:trade')}</span>
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

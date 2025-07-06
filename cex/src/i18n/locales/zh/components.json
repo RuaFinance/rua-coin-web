@@ -36,7 +36,9 @@
     "high24h": "24h最高",
     "low24h": "24h最低",
     "addToFavorites": "添加自选",
-    "removeFromFavorites": "移除自选"
+    "removeFromFavorites": "移除自选",
+    "noFavorites": "暂无自选",
+    "noFavoritesDescription": "点击星号图标可添加交易对到自选"
   },
   "tradingChart": {
     "title": "交易图表",
