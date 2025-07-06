@@ -15,5 +15,12 @@
   "submitOrder": "提交订单",
   "cancelOrder": "撤销订单",
   "stop_loss": "止盈止损",
-  "oco_order": "OCO订单"
+  "oco_order": "OCO订单",
+  "orderTypes": {
+    "limit": "限价单",
+    "market": "市价单",
+    "stop": "止损单"
+  },
+  "actualPay": "实际支付",
+  "actualReceive": "实际获得"
 } 

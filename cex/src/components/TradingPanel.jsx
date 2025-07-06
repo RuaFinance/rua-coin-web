@@ -37,9 +37,9 @@ const TradingPanel = ({ pairData, symbol }) => {
   });
 
   const orderTypes = [
-    { value: 'limit', label: '限价单' },
-    { value: 'market', label: '市价单' },
-    { value: 'stop', label: '止损单' }
+    { value: 'limit', label: t('trading:orderTypes.limit') },
+    { value: 'market', label: t('trading:orderTypes.market') },
+    { value: 'stop', label: t('trading:orderTypes.stop') }
   ];
 
   const percentageOptions = [25, 50, 75, 100];
@@ -455,7 +455,7 @@ const TradingPanel = ({ pairData, symbol }) => {
           </div>
           {total && (
             <div className="flex justify-between">
-              <span className="text-gray-400">实际{side === 'buy' ? '支付' : '获得'}:</span>
+              <span className="text-gray-400">{side === 'buy' ? t('trading:actualPay') : t('trading:actualReceive')}:</span>
               <span className="text-white font-mono text-xs sm:text-sm">
                 {side === 'buy' 
                   ? (parseFloat(total) + parseFloat(calculateFee())).toFixed(8)
@@ -477,7 +477,7 @@ const TradingPanel = ({ pairData, symbol }) => {
           }`}
           disabled={!amount || (!price && orderType !== 'market')}
         >
-          {t('trading:buy')} {symbol}
+          {side === 'buy' ? t('trading:buy') : t('trading:sell')} {symbol}
         </button>
 
         {/* Quick Actions */}

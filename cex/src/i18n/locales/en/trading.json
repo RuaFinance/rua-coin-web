@@ -15,5 +15,12 @@
   "submitOrder": "Submit Order",
   "cancelOrder": "Cancel Order",
   "stop_loss": "Stop Loss",
-  "oco_order": "OCO Order"
+  "oco_order": "OCO Order",
+  "orderTypes": {
+    "limit": "Limit Order",
+    "market": "Market Order",
+    "stop": "Stop Order"
+  },
+  "actualPay": "Actual Payment",
+  "actualReceive": "Actual Receive"
 } 
