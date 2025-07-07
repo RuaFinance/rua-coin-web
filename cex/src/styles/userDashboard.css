@@ -1,0 +1,919 @@
+/**
+ * User Dashboard Styles
+ * 
+ * This file contains all the styling for the user dashboard interface,
+ * including the sidebar navigation, content areas, and various UI components.
+ * Features dark theme, glassmorphism effects, and smooth animations.
+ * 
+ * @author chenjjiaa
+ * @since 2025
+ */
+
+/* Dashboard Layout */
+.dashboard-container {
+  min-height: calc(100vh - 64px); /* Adjust for header height */
+  background: #000000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+}
+
+.dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Sidebar Styles */
+.dashboard-sidebar {
+  background: rgba(13, 13, 13, 0.8);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  width: 252px; /* 280px * 0.9 */
+  min-height: 100%;
+  position: relative;
+  z-index: 10;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* Sidebar Expanded/Collapsed States */
+.dashboard-sidebar.expanded {
+  width: 252px; /* 280px * 0.9 */
+}
+
+.dashboard-sidebar.collapsed {
+  width: 58px; /* 64px * 0.9 */
+}
+
+/* Mobile Sidebar Styles */
+.dashboard-sidebar.mobile {
+  position: fixed;
+  top: 64px; /* Header height */
+  left: 0;
+  height: calc(100vh - 64px);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-sidebar.mobile.expanded {
+  transform: translateX(0);
+  width: 252px; /* 280px * 0.9 */
+}
+
+.dashboard-sidebar.mobile.collapsed {
+  transform: translateX(-100%); /* 完全隐藏，使用悬浮按钮控制 */
+}
+
+
+
+/* 移动端悬浮Toggle按钮 */
+.mobile-sidebar-fab {
+  position: fixed;
+  top: 72px; /* 80px * 0.9 */
+  left: 14px; /* 16px * 0.9 */
+  width: 43px; /* 48px * 0.9 */
+  height: 43px; /* 48px * 0.9 */
+  background: rgba(59, 130, 246, 0.9);
+  border: 2px solid rgba(59, 130, 246, 0.6);
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+
+.mobile-sidebar-fab:hover {
+  background: rgba(59, 130, 246, 1);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+.mobile-sidebar-fab:active {
+  transform: scale(0.95);
+}
+
+/* 只在移动端且sidebar收起时显示悬浮按钮 */
+.mobile-sidebar-fab.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-sidebar-fab.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Desktop Sidebar Styles */
+.dashboard-sidebar.desktop {
+  position: relative;
+  top: 0;
+  transform: none;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Sidebar Content Container */
+.sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  padding: 22px 14px 14px 14px; /* 24px 16px 16px 16px * 0.9 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 1.01rem; /* 1.125rem * 0.9 */
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, 
+              visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+/* 收起状态下隐藏标题 */
+.dashboard-sidebar.collapsed .sidebar-title {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle-btn {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #ffffff;
+  width: 29px; /* 32px * 0.9 */
+  height: 29px; /* 32px * 0.9 */
+  border-radius: 7px; /* 8px * 0.9 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
+}
+
+.sidebar-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  flex: 1;
+  padding: 14px 0; /* 16px 0 * 0.9 */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 14px; /* 16px * 0.9 */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.logout-btn {
+  margin: 0 !important;
+}
+
+.sidebar-nav-item {
+  position: relative;
+  margin: 3px 11px; /* 4px 12px * 0.9 */
+  border-radius: 11px; /* 12px * 0.9 */
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* Collapsed state nav items */
+.dashboard-sidebar.collapsed .sidebar-nav-item {
+  margin: 3px 7px; /* 4px 8px * 0.9 */
+  border-radius: 50%;
+  width: 43px; /* 48px * 0.9 */
+  height: 43px; /* 48px * 0.9 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-item .sidebar-nav-link {
+  padding: 11px; /* 12px * 0.9 */
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-item .sidebar-nav-icon {
+  margin-right: 0;
+  transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-nav-item.active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.sidebar-nav-item:hover {
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateX(4px);
+}
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 11px 14px; /* 12px 16px * 0.9 */
+  color: #9ca3af;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* 文字标签的过渡控制 */
+.sidebar-nav-link span {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, 
+              visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* 收起状态下隐藏文字 - 立即隐藏，无延迟 */
+.dashboard-sidebar.collapsed .sidebar-nav-link span {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 可展开菜单按钮中的flex-1文字控制 */
+.sidebar-nav-link .flex-1 {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, 
+              visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-link .flex-1 {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Chevron图标的过渡控制 */
+.sidebar-nav-link .w-4.h-4 {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, 
+              visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+              transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-link .w-4.h-4 {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-nav-item.active .sidebar-nav-link,
+.sidebar-nav-item:hover .sidebar-nav-link {
+  color: #ffffff;
+}
+
+.sidebar-nav-icon {
+  width: 18px; /* 20px * 0.9 */
+  height: 18px; /* 20px * 0.9 */
+  margin-right: 11px; /* 12px * 0.9 */
+  transition: transform 0.3s ease, margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0; /* 防止图标被挤压 */
+}
+
+.sidebar-nav-item:hover .sidebar-nav-icon {
+  transform: scale(1.1);
+}
+
+/* Submenu Styles */
+.sidebar-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  opacity: 0;
+}
+
+.sidebar-submenu.expanded {
+  max-height: 300px;
+  opacity: 1;
+}
+
+/* 展开状态下的子菜单项显示效果 */
+.sidebar-submenu.expanded .sidebar-submenu-item {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 子菜单项逐个显示效果 - 容器完全展开后开始 */
+.sidebar-submenu.expanded .sidebar-submenu-item:nth-child(1) {
+  transition-delay: 0.25s;
+}
+
+.sidebar-submenu.expanded .sidebar-submenu-item:nth-child(2) {
+  transition-delay: 0.29s;
+}
+
+.sidebar-submenu.expanded .sidebar-submenu-item:nth-child(3) {
+  transition-delay: 0.33s;
+}
+
+.sidebar-submenu.expanded .sidebar-submenu-item:nth-child(4) {
+  transition-delay: 0.37s;
+}
+
+.sidebar-submenu.expanded .sidebar-submenu-item:nth-child(5) {
+  transition-delay: 0.41s;
+}
+
+/* Hide submenu completely in collapsed sidebar */
+.dashboard-sidebar.collapsed .sidebar-submenu {
+  display: none;
+}
+
+/* Disable expandable menu interactions in collapsed state */
+.dashboard-sidebar.collapsed .sidebar-nav-item button[disabled] {
+  cursor: default;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-item button[disabled]:hover {
+  transform: none;
+}
+
+.sidebar-submenu-item {
+  padding: 7px 14px 7px 43px; /* 8px 16px 8px 48px * 0.9 */
+  color: #6b7280;
+  font-size: 13px; /* 14px * 0.9 */
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  border-radius: 7px; /* 8px * 0.9 */
+  margin: 2px 11px; /* 2px 12px * 0.9 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+              visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+              color 0.3s ease,
+              background 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.sidebar-submenu.expanded .sidebar-submenu-item:hover {
+  color: #ffffff;
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+  transform: translateY(0) translateX(4px);
+}
+
+.sidebar-submenu.expanded .sidebar-submenu-item.active {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #ffffff;
+}
+
+/* Mobile Overlay */
+.dashboard-mobile-overlay {
+  position: fixed;
+  top: 64px; /* Header height */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Main Content Area */
+.dashboard-main {
+  flex: 1;
+  padding: 22px; /* 24px * 0.9 */
+  position: relative;
+  z-index: 10;
+  min-height: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+}
+
+/* Main content with sidebar states */
+.dashboard-main.sidebar-expanded {
+  margin-left: 0;
+  width: calc(100% - 252px); /* 280px * 0.9 */
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-main.sidebar-collapsed {
+  margin-left: 0;
+  width: calc(100% - 58px); /* 64px * 0.9 */
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Desktop adjustments for sidebar */
+@media (min-width: 768px) {
+  .dashboard-main.sidebar-expanded {
+    margin-left: 0;
+    width: calc(100% - 252px); /* 280px * 0.9 */
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .dashboard-main.sidebar-collapsed {
+    margin-left: 0;
+    width: calc(100% - 58px); /* 64px * 0.9 */
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Mobile adjustments - full width when sidebar is hidden */
+@media (max-width: 767px) {
+  .dashboard-main.sidebar-expanded,
+  .dashboard-main.sidebar-collapsed {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+.dashboard-content {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 14px; /* 16px * 0.9 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 29px; /* 32px * 0.9 */
+  min-height: calc(100vh - 144px); /* 160px * 0.9 */
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+  animation: dashboard-divider-slide 3s infinite;
+}
+
+@keyframes dashboard-divider-slide {
+  0%, 100% { opacity: 0; transform: translateX(-100%); }
+  50% { opacity: 1; transform: translateX(100%); }
+}
+
+/* Card Components */
+.dashboard-card {
+  background: rgba(31, 31, 31, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 11px; /* 12px * 0.9 */
+  padding: 22px; /* 24px * 0.9 */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); /* 280px * 0.9 */
+  gap: 22px; /* 24px * 0.9 */
+  margin-bottom: 29px; /* 32px * 0.9 */
+}
+
+.stats-card {
+  background: rgba(31, 31, 31, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 11px; /* 12px * 0.9 */
+  padding: 22px; /* 24px * 0.9 */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.08);
+}
+
+.stats-value {
+  font-size: 1.8rem; /* 2rem * 0.9 */
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 7px; /* 8px * 0.9 */
+}
+
+.stats-label {
+  color: #9ca3af;
+  font-size: 13px; /* 14px * 0.9 */
+  font-weight: 500;
+}
+
+.stats-change {
+  font-size: 11px; /* 12px * 0.9 */
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.stats-change.positive {
+  color: #10b981;
+}
+
+.stats-change.negative {
+  color: #ef4444;
+}
+
+/* Button Styles */
+.dashboard-btn {
+  background: rgba(31, 31, 31, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 11px 22px; /* 12px 24px * 0.9 */
+  border-radius: 7px; /* 8px * 0.9 */
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+}
+
+.dashboard-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.08);
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.dashboard-btn-primary {
+  background: rgba(31, 31, 31, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  padding: 11px 22px; /* 12px 24px * 0.9 */
+  border-radius: 7px; /* 8px * 0.9 */
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+}
+
+.dashboard-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.08);
+}
+
+/* 现货交易按钮特殊样式 - 白底黑字 */
+.dashboard-btn-primary-spot {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-btn-primary-spot:hover {
+  background: #e7f2ff !important;
+  color: #000000 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.08);
+}
+
+/* Loading States */
+.dashboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 43px; /* 48px * 0.9 */
+}
+
+.dashboard-spinner {
+  width: 29px; /* 32px * 0.9 */
+  height: 29px; /* 32px * 0.9 */
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: dashboard-spin 1s linear infinite;
+}
+
+@keyframes dashboard-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .dashboard-sidebar {
+    width: 216px; /* 240px * 0.9 */
+  }
+  
+  .dashboard-main {
+    padding: 14px; /* 16px * 0.9 */
+  }
+  
+  .dashboard-content {
+    padding: 22px; /* 24px * 0.9 */
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr)); /* 240px * 0.9 */
+    gap: 14px; /* 16px * 0.9 */
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: row; /* Keep flex-row for mobile overlay to work */
+    position: relative;
+  }
+  
+  /* Mobile sidebar is handled by .mobile class */
+  .dashboard-sidebar.mobile {
+    /* Styles already defined above */
+  }
+  
+  .sidebar-nav-item {
+    margin: 2px 7px; /* 2px 8px * 0.9 */
+  }
+  
+  .dashboard-main {
+    padding: 11px; /* 12px * 0.9 */
+    width: 100% !important; /* Take full width on mobile */
+    margin-left: 0 !important; /* Override any sidebar margin */
+    flex: 1;
+  }
+  
+  .dashboard-content {
+    padding: 14px; /* 16px * 0.9 */
+    border-radius: 11px; /* 12px * 0.9 */
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 11px; /* 12px * 0.9 */
+  }
+  
+  .stats-card {
+    padding: 14px; /* 16px * 0.9 */
+  }
+  
+  /* Mobile toggle button adjustments */
+  .sidebar-header {
+    padding: 14px; /* 16px * 0.9 */
+  }
+  
+  .sidebar-toggle-btn {
+    width: 32px; /* 36px * 0.9 */
+    height: 32px; /* 36px * 0.9 */
+  }
+}
+
+/* Dashboard Sub-Cards */
+.dashboard-asset-item,
+.dashboard-activity-item {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dashboard-asset-item:hover,
+.dashboard-activity-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.08);
+}
+
+/* Dashboard Section Links - Remove hover effects */
+.dashboard-section-link {
+  transition: color 0.3s ease;
+}
+
+.dashboard-section-link:hover {
+  color: #ffffff !important;
+}
+
+/* Tooltip styles for collapsed sidebar */
+.dashboard-sidebar.collapsed .sidebar-nav-link[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 1001;
+  margin-left: 8px;
+  pointer-events: none;
+  opacity: 0;
+  animation: tooltipFadeIn 0.2s ease 0.5s forwards;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-link[title]:hover::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: rgba(0, 0, 0, 0.9);
+  z-index: 1001;
+  margin-left: 2px;
+  pointer-events: none;
+  opacity: 0;
+  animation: tooltipFadeIn 0.2s ease 0.5s forwards;
+}
+
+@keyframes tooltipFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Prevent text selection on toggle button */
+.sidebar-toggle-btn {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Focus styles for accessibility */
+.sidebar-toggle-btn:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+.dashboard-sidebar.collapsed .sidebar-nav-link:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-sidebar,
+  .dashboard-main,
+  .sidebar-toggle-btn,
+  .dashboard-mobile-overlay,
+  .sidebar-nav-item,
+  .sidebar-nav-link,
+  .sidebar-nav-icon {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .dashboard-card,
+  .stats-card,
+  .dashboard-sidebar {
+    border-color: #ffffff;
+    background: #000000;
+  }
+  
+  .sidebar-nav-link,
+  .stats-value,
+  .stats-label {
+    color: #ffffff;
+  }
+}
+
+/* Dashboard页面内容元素尺寸调整 (90%缩放) */
+.dashboard-content h1.text-2xl {
+  font-size: 1.35rem !important; /* text-2xl (1.5rem) * 0.9 */
+}
+
+.dashboard-content h2.text-lg,
+.dashboard-content h3.text-lg {
+  font-size: 1.02rem !important; /* text-lg (1.125rem) * 0.9 */
+}
+
+.dashboard-content .text-3xl {
+  font-size: 1.7rem !important; /* text-3xl (1.875rem) * 0.9 */
+}
+
+.dashboard-content .text-sm {
+  font-size: 0.79rem !important; /* text-sm (0.875rem) * 0.9 */
+}
+
+.dashboard-content .w-4.h-4 {
+  width: 14px !important; /* w-4 (16px) * 0.9 */
+  height: 14px !important; /* h-4 (16px) * 0.9 */
+}
+
+.dashboard-content .w-6.h-6 {
+  width: 20px !important; /* w-6 (24px) * 0.9 */
+  height: 20px !important; /* h-6 (24px) * 0.9 */
+}
+
+.dashboard-content .w-8.h-8 {
+  width: 26px !important; /* w-8 (32px) * 0.9 */
+  height: 26px !important; /* h-8 (32px) * 0.9 */
+}
+
+.dashboard-content .space-x-2 > * + * {
+  margin-left: 0.45rem !important; /* space-x-2 (0.5rem) * 0.9 */
+}
+
+.dashboard-content .space-x-3 > * + * {
+  margin-left: 0.67rem !important; /* space-x-3 (0.75rem) * 0.9 */
+}
+
+.dashboard-content .space-y-3 > * + * {
+  margin-top: 0.67rem !important; /* space-y-3 (0.75rem) * 0.9 */
+}
+
+.dashboard-content .space-y-4 > * + * {
+  margin-top: 0.9rem !important; /* space-y-4 (1rem) * 0.9 */
+}
+
+.dashboard-content .space-y-6 > * + * {
+  margin-top: 1.35rem !important; /* space-y-6 (1.5rem) * 0.9 */
+}
+
+.dashboard-content .gap-4 {
+  gap: 0.9rem !important; /* gap-4 (1rem) * 0.9 */
+}
+
+.dashboard-content .gap-6 {
+  gap: 1.35rem !important; /* gap-6 (1.5rem) * 0.9 */
+}
+
+.dashboard-content .mb-2 {
+  margin-bottom: 0.45rem !important; /* mb-2 (0.5rem) * 0.9 */
+}
+
+.dashboard-content .mb-6 {
+  margin-bottom: 1.35rem !important; /* mb-6 (1.5rem) * 0.9 */
+}
+
+.dashboard-content .mt-1 {
+  margin-top: 0.225rem !important; /* mt-1 (0.25rem) * 0.9 */
+}
+
+.dashboard-content .mt-4 {
+  margin-top: 0.9rem !important; /* mt-4 (1rem) * 0.9 */
+}
+
+.dashboard-content .p-3 {
+  padding: 0.67rem !important; /* p-3 (0.75rem) * 0.9 */
+}
+
+.dashboard-content .py-4 {
+  padding-top: 0.9rem !important; /* py-4 (1rem) * 0.9 */
+  padding-bottom: 0.9rem !important;
+}
+
+.dashboard-content .rounded-lg {
+  border-radius: 0.45rem !important; /* rounded-lg (0.5rem) * 0.9 */
+} 

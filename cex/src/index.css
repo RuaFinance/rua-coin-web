@@ -749,3 +749,7 @@
   background-color: #f0f0f0 !important;
   color: black !important;
 }
+
+@import './styles/footer.css';
+@import './styles/mobileAlert.css';
+@import './styles/userDashboard.css';

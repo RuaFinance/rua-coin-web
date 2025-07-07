@@ -15,6 +15,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import Layout from '../layouts/Layout';
+import UserLayout from '../layouts/UserLayout';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -22,6 +23,7 @@ import RegisterPage from '../pages/RegisterPage';
 import TradingPage from '../pages/TradingPage';
 import FooterTestPage from '../pages/FooterTestPage';
 import DeviceTestPage from '../pages/DeviceTestPage';
+import UserDashboard from '../pages/UserDashboard';
 
 import { BASE_URL } from './config';
 
@@ -53,6 +55,72 @@ const router = createBrowserRouter(
       {
         path: 'device-test',
         element: <DeviceTestPage />,
+      },
+      {
+        path: 'user',
+        element: <UserLayout />,
+        children: [
+          {
+            path: 'dashboard',
+            element: <UserDashboard />,
+          },
+          {
+            path: 'assets/spot',
+            element: <div className="text-white p-8">现货账户页面 - 开发中</div>,
+          },
+          {
+            path: 'assets/futures',
+            element: <div className="text-white p-8">合约账户页面 - 开发中</div>,
+          },
+          {
+            path: 'assets/earn',
+            element: <div className="text-white p-8">理财账户页面 - 开发中</div>,
+          },
+          {
+            path: 'assets/history',
+            element: <div className="text-white p-8">资金流水页面 - 开发中</div>,
+          },
+          {
+            path: 'orders/spot',
+            element: <div className="text-white p-8">现货订单页面 - 开发中</div>,
+          },
+          {
+            path: 'orders/futures',
+            element: <div className="text-white p-8">合约订单页面 - 开发中</div>,
+          },
+          {
+            path: 'orders/history',
+            element: <div className="text-white p-8">订单历史页面 - 开发中</div>,
+          },
+          {
+            path: 'account',
+            element: <div className="text-white p-8">账户信息页面 - 开发中</div>,
+          },
+          {
+            path: 'security',
+            element: <div className="text-white p-8">安全设置页面 - 开发中</div>,
+          },
+          {
+            path: 'api',
+            element: <div className="text-white p-8">API管理页面 - 开发中</div>,
+          },
+          {
+            path: 'rewards',
+            element: <div className="text-white p-8">奖励页面 - 开发中</div>,
+          },
+          {
+            path: 'settings/preferences',
+            element: <div className="text-white p-8">偏好设置页面 - 开发中</div>,
+          },
+          {
+            path: 'settings/notifications',
+            element: <div className="text-white p-8">通知设置页面 - 开发中</div>,
+          },
+          {
+            path: 'help',
+            element: <div className="text-white p-8">帮助中心页面 - 开发中</div>,
+          },
+        ],
       },
       {
         path: '*',

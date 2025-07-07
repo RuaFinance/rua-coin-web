@@ -253,7 +253,7 @@ const Header = () => {
               <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:futures')}
               </Link>
-              <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link to="/user/assets/spot" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:assets')}
               </Link>
               <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -421,21 +421,24 @@ const Header = () => {
 
               {isUserMenuOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50"
+                  className="absolute left-1/2 -translate-x-1/2 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50"
                   onMouseLeave={() => setIsUserMenuOpen(false)}
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
-                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
+                  <Link to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg">
+                    {t('common:userDashboard.overview')}
+                  </Link>
+                  <Link to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
                     {t('header:profile')}
                   </Link>
-                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  <Link to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     {t('header:security')}
                   </Link>
-                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  <Link to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     {t('header:apiManagement')}
                   </Link>
                   {/* <hr className="my-1 border-slate-700" /> */}
-                  <Link to="/todo" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
+                  <Link to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg">
                     {t('header:logout')}
                   </Link>
                 </div>
