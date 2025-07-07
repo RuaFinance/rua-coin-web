@@ -41,6 +41,7 @@ import {
 
 import { formatUrl } from '../router/config';
 import { symbolSet } from '../config/SymbolSetConfig';
+import AssetValueChart from '../components/AssetValueChart';
 
 const UserDashboard = () => {
   const { t } = useTranslation('common');
@@ -180,14 +181,15 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      {/* Balance Overview */}
+      {/* Balance Overview with Chart */}
       <div className="dashboard-card">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-white">{t('userDashboard.totalAssets')}</h2>
           <Wallet className="w-6 h-6 text-blue-400" />
         </div>
         
-        <div className="space-y-4">
+        <div className="space-y-6">
+          {/* Balance Summary */}
           <div>
             <div className="flex items-baseline space-x-2">
               <span className="text-3xl font-bold text-white">
@@ -211,6 +213,14 @@ const UserDashboard = () => {
               </div>
             </div>
           </div>
+
+          {/* Asset Value Chart */}
+          <AssetValueChart 
+            currentValue={dashboardData.totalBalance.usd}
+            isBalanceVisible={isBalanceVisible}
+            className="w-full"
+            showHeader={false}
+          />
         </div>
       </div>
 

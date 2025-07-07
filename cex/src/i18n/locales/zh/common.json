@@ -111,5 +111,38 @@
     "collapseSidebar": "收起侧边栏",
     "expandSidebar": "展开侧边栏",
     "sidebarToggle": "切换侧边栏"
+  },
+  "assetChart": {
+    "title": "总资产估值",
+    "1day": "1日",
+    "1week": "1周", 
+    "1month": "1月",
+    "6months": "半年",
+    "hiddenMessage": "资产数据已隐藏",
+    "loading": "加载图表数据中...",
+    "noData": "暂无图表数据",
+    "error": "加载图表数据失败",
+    "timeRange": "时间范围",
+    "currentValue": "当前估值",
+    "change": "涨跌幅",
+    "high": "最高",
+    "low": "最低",
+    "volume": "成交量",
+    "marketCap": "市值",
+    "tooltip": {
+      "time": "时间",
+      "value": "估值",
+      "change": "涨跌"
+    },
+    "periods": {
+      "1D": "1天",
+      "1W": "1周", 
+      "1M": "1个月",
+      "6M": "6个月"
+    },
+    "refresh": "刷新图表",
+    "fullscreen": "全屏",
+    "download": "下载",
+    "share": "分享"
   }
 } 

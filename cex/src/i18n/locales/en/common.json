@@ -111,5 +111,38 @@
     "collapseSidebar": "Collapse Sidebar",
     "expandSidebar": "Expand Sidebar",
     "sidebarToggle": "Toggle Sidebar"
+  },
+  "assetChart": {
+    "title": "Total Asset Value",
+    "1day": "1D",
+    "1week": "1W", 
+    "1month": "1M",
+    "6months": "6M",
+    "hiddenMessage": "Asset data is hidden",
+    "loading": "Loading chart data...",
+    "noData": "No chart data available",
+    "error": "Failed to load chart data",
+    "timeRange": "Time Range",
+    "currentValue": "Current Value",
+    "change": "Change",
+    "high": "High",
+    "low": "Low",
+    "volume": "Volume",
+    "marketCap": "Market Cap",
+    "tooltip": {
+      "time": "Time",
+      "value": "Value",
+      "change": "Change"
+    },
+    "periods": {
+      "1D": "1 Day",
+      "1W": "1 Week", 
+      "1M": "1 Month",
+      "6M": "6 Months"
+    },
+    "refresh": "Refresh Chart",
+    "fullscreen": "Fullscreen",
+    "download": "Download",
+    "share": "Share"
   }
 } 
