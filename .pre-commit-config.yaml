@@ -6,4 +6,4 @@ repos:
         entry: python3 scripts/add_license_header.py
         language: system
         types: [file]
-        files: ^cex/src/.*\.(jsx|tsx|sh)$
+        files: ^cex/src/.*\.(jsx|js|tsx|ts|sh)$

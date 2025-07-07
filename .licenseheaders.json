@@ -2,6 +2,8 @@
     "paths": [
       "cex/src/**/*.jsx",
       "cex/src/**/*.tsx",
+      "cex/src/**/*.js",
+      "cex/src/**/*.ts",
       "**/*.sh"
     ],
     "exclude": [
@@ -10,14 +12,20 @@
       "**/build/**",
       "**/*.min.js"
     ],
-    "extensions": [".jsx", ".tsx", ".sh"],
+    "extensions": [".jsx", ".tsx", ".js", ".ts", ".sh"],
     "comment_style": {
         ".jsx": {
             "line_comment": "//"
-      },
+        },
         ".tsx": {
             "line_comment": "//"
-      },
+        },
+        ".js": {
+            "line_comment": "//"
+        },
+        ".ts": {
+            "line_comment": "//"
+        },
         ".sh": {
             "line_comment": "#"
         }
