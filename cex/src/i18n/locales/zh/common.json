@@ -44,5 +44,21 @@
   "customerSupport": "客户支持",
   "realTimeData": "实时数据",
   "globalService": "全球服务",
-  "actions": "操作"
+  "actions": "操作",
+  "mobileAlert": {
+    "title": "检测到移动设备",
+    "description": "检测到您可能使用手机/移动设备浏览，手机端的样式可能会有点小问题，为了保证浏览体验，建议使用PC端。",
+    "tabletTitle": "检测到平板设备",
+    "tabletDescription": "检测到您可能使用平板设备浏览，虽然平板体验比手机好一些，但为了获得最佳的交易体验，仍建议使用PC端。",
+    "understood": "知道了",
+    "neverShowAgain": "不再提示"
+  },
+  "browserAlert": {
+    "title": "浏览器兼容性提示",
+    "description": "您的浏览器可能不支持所有功能。为了获得最佳体验，请使用最新版本的Chrome、Firefox、Safari或Edge浏览器。"
+  },
+  "performanceAlert": {
+    "title": "性能提示",
+    "description": "您的设备可能会出现较慢的性能表现。建议使用更强大的设备或关闭其他应用程序以获得更好的性能。"
+  }
 } 

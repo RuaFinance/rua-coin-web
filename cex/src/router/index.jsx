@@ -21,6 +21,7 @@ import NotFoundPage from '../pages/NotFoundPage';
 import RegisterPage from '../pages/RegisterPage';
 import TradingPage from '../pages/TradingPage';
 import FooterTestPage from '../pages/FooterTestPage';
+import DeviceTestPage from '../pages/DeviceTestPage';
 
 import { BASE_URL } from './config';
 
@@ -48,6 +49,10 @@ const router = createBrowserRouter(
       {
         path: 'footer-test',
         element: <FooterTestPage />,
+      },
+      {
+        path: 'device-test',
+        element: <DeviceTestPage />,
       },
       {
         path: '*',

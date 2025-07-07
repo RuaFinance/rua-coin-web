@@ -1,0 +1,143 @@
+/**
+ * 移动设备提示样式
+ */
+
+.mobile-device-alert {
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-device-alert .ant-notification-notice-message {
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.mobile-device-alert .ant-notification-notice-description {
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.mobile-device-alert .ant-notification-notice-icon {
+  margin-top: 4px;
+}
+
+.mobile-device-alert .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.mobile-device-alert .ant-btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border: none;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.mobile-device-alert .ant-btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.mobile-device-alert .ant-btn-default {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(107, 114, 128, 0.3);
+  color: #4b5563;
+}
+
+.mobile-device-alert .ant-btn-default:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(107, 114, 128, 0.5);
+  color: #374151;
+  transform: translateY(-1px);
+}
+
+/* 暗色主题下的样式 */
+.dark .mobile-device-alert {
+  background: rgba(17, 24, 39, 0.95);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.dark .mobile-device-alert .ant-notification-notice-message {
+  color: #f9fafb;
+}
+
+.dark .mobile-device-alert .ant-notification-notice-description {
+  color: #e5e7eb;
+}
+
+.dark .mobile-device-alert .ant-btn-default {
+  background: rgba(55, 65, 81, 0.8);
+  border: 1px solid rgba(107, 114, 128, 0.3);
+  color: #e5e7eb;
+}
+
+.dark .mobile-device-alert .ant-btn-default:hover {
+  background: rgba(55, 65, 81, 0.95);
+  border-color: rgba(107, 114, 128, 0.5);
+  color: #f9fafb;
+}
+
+/* 响应式设计 */
+@media (max-width: 640px) {
+  .mobile-device-alert {
+    width: calc(100vw - 32px) !important;
+    max-width: 350px;
+    margin: 0 16px;
+  }
+  
+  .mobile-device-alert .ant-notification-notice-message {
+    font-size: 15px;
+  }
+  
+  .mobile-device-alert .ant-notification-notice-description {
+    font-size: 13px;
+  }
+  
+  .mobile-device-alert .ant-btn {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.mobile-device-alert {
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+/* 关闭按钮样式 */
+.mobile-device-alert .ant-notification-notice-close {
+  right: 12px;
+  top: 12px;
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+.mobile-device-alert .ant-notification-notice-close:hover {
+  color: #6b7280;
+}
+
+.dark .mobile-device-alert .ant-notification-notice-close {
+  color: #6b7280;
+}
+
+.dark .mobile-device-alert .ant-notification-notice-close:hover {
+  color: #9ca3af;
+} 

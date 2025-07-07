@@ -17,6 +17,7 @@ import { Outlet } from 'react-router-dom';
 
 import Header from '../components/Header';
 import FooterAnimation from '../components/FooterAnimation';
+import AlertManager from '../components/AlertManager';
 import { FooterProvider } from '../contexts/FooterContext';
 
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
           <Outlet />
         </main>
         <FooterAnimation />
+        <AlertManager />
       </div>
     </FooterProvider>
   );

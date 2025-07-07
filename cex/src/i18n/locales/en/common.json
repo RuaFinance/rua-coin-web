@@ -44,5 +44,21 @@
   "customerSupport": "Customer Support",
   "realTimeData": "Real-time Data",
   "globalService": "Global Service",
-  "actions": "Actions"
+  "actions": "Actions",
+  "mobileAlert": {
+    "title": "Mobile Device Detected",
+    "description": "You appear to be using a mobile device. Please note that mobile styling may have some issues. For the best browsing experience, we recommend using a desktop PC.",
+    "tabletTitle": "Tablet Device Detected",
+    "tabletDescription": "You appear to be using a tablet device. While tablet experience is better than mobile, we still recommend using a desktop PC for the optimal trading experience.",
+    "understood": "Got it",
+    "neverShowAgain": "Don't show again"
+  },
+  "browserAlert": {
+    "title": "Browser Compatibility Notice",
+    "description": "Your browser may not support all features. For the best experience, please use the latest version of Chrome, Firefox, Safari, or Edge."
+  },
+  "performanceAlert": {
+    "title": "Performance Notice",
+    "description": "Your device may experience slower performance. Consider using a more powerful device or closing other applications for better performance."
+  }
 } 
