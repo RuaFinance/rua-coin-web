@@ -34,6 +34,22 @@ import enAuth from './locales/en/auth.json';
 import enHome from './locales/en/home.json';
 import enPages from './locales/en/pages.json';
 import enComponents from './locales/en/components.json';
+import jaCommon from './locales/ja/common.json';
+import jaTrading from './locales/ja/trading.json';
+import jaHeader from './locales/ja/header.json';
+import jaFooter from './locales/ja/footer.json';
+import jaAuth from './locales/ja/auth.json';
+import jaHome from './locales/ja/home.json';
+import jaPages from './locales/ja/pages.json';
+import jaComponents from './locales/ja/components.json';
+import koCommon from './locales/ko/common.json';
+import koTrading from './locales/ko/trading.json';
+import koHeader from './locales/ko/header.json';
+import koFooter from './locales/ko/footer.json';
+import koAuth from './locales/ko/auth.json';
+import koHome from './locales/ko/home.json';
+import koPages from './locales/ko/pages.json';
+import koComponents from './locales/ko/components.json';
 
 // 语言资源整合
 const resources = {
@@ -57,6 +73,26 @@ const resources = {
     pages: enPages,
     components: enComponents,
   },
+  ja: {
+    common: jaCommon,
+    trading: jaTrading,
+    header: jaHeader,
+    footer: jaFooter,
+    auth: jaAuth,
+    home: jaHome,
+    pages: jaPages,
+    components: jaComponents,
+  },
+  ko: {
+    common: koCommon,
+    trading: koTrading,
+    header: koHeader,
+    footer: koFooter,
+    auth: koAuth,
+    home: koHome,
+    pages: koPages,
+    components: koComponents,
+  },
 };
 
 // 支持的语言列表
@@ -65,13 +101,29 @@ export const SUPPORTED_LANGUAGES = {
     code: 'zh',
     name: '中文',
     nativeName: '中文',
+    englishName: 'Chinese',
     flag: '🇨🇳',
   },
   en: {
     code: 'en',
     name: 'English',
     nativeName: 'English',
+    englishName: 'English',
     flag: '🇺🇸',
+  },
+  ja: {
+    code: 'ja',
+    name: '日本語',
+    nativeName: '日本語',
+    englishName: 'Japanese',
+    flag: '🇯🇵',
+  },
+  ko: {
+    code: 'ko',
+    name: '한국어',
+    nativeName: '한국어',
+    englishName: 'Korean',
+    flag: '🇰🇷',
   },
 };
 
@@ -190,6 +242,11 @@ export const getLanguageName = (languageCode) => {
 // 获取语言本地名称
 export const getLanguageNativeName = (languageCode) => {
   return SUPPORTED_LANGUAGES[languageCode]?.nativeName || languageCode;
+};
+
+// 获取语言英文名称
+export const getLanguageEnglishName = (languageCode) => {
+  return SUPPORTED_LANGUAGES[languageCode]?.englishName || languageCode;
 };
 
 // 获取语言国旗

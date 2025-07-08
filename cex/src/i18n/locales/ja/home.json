@@ -1,0 +1,15 @@
+{
+  "marketOverview": "マーケット概要",
+  "hotCoins": "人気コイン",
+  "totalMarketCap": "総時価総額",
+  "volume24h": "24時間取引量",
+  "btcDominance": "BTC占有率",
+  "activeCoins": "アクティブコイン",
+  "tradingPairs": "取引ペア",
+  "price": "価格",
+  "change": "変動",
+  "volume": "取引量",
+  "loading": "読み込み中...",
+  "noData": "データなし",
+  "error": "読み込み失敗"
+} 

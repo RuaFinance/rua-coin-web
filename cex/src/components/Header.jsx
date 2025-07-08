@@ -33,7 +33,7 @@ const Header = () => {
     searchBoxMargin: 'ml-auto mr-4', // 搜索框左右margin (ml-auto让搜索框向右靠拢)
     searchBoxMaxWidth: 'max-w-[270px]', // 搜索框最大宽度设为270px
     searchClearButtonColor: 'text-gray-400 hover:text-gray-700', // 清除按钮颜色
-    searchTextColor: 'text-black', // 搜索框文本颜色
+    searchTextColor: 'text-white', // 搜索框文本颜色
     
     // 右侧区域间距
     rightSideSpacing: 'space-x-4',   // 右侧元素间距
@@ -290,7 +290,8 @@ const Header = () => {
                     setIsSearchFocused(false);
                   }
                 }}
-                className={`block w-full pl-10 pr-10 py-2 rounded-md card-inner-form ${headerSpacing.searchTextColor} placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent`}
+                className={`block w-full pl-10 pr-10 rounded-md bg-[#1d1d1d] ${headerSpacing.searchTextColor} placeholder-gray-400 focus:outline-none border border-transparent focus:border-[#efb90b] hover:border-[#efb90b]`}
+                style={{ height: '33px' }}
                 placeholder={t('header:searchPlaceholder')}
               />
               {/* 清除按钮 */}
@@ -487,7 +488,8 @@ const Header = () => {
                   onBlur={() => {
                     setTimeout(() => setIsSearchFocused(false), 200);
                   }}
-                  className={`block w-full pl-10 pr-3 py-2 rounded-md card-inner-form ${headerSpacing.searchTextColor} placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-white focus:border-transparent`}
+                  className={`block w-full pl-10 pr-3 rounded-md bg-[#1d1d1d] ${headerSpacing.searchTextColor} placeholder-gray-400 focus:outline-none border border-transparent focus:border-[#efb90b] hover:border-[#efb90b]`}
+                  style={{ height: '33px' }}
                   placeholder={t('header:mobileSearchPlaceholder')}
                 />
 

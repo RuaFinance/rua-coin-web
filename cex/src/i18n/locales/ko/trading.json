@@ -1,0 +1,26 @@
+{
+  "trade": "거래",
+  "buy": "매수",
+  "sell": "매도",
+  "price": "가격",
+  "amount": "수량",
+  "total": "총액",
+  "orderBook": "주문서",
+  "recentTrades": "최근 거래",
+  "openOrders": "미체결 주문",
+  "tradeHistory": "거래 기록",
+  "available": "사용 가능",
+  "balance": "잔고",
+  "fee": "수수료",
+  "submitOrder": "주문 제출",
+  "cancelOrder": "주문 취소",
+  "stop_loss": "손절매",
+  "oco_order": "OCO 주문",
+  "orderTypes": {
+    "limit": "지정가 주문",
+    "market": "시장가 주문",
+    "stop": "스톱 주문"
+  },
+  "actualPay": "실제 지불",
+  "actualReceive": "실제 수령"
+} 

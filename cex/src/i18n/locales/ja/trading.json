@@ -1,0 +1,26 @@
+{
+  "trade": "取引",
+  "buy": "買い",
+  "sell": "売り",
+  "price": "価格",
+  "amount": "数量",
+  "total": "合計",
+  "orderBook": "オーダーブック",
+  "recentTrades": "最近の取引",
+  "openOrders": "有効注文",
+  "tradeHistory": "取引履歴",
+  "available": "利用可能",
+  "balance": "残高",
+  "fee": "手数料",
+  "submitOrder": "注文を送信",
+  "cancelOrder": "注文をキャンセル",
+  "stop_loss": "ストップロス",
+  "oco_order": "OCO注文",
+  "orderTypes": {
+    "limit": "指値注文",
+    "market": "成行注文",
+    "stop": "ストップ注文"
+  },
+  "actualPay": "実際の支払い",
+  "actualReceive": "実際の受け取り"
+} 

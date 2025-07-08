@@ -20,7 +20,8 @@ import {
   changeLanguage, 
   getCurrentLanguage,
   getLanguageFlag,
-  getLanguageNativeName 
+  getLanguageNativeName,
+  getLanguageEnglishName 
 } from '../../i18n';
 
 /**
@@ -47,9 +48,11 @@ const LanguageSwitcher = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(getCurrentLanguage());
   const [searchTerm, setSearchTerm] = useState('');
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
   const searchInputRef = useRef(null);
+  const optionRefs = useRef([]);
 
   // 监听语言变化
   useEffect(() => {
@@ -120,8 +123,14 @@ const LanguageSwitcher = ({ className = '' }) => {
   useEffect(() => {
     if (!isOpen) {
       setSearchTerm('');
+      setHighlightedIndex(-1);
     }
   }, [isOpen]);
+
+  // 搜索词改变时重置高亮索引
+  useEffect(() => {
+    setHighlightedIndex(-1);
+  }, [searchTerm]);
 
   // 过滤语言列表
   const getFilteredLanguages = () => {
@@ -133,6 +142,7 @@ const LanguageSwitcher = ({ className = '' }) => {
     return Object.values(SUPPORTED_LANGUAGES).filter(language =>
       language.name.toLowerCase().includes(term) ||
       language.nativeName.toLowerCase().includes(term) ||
+      language.englishName.toLowerCase().includes(term) ||
       language.code.toLowerCase().includes(term)
     );
   };
@@ -154,6 +164,65 @@ const LanguageSwitcher = ({ className = '' }) => {
     }
   };
 
+  // 搜索框键盘导航支持
+  const handleSearchKeyDown = (event) => {
+    const filteredLanguages = getFilteredLanguages();
+    
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        setHighlightedIndex(prev => {
+          const newIndex = prev < filteredLanguages.length - 1 ? prev + 1 : 0;
+          // 滚动到视图内
+          setTimeout(() => {
+            optionRefs.current[newIndex]?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest'
+            });
+          }, 0);
+          return newIndex;
+        });
+        break;
+        
+      case 'ArrowUp':
+        event.preventDefault();
+        setHighlightedIndex(prev => {
+          const newIndex = prev > 0 ? prev - 1 : filteredLanguages.length - 1;
+          // 滚动到视图内
+          setTimeout(() => {
+            optionRefs.current[newIndex]?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest'
+            });
+          }, 0);
+          return newIndex;
+        });
+        break;
+        
+      case 'Enter':
+        event.preventDefault();
+        if (highlightedIndex >= 0 && highlightedIndex < filteredLanguages.length) {
+          handleLanguageChange(filteredLanguages[highlightedIndex].code);
+        }
+        break;
+        
+      case 'Escape':
+        event.preventDefault();
+        setIsOpen(false);
+        setSearchTerm('');
+        setHighlightedIndex(-1);
+        buttonRef.current?.focus();
+        break;
+        
+      default:
+        // 对于其他键，重置高亮索引
+        if (event.key.length === 1) {
+          setHighlightedIndex(-1);
+        }
+        break;
+    }
+  };
+
   // 键盘导航支持
   const handleKeyDown = (event, languageCode) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -166,8 +235,29 @@ const LanguageSwitcher = ({ className = '' }) => {
   const currentLangInfo = SUPPORTED_LANGUAGES[currentLanguage];
 
   return (
-    <div className={`relative ${className}`}>
-      {/* 语言切换按钮 */}
+    <>
+      {/* 自定义滚动条样式 */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .language-scrollbar::-webkit-scrollbar {
+            width: 6px;
+          }
+          .language-scrollbar::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 3px;
+          }
+          .language-scrollbar::-webkit-scrollbar-thumb {
+            background: #4a4a4a;
+            border-radius: 3px;
+          }
+          .language-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5a;
+          }
+        `
+      }} />
+      
+      <div className={`relative ${className}`}>
+        {/* 语言切换按钮 */}
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
@@ -202,7 +292,8 @@ const LanguageSwitcher = ({ className = '' }) => {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg border border-[#424242] z-50 animate-in fade-in-0 zoom-in-95 duration-200"
+          className="absolute right-0 mt-2 bg-[#1d1d1d] rounded-lg shadow-lg border border-[#424242] z-50 animate-in fade-in-0 zoom-in-95 duration-200"
+          style={{ width: '220px' }}
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="language-menu"
@@ -224,28 +315,45 @@ const LanguageSwitcher = ({ className = '' }) => {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
                   placeholder={t('header:searchLanguages')}
-                  className="block w-full pl-10 pr-3 py-2 text-sm bg-white border 
+                  className="block pl-10 pr-3 text-sm bg-white border 
                   border-[#424242] rounded-md text-black placeholder-gray-400 focus:outline-none"
+                  style={{ width: '195px', height: '30px' }}
                 />
               </div>
             </div>
             
             {/* 语言选项列表 */}
-            <div className="max-h-48 overflow-y-auto">
-              {getFilteredLanguages().length > 0 ? (
-                getFilteredLanguages().map((language) => (
+            <div 
+              className="max-h-48 overflow-y-auto language-scrollbar"
+              style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#4a4a4a #2a2a2a'
+              }}
+            >
+              {(() => {
+                // 清理旧的refs
+                optionRefs.current = [];
+                const filteredLanguages = getFilteredLanguages();
+                return filteredLanguages.length > 0 ? (
+                filteredLanguages.map((language, index) => (
                   <button
                     key={language.code}
+                    ref={(el) => (optionRefs.current[index] = el)}
                     onClick={() => handleLanguageChange(language.code)}
+                    onMouseEnter={() => setHighlightedIndex(index)}
                     onKeyDown={(e) => handleKeyDown(e, language.code)}
-                    className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[#3a3a3a] transition-colors duration-150 focus:outline-none focus:bg-[#3a3a3a] ${
-                      currentLanguage === language.code 
-                        ? 'bg-[#3a3a3a] text-white' 
-                        : 'text-gray-300'
+                    className={`w-full flex items-center justify-between px-4 py-2 text-left transition-colors duration-150 focus:outline-none ${
+                      currentLanguage === language.code
+                        ? 'bg-[#1d1d1d] text-[#efb90b]' 
+                        : highlightedIndex === index
+                        ? 'bg-[#3a3a3a] text-white'
+                        : 'text-gray-300 hover:bg-[#3a3a3a] hover:text-white'
                     }`}
                     role="menuitem"
                     aria-selected={currentLanguage === language.code}
+                    aria-highlighted={highlightedIndex === index}
                   >
                     <div className="flex items-center space-x-3">
                       {/* 语言旗帜 */}
@@ -258,28 +366,34 @@ const LanguageSwitcher = ({ className = '' }) => {
                         <span className="text-sm font-medium">
                           {language.nativeName}
                         </span>
-                        <span className="text-xs text-gray-500">
-                          {language.name}
+                        <span className={`text-xs ${
+                          currentLanguage === language.code
+                            ? 'text-[#efb90b] opacity-75'
+                            : 'text-gray-500'
+                        }`}>
+                          {language.englishName}
                         </span>
                       </div>
                     </div>
                     
                     {/* 选中状态指示器 */}
                     {currentLanguage === language.code && (
-                      <Check size={16} className="text-blue-400 flex-shrink-0" />
+                      <Check size={16} className="text-[#efb90b] flex-shrink-0" />
                     )}
                   </button>
                 ))
-              ) : (
-                <div className="px-4 py-3 text-center text-sm text-gray-400">
-                  {t('header:noLanguagesFound')}
-                </div>
-              )}
+                ) : (
+                  <div className="px-4 py-3 text-center text-sm text-gray-400">
+                    {t('header:noLanguagesFound')}
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 
