@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import './styles/footer.css';
+@import './styles/mobileAlert.css';
+@import './styles/userDashboard.css';
 
 @tailwind base;
 @tailwind components;
@@ -749,7 +752,3 @@
   background-color: #f0f0f0 !important;
   color: black !important;
 }
-
-@import './styles/footer.css';
-@import './styles/mobileAlert.css';
-@import './styles/userDashboard.css';

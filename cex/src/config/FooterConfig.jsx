@@ -135,7 +135,7 @@ export const FOOTER_CONTENT_CONFIG = {
   ],
   
   // 公司链接
-  company: [
+  companyLinks: [
     { name: "关于我们", url: "#", icon: "Users" },
     { name: "新闻公告", url: "#", icon: "BookOpen" },
     { name: "招聘信息", url: "#", icon: "Users" },
