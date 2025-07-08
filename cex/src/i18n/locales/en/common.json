@@ -110,7 +110,8 @@
     "notifications": "Notifications",
     "collapseSidebar": "Collapse Sidebar",
     "expandSidebar": "Expand Sidebar",
-    "sidebarToggle": "Toggle Sidebar"
+    "sidebarToggle": "Toggle Sidebar",
+    "tradingCalendar": "Trading Calendar"
   },
   "assetChart": {
     "title": "Total Asset Value",

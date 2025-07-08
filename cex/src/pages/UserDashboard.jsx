@@ -42,6 +42,7 @@ import {
 import { formatUrl } from '../router/config';
 import { symbolSet } from '../config/SymbolSetConfig';
 import AssetValueChart from '../components/AssetValueChart';
+import TradingCalendarHeatMap from '../components/TradingCalendarHeatMap';
 
 const UserDashboard = () => {
   const { t } = useTranslation('common');
@@ -221,6 +222,18 @@ const UserDashboard = () => {
             className="w-full"
             showHeader={false}
           />
+        </div>
+      </div>
+
+      {/* Trading Calendar */}
+      <div className="dashboard-card">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-semibold text-white">{t('userDashboard.tradingCalendar')}</h2>
+          <Activity className="w-6 h-6 text-purple-400" />
+        </div>
+        
+        <div className="trading-calendar-wrapper">
+          <TradingCalendarHeatMap className="w-full" />
         </div>
       </div>
 

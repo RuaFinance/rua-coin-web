@@ -93,18 +93,33 @@
   cursor: pointer;
   z-index: 1001;
   box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   backdrop-filter: blur(8px);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: none;
 }
 
-.mobile-sidebar-fab:hover {
+.mobile-sidebar-fab:hover:not(.dragging) {
   background: rgba(59, 130, 246, 1);
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
 }
 
-.mobile-sidebar-fab:active {
+.mobile-sidebar-fab:active:not(.dragging) {
   transform: scale(0.95);
+}
+
+/* 拖动状态样式 */
+.mobile-sidebar-fab.dragging {
+  transform: scale(1.1);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.6);
+  transition: none !important; /* 拖动时禁用所有过渡动画 */
+  z-index: 1002;
 }
 
 /* 只在移动端且sidebar收起时显示悬浮按钮 */
@@ -1403,5 +1418,226 @@
   
   .chart-tooltip {
     background: #000000;
+  }
+}
+
+/* Trading Calendar Styles */
+.trading-calendar-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0 8px 0;
+  border-radius: 8px;
+  background: #f8f9fa;
+  backdrop-filter: blur(8px);
+  border: 1px solid #e0e0e0;
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #e0e0e0;
+  scroll-behavior: smooth;
+}
+
+.trading-calendar-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.trading-calendar-wrapper::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 3px;
+}
+
+.trading-calendar-wrapper::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.trading-calendar-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+.trading-calendar-container {
+  position: relative;
+  width: 880px;
+  max-width: 100%;
+  min-height: 220px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.calendar-content {
+  position: relative;
+  width: 800px;
+  flex-shrink: 0;
+}
+
+.calendar-chart-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.trading-calendar-chart {
+  position: relative;
+  z-index: 1;
+}
+
+.legend-text {
+  margin: 0 6px;
+}
+
+.legend-colors {
+  display: flex;
+  gap: 2px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid #e5e7eb;
+}
+
+/* 年份选择器样式 */
+.calendar-year-selector {
+  display: flex !important;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 70px;
+  padding: 8px;
+  background: #f8f9fa;
+  /* border: 1px solid #e5e7eb; */
+  border-radius: 8px;
+  /* box-shadow: 0 2px 4px #0000000d; */
+  flex-shrink: 0;
+}
+
+.year-btn {
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  background: #f8f9fa !important;
+  color: #374151 !important;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  display: block !important;
+  width: 100%;
+}
+
+.year-btn:hover {
+  background: #f6f8fa;
+  border-color: #d1d5db;
+  /* transform: translateY(-1px); */
+}
+
+.year-btn.active {
+  background: #0a69da !important;
+  color: #ffffff !important;
+  border-color: #0a69da;
+  box-shadow: 0 2px 4px #0a69da33;
+}
+
+/* Trading Calendar Responsive Styles */
+@media (max-width: 1024px) {
+  .trading-calendar-wrapper {
+    padding: 2px 0 6px 0;
+  }
+  
+  .trading-calendar-chart {
+    height: 180px !important;
+  }
+  
+  .legend-color {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .trading-calendar-wrapper {
+    margin: 0 -16px;
+    padding: 2px 16px 6px 16px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  
+  .trading-calendar-container {
+    flex-direction: row;
+    gap: 12px;
+    width: 872px;
+    max-width: none;
+    min-width: 872px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .calendar-content {
+    width: 800px;
+    flex-shrink: 0;
+  }
+  
+  .calendar-year-selector {
+    flex-direction: column !important;
+    gap: 3px;
+    min-width: 60px;
+    width: 60px;
+    flex-shrink: 0;
+    padding: 6px;
+  }
+  
+  .year-btn {
+    padding: 4px 6px;
+    min-width: auto;
+    font-size: 11px;
+  }
+  
+  .trading-calendar-chart {
+    height: 200px !important;
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trading-calendar-container {
+    gap: 8px;
+    width: 868px;
+    min-width: 868px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .calendar-content {
+    width: 800px;
+  }
+  
+  .calendar-year-selector {
+    min-width: 52px;
+    width: 52px;
+    gap: 2px;
+    padding: 4px;
+  }
+  
+  .trading-calendar-chart {
+    height: 200px !important;
+    min-width: 600px;
+  }
+  
+  .legend-color {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .year-btn {
+    font-size: 10px;
+    padding: 3px 4px;
+    min-width: auto;
   }
 } 

@@ -71,26 +71,26 @@ const AssetValueChart = ({
 
     switch (period) {
       case '1D':
-        dataPoints = 25; // 25 points for 24 hours (every hour + start point)
-        timeInterval = 60; // minutes
+        dataPoints = 145; // 24 hours with 10-minute intervals (24*60/10 + 1)
+        timeInterval = 10; // 10 minutes
         formatString = 'HH:mm';
         startValue = currentValue * 0.98; // Start 2% lower
         break;
       case '1W':
-        dataPoints = 49; // 7 days * 7 points per day
-        timeInterval = 3 * 60; // Every 3 hours
-        formatString = 'MM/dd HH:mm';
+        dataPoints = 337; // 7 days with 30-minute intervals (7*24*60/30 + 1)
+        timeInterval = 30; // 30 minutes
+        formatString = 'MM/dd';
         startValue = currentValue * 0.94; // Start 6% lower
         break;
       case '1M':
-        dataPoints = 61; // 30 days, every 12 hours
-        timeInterval = 12 * 60; // minutes
+        dataPoints = 721; // 30 days with 1-hour intervals (30*24 + 1)
+        timeInterval = 60; // 1 hour
         formatString = 'MM/dd';
         startValue = currentValue * 0.88; // Start 12% lower
         break;
       case '6M':
-        dataPoints = 181; // Daily for 6 months
-        timeInterval = 24 * 60; // minutes
+        dataPoints = 181; // Daily for 6 months (180 days + 1)
+        timeInterval = 24 * 60; // 1 day in minutes
         formatString = 'MM/dd';
         startValue = currentValue * 0.75; // Start 25% lower
         break;
@@ -230,12 +230,31 @@ const AssetValueChart = ({
     ];
   }, [chartData]);
 
-  // Calculate X-axis interval to show exactly 5 ticks
+  // Calculate X-axis interval to show appropriate number of ticks based on period
   const xAxisInterval = useMemo(() => {
     if (chartData.length <= 5) return 0;
-    // Calculate interval to get exactly 5 evenly distributed points
-    return Math.floor((chartData.length - 1) / 4);
-  }, [chartData]);
+    
+    // Adjust tick count based on period for better readability
+    let targetTicks;
+    switch (selectedPeriod) {
+      case '1D':
+        targetTicks = 6; // Show every 4 hours (240 minutes / 10 = 24 intervals)
+        break;
+      case '1W':
+        targetTicks = 7; // Show each day
+        break;
+      case '1M':
+        targetTicks = 6; // Show every 5 days approximately
+        break;
+      case '6M':
+        targetTicks = 6; // Show every month
+        break;
+      default:
+        targetTicks = 5;
+    }
+    
+    return Math.floor((chartData.length - 1) / (targetTicks - 1));
+  }, [chartData, selectedPeriod]);
 
 
 
