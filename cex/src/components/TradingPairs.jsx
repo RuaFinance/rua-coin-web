@@ -14,11 +14,13 @@
 
 import { TrendingUp, TrendingDown, Star, ArrowUpDown, Volume2, BarChart3 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import { formatUrl } from '../router/config';
 import { symbolSet } from '../config/SymbolSetConfig';
+import { formatUrl } from '../router/config';
+
+import { useLocalizedNavigation } from './LanguageRouter/AdvancedLanguageRouter';
 
 const TradingPairs = () => {
   const { t } = useTranslation(['components', 'common']);
@@ -27,6 +29,7 @@ const TradingPairs = () => {
   const [sortBy, setSortBy] = useState('none');
   const [sortOrder, setSortOrder] = useState('desc');
   const navigate = useNavigate();
+  const { navigateLocalized } = useLocalizedNavigation();
 
   // 模拟交易对数据
   const [tradingPairs, setTradingPairs] = useState([
@@ -150,7 +153,7 @@ const TradingPairs = () => {
 
   const handleCoinClick = (symbol) => {
     const [baseCurrency] = symbol.split('/');
-    navigate(`/trading/${baseCurrency}`);
+    navigateLocalized(`/trading/${baseCurrency}`);
   };
 
   // 模拟价格更新

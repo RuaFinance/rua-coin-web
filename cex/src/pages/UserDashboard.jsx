@@ -22,9 +22,6 @@
  * @since 2025
  */
 
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import {
   Wallet,
   TrendingUp,
@@ -38,11 +35,14 @@ import {
   EyeOff,
   RefreshCw
 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { formatUrl } from '../router/config';
-import { symbolSet } from '../config/SymbolSetConfig';
 import AssetValueChart from '../components/AssetValueChart';
+import LanguageAwareLink from '../components/LanguageAware/LanguageAwareLink';
 import TradingCalendarHeatMap from '../components/TradingCalendarHeatMap';
+import { symbolSet } from '../config/SymbolSetConfig';
+import { formatUrl } from '../router/config';
 
 const UserDashboard = () => {
   const { t } = useTranslation('common');
@@ -290,9 +290,9 @@ const UserDashboard = () => {
         <div className="dashboard-card">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">{t('userDashboard.assetDistribution')}</h3>
-            <Link to="/user/assets/spot" className="dashboard-section-link text-blue-400 text-sm">
-              {t('userDashboard.viewDetails')} →
-            </Link>
+                                        <LanguageAwareLink to="/user/assets/spot" className="dashboard-section-link text-blue-400 text-sm">
+                {t('userDashboard.viewDetails')} →
+              </LanguageAwareLink>
           </div>
           
           <div className="space-y-4">
@@ -331,9 +331,9 @@ const UserDashboard = () => {
         <div className="dashboard-card">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">{t('userDashboard.recentActivities')}</h3>
-            <Link to="/user/orders/history" className="dashboard-section-link text-blue-400 text-sm">
-              {t('userDashboard.viewAll')} →
-            </Link>
+                                        <LanguageAwareLink to="/user/orders/history" className="dashboard-section-link text-blue-400 text-sm">
+                {t('userDashboard.viewAll')} →
+              </LanguageAwareLink>
           </div>
           
           <div className="space-y-3">
@@ -370,22 +370,22 @@ const UserDashboard = () => {
       <div className="dashboard-card">
         <h3 className="text-lg font-semibold text-white mb-6">{t('userDashboard.quickActions')}</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link to="/trading/BTC" className="dashboard-btn dashboard-btn-primary-spot text-center py-4">
-            <TrendingUp className="w-6 h-6 mx-auto mb-2" />
-            <span>{t('userDashboard.spotTrading')}</span>
-          </Link>
-          <Link to="/user/assets/spot" className="dashboard-btn text-center py-4">
-            <Wallet className="w-6 h-6 mx-auto mb-2" />
-            <span>{t('userDashboard.assetManagement')}</span>
-          </Link>
-          <Link to="/user/orders/spot" className="dashboard-btn text-center py-4">
-            <BarChart3 className="w-6 h-6 mx-auto mb-2" />
-            <span>{t('userDashboard.orderManagement')}</span>
-          </Link>
-          <Link to="/user/security" className="dashboard-btn text-center py-4">
-            <Activity className="w-6 h-6 mx-auto mb-2" />
-            <span>{t('userDashboard.securitySettings')}</span>
-          </Link>
+                      <LanguageAwareLink to="/trading/BTC" className="dashboard-btn dashboard-btn-primary-spot text-center py-4">
+              <TrendingUp className="w-6 h-6 mx-auto mb-2" />
+              <span>{t('userDashboard.spotTrading')}</span>
+            </LanguageAwareLink>
+                      <LanguageAwareLink to="/user/assets/spot" className="dashboard-btn text-center py-4">
+              <Wallet className="w-6 h-6 mx-auto mb-2" />
+              <span>{t('userDashboard.assetManagement')}</span>
+            </LanguageAwareLink>
+                      <LanguageAwareLink to="/user/orders/spot" className="dashboard-btn text-center py-4">
+              <BarChart3 className="w-6 h-6 mx-auto mb-2" />
+              <span>{t('userDashboard.orderManagement')}</span>
+            </LanguageAwareLink>
+                      <LanguageAwareLink to="/user/security" className="dashboard-btn text-center py-4">
+              <Activity className="w-6 h-6 mx-auto mb-2" />
+              <span>{t('userDashboard.securitySettings')}</span>
+            </LanguageAwareLink>
         </div>
       </div>
     </div>

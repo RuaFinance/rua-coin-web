@@ -12,17 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { Globe, Check, ChevronDown, Search } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Globe, Check, ChevronDown, Search } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+
 import { 
   SUPPORTED_LANGUAGES, 
   changeLanguage, 
   getCurrentLanguage,
   getLanguageFlag,
-  getLanguageNativeName,
-  getLanguageEnglishName 
+  getLanguageNativeName
 } from '../../i18n';
+import { extractLocaleFromPath, removeLocaleFromPath } from '../../router/languageRouter';
 
 /**
  * 语言切换组件
@@ -45,8 +47,8 @@ import {
  */
 const LanguageSwitcher = ({ className = '' }) => {
   const { t, i18n } = useTranslation(['common', 'header']);
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState(getCurrentLanguage());
   const [searchTerm, setSearchTerm] = useState('');
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const dropdownRef = useRef(null);
@@ -54,10 +56,28 @@ const LanguageSwitcher = ({ className = '' }) => {
   const searchInputRef = useRef(null);
   const optionRefs = useRef([]);
 
-  // 监听语言变化
+  // 从URL路径中获取当前语言，而不是从i18n状态
+  const getCurrentLanguageFromURL = () => {
+    const langFromURL = extractLocaleFromPath(location.pathname);
+    return langFromURL || getCurrentLanguage();
+  };
+
+  const [currentLanguage, setCurrentLanguage] = useState(getCurrentLanguageFromURL());
+
+  // 监听URL变化来更新当前语言
+  useEffect(() => {
+    const newLanguage = getCurrentLanguageFromURL();
+    if (newLanguage !== currentLanguage) {
+      setCurrentLanguage(newLanguage);
+    }
+  }, [location.pathname]);
+
+  // 监听语言变化事件
   useEffect(() => {
     const handleLanguageChange = () => {
-      setCurrentLanguage(getCurrentLanguage());
+      // 从URL获取最新语言，而不是从i18n状态
+      const newLanguage = getCurrentLanguageFromURL();
+      setCurrentLanguage(newLanguage);
     };
 
     // 监听 i18n 语言变化事件
@@ -70,7 +90,7 @@ const LanguageSwitcher = ({ className = '' }) => {
       i18n.off('languageChanged', handleLanguageChange);
       window.removeEventListener('languageChanged', handleLanguageChange);
     };
-  }, [i18n]);
+  }, [i18n, location.pathname]);
 
   // 点击外部关闭弹窗
   useEffect(() => {
@@ -140,23 +160,42 @@ const LanguageSwitcher = ({ className = '' }) => {
     
     const term = searchTerm.toLowerCase();
     return Object.values(SUPPORTED_LANGUAGES).filter(language =>
-      language.name.toLowerCase().includes(term) ||
-      language.nativeName.toLowerCase().includes(term) ||
-      language.englishName.toLowerCase().includes(term) ||
-      language.code.toLowerCase().includes(term)
+      (language.name && language.name.toLowerCase().includes(term)) ||
+      (language.nativeName && language.nativeName.toLowerCase().includes(term)) ||
+      (language.region && language.region.toLowerCase().includes(term)) ||
+      (language.code && language.code.toLowerCase().includes(term))
     );
   };
 
   // 切换语言
   const handleLanguageChange = async (languageCode) => {
     try {
+      // 防止重复切换
+      if (languageCode === currentLanguage) {
+        setIsOpen(false);
+        return;
+      }
+
+      // 获取当前路径信息
+      const currentPath = location.pathname;
+      const pathWithoutLocale = removeLocaleFromPath(currentPath);
+      
       const success = await changeLanguage(languageCode);
       if (success) {
         setCurrentLanguage(languageCode);
         setIsOpen(false);
         setSearchTerm(''); // 清空搜索
         
-        // 显示切换成功提示（可选）
+        // 触发包含路径信息的语言切换事件
+        window.dispatchEvent(new CustomEvent('languageSwitcherChanged', {
+          detail: {
+            language: languageCode,
+            currentPath: currentPath,
+            pathWithoutLocale: pathWithoutLocale,
+            source: 'language_switcher'
+          }
+        }));
+        
         console.log(`Language switched to: ${getLanguageNativeName(languageCode)}`);
       }
     } catch (error) {
@@ -371,7 +410,7 @@ const LanguageSwitcher = ({ className = '' }) => {
                             ? 'text-[#efb90b] opacity-75'
                             : 'text-gray-500'
                         }`}>
-                          {language.englishName}
+                          {language.name}
                         </span>
                       </div>
                     </div>

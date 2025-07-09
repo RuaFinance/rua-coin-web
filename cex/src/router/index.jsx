@@ -16,13 +16,13 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Layout from '../layouts/Layout';
 import UserLayout from '../layouts/UserLayout';
+import DeviceTestPage from '../pages/DeviceTestPage';
+import FooterTestPage from '../pages/FooterTestPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import RegisterPage from '../pages/RegisterPage';
 import TradingPage from '../pages/TradingPage';
-import FooterTestPage from '../pages/FooterTestPage';
-import DeviceTestPage from '../pages/DeviceTestPage';
 import UserDashboard from '../pages/UserDashboard';
 
 import { BASE_URL } from './config';

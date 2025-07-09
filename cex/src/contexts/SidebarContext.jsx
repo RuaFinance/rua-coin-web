@@ -27,6 +27,7 @@
  */
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+
 import useMobileDetection from '../hooks/useMobileDetection';
 
 const SidebarContext = createContext();

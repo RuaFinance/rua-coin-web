@@ -24,6 +24,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { shouldHideFooter, shouldShowSimplifiedFooter } from '../config/FooterConfig';
 
 const FooterContext = createContext();

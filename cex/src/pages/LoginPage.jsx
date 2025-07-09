@@ -16,9 +16,11 @@ import { SmileOutlined, EyeInvisibleOutlined, EyeTwoTone, DownOutlined, QrcodeOu
 import { Button, ConfigProvider, Input, Checkbox, notification, Select } from 'antd';
 import { ArrowLeft, Mail, Lock, Phone } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
+import LanguageAwareLink from '../components/LanguageAware/LanguageAwareLink';
+import { useLocalizedNavigation } from '../components/LanguageRouter/AdvancedLanguageRouter';
 import { SelectLightConfig } from '../config/AntdSelectConfig';
 import { phoneCountriesCN } from '../config/PhoneCountriesList';
 import { formatUrl } from '../router/config';
@@ -28,6 +30,7 @@ const { Option } = Select;
 const LoginPage = () => {
   const { t } = useTranslation(['pages', 'common']);
   const navigate = useNavigate();
+  const { navigateLocalized } = useLocalizedNavigation();
   const [api, contextHolder] = notification.useNotification({
     placement: 'topRight',
   });
@@ -112,7 +115,7 @@ const LoginPage = () => {
       });
       
       // 登录成功后跳转到首页或之前的页面
-      navigate('/');
+      navigateLocalized('/');
       
     } catch (error) {
       api.error({
@@ -126,7 +129,7 @@ const LoginPage = () => {
   };
 
   const handleBack = () => {
-    navigate('/');
+    navigateLocalized('/');
   };
 
   const handleThirdPartyLogin = (provider) => {
@@ -317,9 +320,9 @@ const LoginPage = () => {
                   >
                     {t('pages:login.rememberMe')}
                   </Checkbox>
-                  <Link to="#" className="text-blue-400 hover:text-blue-300 text-sm">
+                  <LanguageAwareLink to="#" className="text-blue-400 hover:text-blue-300 text-sm">
                     {t('pages:login.forgotPassword')}
-                  </Link>
+                  </LanguageAwareLink>
                 </div>
 
                 {/* 登录按钮 */}
@@ -385,9 +388,9 @@ const LoginPage = () => {
             {/* 注册提示 */}
             <div className="text-center pt-4 text-sm">
               <span className="text-gray-400">{t('pages:login.noAccount')}</span>
-              <Link to="/register" className="text-blue-400 hover:text-blue-300 ml-1">
+              <LanguageAwareLink to="/register" className="text-blue-400 hover:text-blue-300 ml-1">
                 {t('pages:login.registerNow')}
-              </Link>
+              </LanguageAwareLink>
             </div>
             
             {/* 返回按钮 */}

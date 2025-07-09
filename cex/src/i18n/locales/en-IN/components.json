@@ -1,0 +1,45 @@
+{
+  "languageSwitcher": {
+    "selectLanguage": "Select Language",
+    "currentLanguage": "Current Language"
+  },
+  "tradingChart": {
+    "price": "Price",
+    "volume": "Volume",
+    "time": "Time",
+    "fullscreen": "Fullscreen",
+    "indicators": "Indicators",
+    "timeframes": "Timeframes"
+  },
+  "orderBook": {
+    "title": "Order Book",
+    "price": "Price",
+    "amount": "Amount",
+    "total": "Total",
+    "buy": "Buy Orders",
+    "sell": "Sell Orders"
+  },
+  "recentTrades": {
+    "title": "Recent Trades",
+    "price": "Price",
+    "amount": "Amount",
+    "time": "Time"
+  },
+  "tradingPanel": {
+    "title": "Trading Panel",
+    "buy": "Buy",
+    "sell": "Sell",
+    "price": "Price",
+    "amount": "Amount",
+    "total": "Total",
+    "available": "Available",
+    "placeOrder": "Place Order"
+  },
+  "alert": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information",
+    "close": "Close"
+  }
+} 

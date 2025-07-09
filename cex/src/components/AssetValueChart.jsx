@@ -30,6 +30,8 @@
  * @since 2025
  */
 
+import { format, subDays, subWeeks, subMonths, startOfDay, addHours, addMinutes } from 'date-fns';
+import { zhCN } from 'date-fns/locale';
 import React, { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -41,8 +43,6 @@ import {
   Tooltip,
   ReferenceLine
 } from 'recharts';
-import { format, subDays, subWeeks, subMonths, startOfDay, addHours, addMinutes } from 'date-fns';
-import { zhCN } from 'date-fns/locale';
 
 const AssetValueChart = ({ 
   currentValue = 12856.43, 

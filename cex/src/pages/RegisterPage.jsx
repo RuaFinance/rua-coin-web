@@ -16,9 +16,11 @@ import { SmileOutlined } from '@ant-design/icons';
 import { Radio, Button, Input, Select, notification } from 'antd';
 import { ArrowLeft, Mail } from 'lucide-react';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
+import LanguageAwareLink from '../components/LanguageAware/LanguageAwareLink';
+import { useLocalizedNavigation } from '../components/LanguageRouter/AdvancedLanguageRouter';
 import { countriesCN, countriesEN } from '../config/CountriesList';
 import { getCurrentLanguage } from '../i18n';
 
@@ -27,6 +29,7 @@ const { Option } = Select;
 const RegisterPage = () => {
   const { t, i18n } = useTranslation(['pages', 'common']);
   const navigate = useNavigate();
+  const { navigateLocalized } = useLocalizedNavigation();
   const [api, contextHolder] = notification.useNotification({
     placement: 'topRight',
   });
@@ -92,7 +95,7 @@ const RegisterPage = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     } else {
-      navigate('/');
+      navigateLocalized('/');
     }
   };
 
@@ -103,7 +106,7 @@ const RegisterPage = () => {
       icon: <SmileOutlined style={{ color: '#52c41a' }} />,
       placement: 'topRight',
     });
-    navigate('/');
+    navigateLocalized('/');
   };
 
   const renderStep1 = () => (
@@ -311,9 +314,9 @@ const RegisterPage = () => {
             {/* Login link */}
             <div className="text-center pt-6 text-sm">
               <span className="text-gray-400">{t('pages:register.alreadyHaveAccount')}</span>
-              <a href="/login" className="text-blue-400 hover:text-blue-300 ml-1">
+              <LanguageAwareLink to="/login" className="text-blue-400 hover:text-blue-300 ml-1">
                 {t('pages:register.loginNow')}
-              </a>
+              </LanguageAwareLink>
             </div>
           </div>
         </div>

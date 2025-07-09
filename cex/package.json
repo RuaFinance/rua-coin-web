@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
+    "@heroicons/react": "^2.2.0",
     "@klinecharts/pro": "^0.1.1",
     "antd": "^5.26.2",
     "axios": "^1.10.0",
@@ -26,6 +27,7 @@
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.6.0",
     "react-router-dom": "^7.6.2",
     "react-select": "^5.10.1",

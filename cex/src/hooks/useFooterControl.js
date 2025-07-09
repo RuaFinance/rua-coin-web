@@ -24,6 +24,7 @@
  */
 
 import { useEffect } from 'react';
+
 import { useFooter } from '../contexts/FooterContext';
 
 /**

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 import { fetchTradingPairData } from '../api/trading';
 import KlineTradingChartPro from '../components/KlineChartProTradingChart';

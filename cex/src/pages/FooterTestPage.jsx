@@ -25,6 +25,8 @@
  */
 
 import React from 'react';
+
+import LanguageAwareLink from '../components/LanguageAware/LanguageAwareLink';
 import { useFooter } from '../contexts/FooterContext';
 import { useFooterControl, useHideFooter, useShowFooter } from '../hooks/useFooterControl';
 
@@ -128,33 +130,33 @@ const FooterTestPage = () => {
           点击下面的链接测试不同页面的Footer显示效果：
         </p>
         <div className="flex flex-wrap gap-4">
-          <a
-            href="/"
+          <LanguageAwareLink
+            to="/"
             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
           >
             首页 (显示完整Footer)
-          </a>
+          </LanguageAwareLink>
           
-          <a
-            href="/trading/BTC"
+          <LanguageAwareLink
+            to="/trading/BTC"
             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
           >
             交易页面 (隐藏Footer)
-          </a>
+          </LanguageAwareLink>
           
-          <a
-            href="/login"
+          <LanguageAwareLink
+            to="/login"
             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
           >
             登录页面 (隐藏Footer)
-          </a>
+          </LanguageAwareLink>
           
-          <a
-            href="/register"
+          <LanguageAwareLink
+            to="/register"
             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
           >
             注册页面 (隐藏Footer)
-          </a>
+          </LanguageAwareLink>
         </div>
       </div>
 

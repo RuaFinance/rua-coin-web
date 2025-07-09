@@ -13,15 +13,16 @@
 // limitations under the License.
 
 import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { changeLanguage, getCurrentLanguage } from '../../i18n';
 import { 
   extractLanguageFromPath, 
   removeLanguagePrefix, 
   getSafeLanguageCode,
   buildLanguagePath
 } from '../../i18n/utils/languageUtils';
-import { changeLanguage, getCurrentLanguage } from '../../i18n';
 
 /**
  * 多语言路由增强组件

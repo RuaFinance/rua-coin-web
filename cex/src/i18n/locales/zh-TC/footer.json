@@ -1,0 +1,63 @@
+{
+  "company": {
+    "name": "RuaCoin",
+    "description": "全球領先的數字資產交易平台",
+    "registered": "註冊於新加坡",
+    "license": "持有相關牌照"
+  },
+  "products": {
+    "title": "產品",
+    "spot": "現貨交易",
+    "futures": "期貨交易",
+    "options": "選擇權",
+    "earn": "理財產品",
+    "nft": "NFT市場",
+    "api": "API服務"
+  },
+  "services": {
+    "title": "服務",
+    "institutional": "機構服務",
+    "vip": "VIP服務",
+    "referral": "推薦計劃",
+    "affiliate": "聯盟計劃",
+    "listing": "上幣申請"
+  },
+  "support": {
+    "title": "支援",
+    "helpCenter": "幫助中心",
+    "contactUs": "聯絡我們",
+    "announcements": "公告",
+    "fees": "手續費率",
+    "status": "系統狀態"
+  },
+  "legal": {
+    "title": "法律",
+    "terms": "服務條款",
+    "privacy": "隱私權政策",
+    "aml": "反洗錢政策",
+    "risk": "風險披露",
+    "cookies": "Cookie政策"
+  },
+  "community": {
+    "title": "社群",
+    "telegram": "Telegram",
+    "twitter": "Twitter",
+    "discord": "Discord",
+    "reddit": "Reddit",
+    "youtube": "YouTube"
+  },
+  "contact": {
+    "customerService": "客戶服務",
+    "businessCooperation": "商業合作",
+    "mediaInquiries": "媒體諮詢",
+    "careers": "職涯機會"
+  },
+  "download": {
+    "title": "下載應用程式",
+    "ios": "iOS 應用程式",
+    "android": "Android 應用程式",
+    "qrCode": "掃描 QR Code 下載"
+  },
+  "copyright": "© 2025 RuaCoin. 版權所有。",
+  "allRightsReserved": "保留所有權利。"
+} 

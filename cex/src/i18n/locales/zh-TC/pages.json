@@ -1,0 +1,22 @@
+{
+  "notFound": {
+    "title": "找不到頁面",
+    "backToHome": "返回首頁",
+    "pageNotFound": "抱歉，您所尋找的頁面不存在",
+    "errorOccurred": "發生錯誤"
+  },
+  "trading": {
+    "title": "交易",
+    "selectPair": "選擇交易對",
+    "chartAnalysis": "技術分析",
+    "orderForm": "下單"
+  },
+  "dashboard": {
+    "title": "控制台",
+    "overview": "總覽",
+    "totalBalance": "總餘額",
+    "availableBalance": "可用餘額",
+    "frozenBalance": "凍結餘額",
+    "recentTransactions": "最近交易"
+  }
+} 

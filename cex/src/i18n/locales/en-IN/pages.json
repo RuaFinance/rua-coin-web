@@ -1,0 +1,22 @@
+{
+  "notFound": {
+    "title": "Page Not Found",
+    "backToHome": "Back to Home",
+    "pageNotFound": "Sorry, the page you are looking for does not exist",
+    "errorOccurred": "An error occurred"
+  },
+  "trading": {
+    "title": "Trading",
+    "selectPair": "Select Trading Pair",
+    "chartAnalysis": "Chart Analysis",
+    "orderForm": "Place Order"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "overview": "Overview",
+    "totalBalance": "Total Balance",
+    "availableBalance": "Available Balance",
+    "frozenBalance": "Frozen Balance",
+    "recentTransactions": "Recent Transactions"
+  }
+} 

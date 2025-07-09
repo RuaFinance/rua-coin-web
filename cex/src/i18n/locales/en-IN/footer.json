@@ -1,0 +1,70 @@
+{
+  "company": {
+    "name": "RuaCoin",
+    "description": "Leading global digital asset trading platform",
+    "registered": "Registered in Singapore",
+    "license": "Licensed and regulated"
+  },
+  "products": {
+    "title": "Products",
+    "spot": "Spot Trading",
+    "futures": "Futures Trading",
+    "options": "Options",
+    "earn": "Earn Products",
+    "nft": "NFT Marketplace",
+    "api": "API Services"
+  },
+  "services": {
+    "title": "Services",
+    "institutional": "Institutional Services",
+    "vip": "VIP Services",
+    "referral": "Referral Programme",
+    "affiliate": "Affiliate Programme",
+    "listing": "Token Listing"
+  },
+  "support": {
+    "title": "Support",
+    "helpCenter": "Help Centre",
+    "contactUs": "Contact Us",
+    "announcements": "Announcements",
+    "fees": "Fee Schedule",
+    "status": "System Status"
+  },
+  "legal": {
+    "title": "Legal",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "aml": "AML Policy",
+    "risk": "Risk Disclosure",
+    "cookies": "Cookie Policy"
+  },
+  "community": {
+    "title": "Community",
+    "telegram": "Telegram",
+    "twitter": "Twitter",
+    "discord": "Discord",
+    "reddit": "Reddit",
+    "youtube": "YouTube"
+  },
+  "contact": {
+    "customerService": "Customer Service",
+    "businessCooperation": "Business Cooperation",
+    "mediaInquiries": "Media Enquiries",
+    "careers": "Careers"
+  },
+  "download": {
+    "title": "Download App",
+    "ios": "iOS App",
+    "android": "Android App",
+    "qrCode": "Scan QR Code to Download"
+  },
+  "india": {
+    "title": "India Specific",
+    "compliance": "SEBI Compliance",
+    "gst": "GST Information",
+    "tds": "TDS Policy",
+    "indianBanking": "Indian Banking Support"
+  },
+  "copyright": "© 2025 RuaCoin. All rights reserved.",
+  "allRightsReserved": "All rights reserved."
+} 

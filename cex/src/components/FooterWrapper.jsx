@@ -21,7 +21,9 @@
  */
 
 import React from 'react';
+
 import { useFooter } from '../contexts/FooterContext';
+
 import Footer from './Footer';
 import SimplifiedFooter from './SimplifiedFooter';
 

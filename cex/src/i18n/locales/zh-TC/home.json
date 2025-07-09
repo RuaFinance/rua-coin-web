@@ -1,0 +1,49 @@
+{
+  "hero": {
+    "title": "全球領先的數字資產交易平台",
+    "subtitle": "安全、快速、專業的加密貨幣交易體驗",
+    "startTrading": "開始交易",
+    "learnMore": "了解更多"
+  },
+  "features": {
+    "security": {
+      "title": "頂級安全",
+      "description": "多重安全防護，保障您的資產安全"
+    },
+    "speed": {
+      "title": "高速交易",
+      "description": "毫秒級撮合引擎，極速交易體驗"
+    },
+    "liquidity": {
+      "title": "深度流動性",
+      "description": "全球流動性池，最佳交易價格"
+    },
+    "support": {
+      "title": "24/7 客服",
+      "description": "全天候專業客服支援"
+    }
+  },
+  "stats": {
+    "users": "註冊用戶",
+    "volume": "24小時交易量",
+    "countries": "服務國家",
+    "coins": "支援幣種"
+  },
+  "markets": {
+    "title": "熱門市場",
+    "viewAll": "查看全部",
+    "change24h": "24小時漲跌",
+    "volume": "交易量"
+  },
+  "news": {
+    "title": "最新資訊",
+    "readMore": "閱讀更多",
+    "viewAll": "查看全部新聞"
+  },
+  "cta": {
+    "title": "立即加入 RuaCoin",
+    "subtitle": "開啟您的數字資產交易之旅",
+    "signUpNow": "立即註冊",
+    "downloadApp": "下載應用程式"
+  }
+} 

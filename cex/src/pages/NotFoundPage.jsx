@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import LanguageAwareLink from '../components/LanguageAware/LanguageAwareLink';
 import { formatUrl } from '../router/config';
 
 const NotFoundPage = () => {
@@ -28,11 +28,11 @@ const NotFoundPage = () => {
       <div className="bg-white" >
         <img src={formatUrl("/asserts/very_sorry.png")} className="mx-auto" alt="Not Found" />
         <div className="py-0" style={{padding: "0 0 40px 0"}}>
-          <Link to="/" 
+          <LanguageAwareLink to="/" 
             className="rollback-btn font-bold"
           >
             {t('pages:notFound.backToHome')}
-          </Link>
+          </LanguageAwareLink>
         </div>
 
         <div className="error-split" id="up"></div>

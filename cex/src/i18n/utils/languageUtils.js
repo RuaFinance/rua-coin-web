@@ -242,7 +242,6 @@ export default {
   buildLanguagePath,
   removeLanguagePrefix,
   formatNumber,
-  formatCurrency,
   formatDate,
   getTextDirection,
   generateLanguageOptions,

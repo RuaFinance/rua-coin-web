@@ -1,0 +1,45 @@
+{
+  "languageSwitcher": {
+    "selectLanguage": "選擇語言",
+    "currentLanguage": "當前語言"
+  },
+  "tradingChart": {
+    "price": "價格",
+    "volume": "成交量",
+    "time": "時間",
+    "fullscreen": "全螢幕",
+    "indicators": "指標",
+    "timeframes": "時間週期"
+  },
+  "orderBook": {
+    "title": "掛單簿",
+    "price": "價格",
+    "amount": "數量",
+    "total": "總額",
+    "buy": "買盤",
+    "sell": "賣盤"
+  },
+  "recentTrades": {
+    "title": "最新成交",
+    "price": "價格",
+    "amount": "數量",
+    "time": "時間"
+  },
+  "tradingPanel": {
+    "title": "交易面板",
+    "buy": "買入",
+    "sell": "賣出",
+    "price": "價格",
+    "amount": "數量",
+    "total": "總額",
+    "available": "可用",
+    "placeOrder": "下單"
+  },
+  "alert": {
+    "success": "成功",
+    "error": "錯誤",
+    "warning": "警告",
+    "info": "資訊",
+    "close": "關閉"
+  }
+} 

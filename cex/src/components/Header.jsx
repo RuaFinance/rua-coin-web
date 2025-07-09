@@ -15,9 +15,10 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Menu, X, User, Bell, Search } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import LanguageAwareLink from './LanguageAware/LanguageAwareLink';
+import { useLocalizedNavigation } from './LanguageRouter/AdvancedLanguageRouter';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
@@ -68,19 +69,9 @@ const Header = () => {
   });
 
   // 路由导航
-  const navigate = useNavigate();
+  const { navigateLocalized } = useLocalizedNavigation();
 
-  // Mock后端数据 - 模拟API调用
-  // TODO: 替换为真实的API调用
-  // const fetchSpotTradingPairs = async () => {
-  //   try {
-  //     const response = await fetch('/api/spot/trading-pairs');
-  //     const data = await response.json();
-  //     setSpotTradingPairs(data);
-  //   } catch (error) {
-  //     console.error('Failed to fetch spot trading pairs:', error);
-  //   }
-  // };
+  // Mock现货交易对数据
   const fetchSpotTradingPairs = async () => {
     try {
       setIsLoadingSpotPairs(true);
@@ -116,8 +107,6 @@ const Header = () => {
   const fetchHotSearches = async () => {
     try {
       setIsLoadingHotSearches(true);
-      // 模拟API延迟
-      // await new Promise(resolve => setTimeout(resolve, 300));
       
       // Mock热门搜索数据
       const mockHotSearches = [
@@ -145,21 +134,6 @@ const Header = () => {
     fetchSpotTradingPairs();
     fetchHotSearches();
   }, []);
-
-  const spotItems = [
-    { key: 'BTC/USDT', label: 'BTC'},
-  ]
-
-  const handleSpotItemsClick = ({ key }) => {
-    const [baseCurrency] = key.split('/');
-    navigate(`/trading/${baseCurrency}`);
-  };
-
-  // 保存历史到localStorage
-  const saveSearchHistory = (historyArr) => {
-    setSearchHistory(historyArr);
-    localStorage.setItem('ruacoin_search_history', JSON.stringify(historyArr));
-  };
 
   // 添加历史
   const addToSearchHistory = (keyword) => {
@@ -195,15 +169,15 @@ const Header = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold gradient-text">
-                <Link to="/">RuaCoin</Link>
+                <LanguageAwareLink to="/">RuaCoin</LanguageAwareLink>
               </h1>
             </div>
 
             {/* Desktop Navigation */}
             <nav className={`hidden ${headerSpacing.navLeftMargin} md:flex ${headerSpacing.navItemsSpacing}`}>
-              <Link href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <LanguageAwareLink to="/trading/BTCUSDT" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:trade')}
-              </Link>
+              </LanguageAwareLink>
 
               <div className="relative">
                 <button
@@ -236,29 +210,29 @@ const Header = () => {
                       spotTradingPairs
                         .filter(pair => pair.isActive) // 只显示活跃的交易对
                         .map((pair) => (
-                          <Link 
+                          <LanguageAwareLink 
                             key={pair.id}
                             to={`/trading/${pair.baseCurrency}`} 
                             className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg transition-colors"
                             onClick={() => setIsSpotItemsMenuOpen(false)}
                           >
                             {pair.pair}
-                          </Link>
+                          </LanguageAwareLink>
                         ))
                     )}
                   </div>
                 )}
               </div>
               
-              <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <LanguageAwareLink to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:futures')}
-              </Link>
-              <Link to="/user/assets/spot" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </LanguageAwareLink>
+              <LanguageAwareLink to="/user/assets/spot" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:assets')}
-              </Link>
-              <Link to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </LanguageAwareLink>
+              <LanguageAwareLink to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:earn')}
-              </Link>
+              </LanguageAwareLink>
             </nav>
           </div>
 
@@ -266,11 +240,6 @@ const Header = () => {
           <div className={`hidden md:flex flex-none ${headerSpacing.searchBoxMaxWidth} ${headerSpacing.searchBoxMargin}`}>
             <div className="relative w-full">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                {/* 
-                  inset-y-0: 垂直居中
-                  left-0​​: 贴紧父容器左侧
-                  pointer-events-none​​: 允许点击事件穿透到后面的 input
-                */}
                 <Search className="h-5 w-5 text-gray-400" />
               </div>
               <input
@@ -332,12 +301,12 @@ const Header = () => {
                           .map((item) => (
                             <button
                               key={item.id}
-                              onClick={() => {
+                              onClick={() => {                            
                                 setSearchValue(item.symbol);
                                 if (isSearchValueMatch(item.symbol)) {
                                   addToSearchHistory(item.symbol);
                                 }
-                                navigate(`/trading/${item.symbol}`);
+                                navigateLocalized(`/trading/${item.symbol}`);
                                 setIsSearchFocused(false);
                               }}
                               className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-md transition-colors flex items-center justify-between"
@@ -370,10 +339,10 @@ const Header = () => {
                         {searchHistory.map((item, idx) => (
                           <button
                             key={item + idx}
-                            onClick={() => {
+                            onClick={() => {                          
                               setSearchValue(item);
                               setIsSearchFocused(false);
-                              navigate(`/trading/${item}`);
+                              navigateLocalized(`/trading/${item}`);
                             }}
                             className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-md transition-colors"
                           >
@@ -426,39 +395,39 @@ const Header = () => {
                   onMouseLeave={() => setIsUserMenuOpen(false)}
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
-                  <Link to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg">
+                  <LanguageAwareLink to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg">
                     {t('common:userDashboard.overview')}
-                  </Link>
-                  <Link to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
+                  </LanguageAwareLink>
+                  <LanguageAwareLink to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
                     {t('header:profile')}
-                  </Link>
-                  <Link to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  </LanguageAwareLink>
+                  <LanguageAwareLink to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     {t('header:security')}
-                  </Link>
-                  <Link to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  </LanguageAwareLink>
+                  <LanguageAwareLink to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
                     {t('header:apiManagement')}
-                  </Link>
-                  {/* <hr className="my-1 border-slate-700" /> */}
-                  <Link to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg">
+                  </LanguageAwareLink>
+                  <LanguageAwareLink to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg">
                     {t('header:logout')}
-                  </Link>
+                  </LanguageAwareLink>
                 </div>
               )}
             </div>
 
             {/* Login/Register Buttons */}
             <div className={`hidden md:flex items-center ${headerSpacing.mobileButtonSpacing}`}>
-              <button 
-                onClick={() => navigate('/login')}
-                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors border-[2px] border-transparent hover:border-[#00d4ff] hover:border-[2px] rounded-lg"              >
+              <LanguageAwareLink 
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors border-[2px] border-transparent hover:border-[#00d4ff] hover:border-[2px] rounded-lg"
+              >
                 {t('header:login')}
-              </button>
-              <button 
-                onClick={() => navigate('/register')}
+              </LanguageAwareLink>
+              <LanguageAwareLink 
+                to="/register"
                 className="btn-register-blue text-sm"
               >
                 {t('header:register')}
-              </button>
+              </LanguageAwareLink>
             </div>
 
             {/* Mobile menu button */}
@@ -507,9 +476,9 @@ const Header = () => {
                           {hotSearches.slice(0, 4).map((item) => (
                             <button
                               key={item.id}
-                              onClick={() => {
+                              onClick={() => {                            
                                 setSearchValue(item.symbol);
-                                navigate(`/trading/${item.symbol}`);
+                                navigateLocalized(`/trading/${item.symbol}`);
                                 setIsSearchFocused(false);
                                 setIsMenuOpen(false);
                               }}
@@ -528,37 +497,39 @@ const Header = () => {
             </div>
 
             <div className={`px-2 pt-2 pb-3 ${headerSpacing.mobileNavSpacing} border-t border-slate-700`}>
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              <LanguageAwareLink to="/trading/BTCUSDT" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 {t('header:trade')}
-              </Link>
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </LanguageAwareLink>
+              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 {t('header:spot')}
-              </Link>
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </LanguageAwareLink>
+              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 {t('header:futures')}
-              </Link>
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </LanguageAwareLink>
+              <LanguageAwareLink to="/user/assets/spot" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 {t('header:assets')}
-              </Link>
-              <Link href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              </LanguageAwareLink>
+              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
                 {t('header:earn')}
-              </Link>
+              </LanguageAwareLink>
               <div className="pt-4 pb-3 border-t border-slate-700">
                 <div className={`flex items-center px-3 ${headerSpacing.mobileButtonSpacing}`}>
-                  <button 
-                    onClick={() => navigate('/login')}
-                    className="btn-primary w-full"
+                  <LanguageAwareLink 
+                    to="/login"
+                    className="btn-primary w-full text-center"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {t('header:login')}
-                  </button>
+                  </LanguageAwareLink>
                 </div>
                 <div className={`flex items-center px-3 ${headerSpacing.mobileButtonSpacing} mt-2`}>
-                  <button 
-                    onClick={() => navigate('/register')}
-                    className="btn-primary w-full"
+                  <LanguageAwareLink 
+                    to="/register"
+                    className="btn-primary w-full text-center"
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {t('header:register')}
-                  </button>
+                  </LanguageAwareLink>
                 </div>
               </div>
             </div>

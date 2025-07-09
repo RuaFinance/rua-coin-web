@@ -22,8 +22,8 @@
  * @since 2025
  */
 
-import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
+import React, { useEffect, useRef, useState } from 'react';
 
 const TradingCalendarHeatMap = ({ data = null, className = '' }) => {
   const chartRef = useRef(null);

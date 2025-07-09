@@ -22,9 +22,6 @@
  * @since 2025
  */
 
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import {
   LayoutDashboard,
   Wallet,
@@ -46,7 +43,14 @@ import {
   ChevronsLeft,
   Menu
 } from 'lucide-react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+
 import { useSidebar } from '../contexts/SidebarContext';
+
+import LanguageAwareLink from './LanguageAware/LanguageAwareLink';
+
 
 const UserSidebar = () => {
   const { t } = useTranslation('common');
@@ -154,14 +158,14 @@ const UserSidebar = () => {
     if (item.isMain) {
       return (
         <li key={item.id} className={`sidebar-nav-item ${isActive(item.path) ? 'active' : ''}`}>
-          <Link 
+          <LanguageAwareLink 
             to={item.path} 
             className="sidebar-nav-link"
             title={!isExpanded ? item.label : ''}
           >
             <item.icon className="sidebar-nav-icon" />
             {isExpanded && <span>{item.label}</span>}
-          </Link>
+          </LanguageAwareLink>
         </li>
       );
     }
@@ -198,12 +202,12 @@ const UserSidebar = () => {
             <ul className="sidebar-submenu expanded">
               {item.subItems.map((subItem, index) => (
                 <li key={index}>
-                  <Link
+                  <LanguageAwareLink
                     to={subItem.path}
                     className={`sidebar-submenu-item block ${isActive(subItem.path) ? 'active' : ''}`}
                   >
                     {subItem.label}
-                  </Link>
+                  </LanguageAwareLink>
                 </li>
               ))}
             </ul>

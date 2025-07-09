@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd cex
-          npm ci
+          npm ci --legacy-peer-deps
 
       - name: Build project
         run: |

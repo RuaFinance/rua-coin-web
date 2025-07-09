@@ -23,10 +23,12 @@
  * @since 2025
  */
 
-import React, { useState, useRef, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 import { Menu } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Outlet } from 'react-router-dom';
+
+import ScrollToTop from '../components/ScrollToTop';
 import UserSidebar from '../components/UserSidebar';
 import { SidebarProvider, useSidebar } from '../contexts/SidebarContext';
 import '../styles/userDashboard.css';
@@ -233,6 +235,9 @@ const UserLayoutContent = () => {
   
   return (
     <div className="dashboard-container flex relative">
+      {/* Scroll to top on route change */}
+      <ScrollToTop behavior="smooth" />
+      
       {/* Sidebar */}
       <UserSidebar />
       

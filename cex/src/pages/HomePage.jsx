@@ -12,15 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { TrendingUp, TrendingDown, Activity, DollarSign, BarChart3, Users } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { fetchMarketOverview, fetchPopularCoins } from '../api/market';
+import { useLocalizedNavigation } from '../components/LanguageRouter/AdvancedLanguageRouter';
 import TradingPairs from '../components/TradingPairs';
-import { formatUrl } from '../router/config';
 import { symbolSet } from '../config/SymbolSetConfig';
+import { formatUrl } from '../router/config';
 
 const HomePage = () => {
   const { t } = useTranslation(['pages', 'common']);
@@ -28,6 +29,7 @@ const HomePage = () => {
   const [popularCoins, setPopularCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const { navigateLocalized } = useLocalizedNavigation();
 
   // 获取币种logo的函数
   const getCoinLogo = (symbol) => {
@@ -68,7 +70,7 @@ const HomePage = () => {
   }, []);
 
   const handleCoinClick = (symbol) => {
-    navigate(`/trading/${symbol}`);
+    navigateLocalized(`/trading/${symbol}`);
   };
 
   if (isLoading) {

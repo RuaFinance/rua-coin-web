@@ -1,0 +1,15 @@
+{
+  "marketOverview": "市场概览",
+  "hotCoins": "热门币种",
+  "totalMarketCap": "总市值",
+  "volume24h": "24h成交量",
+  "btcDominance": "BTC占比",
+  "activeCoins": "活跃币种",
+  "tradingPairs": "交易对",
+  "price": "价格",
+  "change": "涨跌幅",
+  "volume": "成交量",
+  "loading": "加载中...",
+  "noData": "暂无数据",
+  "error": "加载失败"
+} 

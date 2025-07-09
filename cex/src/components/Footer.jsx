@@ -26,9 +26,6 @@
  * 支持响应式设计和交互动画效果
  */
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { 
   Twitter, 
   Facebook, 
@@ -50,7 +47,12 @@ import {
   Download,
   Smartphone
 } from 'lucide-react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { formatUrl } from '../router/config';
+
+import LanguageAwareLink from './LanguageAware/LanguageAwareLink';
 import '../styles/footer.css';
 
 const Footer = () => {
@@ -153,14 +155,14 @@ const Footer = () => {
       
       <div className={`space-y-3 ${expandedSections[sectionKey] ? 'block' : 'hidden md:block'}`}>
         {items.map((item, index) => (
-          <Link
+          <LanguageAwareLink
             key={index}
             to={item.href}
             className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200 text-sm"
           >
             <item.icon size={14} />
             <span>{item.name}</span>
-          </Link>
+          </LanguageAwareLink>
         ))}
       </div>
     </div>

@@ -1,0 +1,68 @@
+{
+  "hero": {
+    "title": "India's Leading Cryptocurrency Exchange",
+    "subtitle": "Secure, fast, and professional crypto trading experience",
+    "startTrading": "Start Trading",
+    "learnMore": "Learn More"
+  },
+  "features": {
+    "security": {
+      "title": "Bank-Grade Security",
+      "description": "Multi-layer security protection for your assets"
+    },
+    "speed": {
+      "title": "Lightning Fast",
+      "description": "Millisecond matching engine for instant trades"
+    },
+    "liquidity": {
+      "title": "Deep Liquidity",
+      "description": "Global liquidity pool for best prices"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Round-the-clock professional customer support"
+    }
+  },
+  "stats": {
+    "users": "Registered Users",
+    "volume": "24h Trading Volume",
+    "countries": "Countries Served",
+    "coins": "Supported Coins"
+  },
+  "markets": {
+    "title": "Popular Markets",
+    "viewAll": "View All",
+    "change24h": "24h Change",
+    "volume": "Volume"
+  },
+  "news": {
+    "title": "Latest News",
+    "readMore": "Read More",
+    "viewAll": "View All News"
+  },
+  "cta": {
+    "title": "Join RuaCoin India Today",
+    "subtitle": "Start your cryptocurrency journey",
+    "signUpNow": "Sign Up Now",
+    "downloadApp": "Download App"
+  },
+  "indianFeatures": {
+    "title": "Built for India",
+    "upiSupport": {
+      "title": "UPI Support",
+      "description": "Instant deposits with UPI, IMPS, and NEFT"
+    },
+    "inrTrading": {
+      "title": "INR Trading",
+      "description": "Trade directly with Indian Rupees"
+    },
+    "compliance": {
+      "title": "Regulatory Compliance",
+      "description": "Fully compliant with Indian regulations"
+    },
+    "indianSupport": {
+      "title": "Local Support",
+      "description": "Customer support in Hindi and English"
+    }
+  }
+} 
