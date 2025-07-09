@@ -1,0 +1,1 @@
+console.log('=== Language Debug Info ==='); console.log('Current URL:', window.location.href); console.log('Current pathname:', window.location.pathname); console.log('localStorage language:', localStorage.getItem('ruacoin_language_v2')); console.log('i18n language:', window.i18n?.language); console.log('HTML lang:', document.documentElement.lang);

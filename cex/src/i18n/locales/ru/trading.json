@@ -1,0 +1,26 @@
+{
+  "trade": "Торговля",
+  "buy": "Купить",
+  "sell": "Продать",
+  "price": "Цена",
+  "amount": "Количество",
+  "total": "Итого",
+  "orderBook": "Книга ордеров",
+  "recentTrades": "Последние сделки",
+  "openOrders": "Открытые ордера",
+  "tradeHistory": "История торгов",
+  "available": "Доступно",
+  "balance": "Баланс",
+  "fee": "Комиссия",
+  "submitOrder": "Отправить ордер",
+  "cancelOrder": "Отменить ордер",
+  "stop_loss": "Стоп-лосс",
+  "oco_order": "OCO ордер",
+  "orderTypes": {
+    "limit": "Лимитный ордер",
+    "market": "Рыночный ордер",
+    "stop": "Стоп ордер"
+  },
+  "actualPay": "Фактическая оплата",
+  "actualReceive": "Фактическое получение"
+} 

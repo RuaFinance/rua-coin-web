@@ -61,7 +61,7 @@
     "title": "性能提示",
     "description": "您的设备可能会出现较慢的性能表现。建议使用更强大的设备或关闭其他应用程序以获得更好的性能。"
   },
-      "userDashboard": {
+  "userDashboard": {
     "userCenter": "用户中心",
     "overview": "总览",
     "assets": "资产",

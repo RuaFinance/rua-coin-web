@@ -27,17 +27,17 @@ const Header = () => {
   // Header 间距配置 - 统一管理所有间距
   const headerSpacing = {
     // 主要导航区域间距
-    navLeftMargin: 'md:ml-6',        // 导航与logo的间距 (从ml-8改为ml-6)
-    navItemsSpacing: 'md:space-x-2', // 导航项之间的间距 (从space-x-8改为space-x-6)
+    navLeftMargin: 'md:ml-5',        // 导航与logo的间距 (从ml-8改为ml-6)
+    navItemsSpacing: 'md:space-x-1', // 导航项之间的间距 (从space-x-8改为space-x-6)
     
     // 搜索框区域间距
     searchBoxMargin: 'ml-auto mr-4', // 搜索框左右margin (ml-auto让搜索框向右靠拢)
-    searchBoxMaxWidth: 'max-w-[270px]', // 搜索框最大宽度设为270px
+    searchBoxMaxWidth: 'max-w-[260px]', // 搜索框最大宽度设为270px
     searchClearButtonColor: 'text-gray-400 hover:text-gray-700', // 清除按钮颜色
     searchTextColor: 'text-white', // 搜索框文本颜色
     
     // 右侧区域间距
-    rightSideSpacing: 'space-x-4',   // 右侧元素间距
+    rightSideSpacing: 'space-x-2',   // 右侧元素间距
     
     // 移动端间距
     mobileNavSpacing: 'space-y-1',   // 移动端导航项间距
@@ -156,7 +156,7 @@ const Header = () => {
 
   return (
     <header className="bg-black sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-2 sm:px-2 lg:px-2">
+      <div className="w-full pl-1 pr-2 sm:pl-2 sm:pr-2 lg:pl-2 lg:pr-4">
         <div 
           className="flex justify-between items-center h-16"
           onMouseLeave={() => {
@@ -166,7 +166,7 @@ const Header = () => {
           }}
         >
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center ml-3">
             <div className="flex-shrink-0">
               <h1 className="text-2xl font-bold gradient-text">
                 <LanguageAwareLink to="/">RuaCoin</LanguageAwareLink>
@@ -415,7 +415,7 @@ const Header = () => {
             </div>
 
             {/* Login/Register Buttons */}
-            <div className={`hidden md:flex items-center ${headerSpacing.mobileButtonSpacing}`}>
+            <div className={`hidden md:flex items-center ${headerSpacing.mobileButtonSpacing} pr-5`}>
               <LanguageAwareLink 
                 to="/login"
                 className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors border-[2px] border-transparent hover:border-[#00d4ff] hover:border-[2px] rounded-lg"

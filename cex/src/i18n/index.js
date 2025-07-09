@@ -26,12 +26,6 @@ import {
   getFallbackLanguage
 } from './config/languageConfig';
 
-// Import language detection service
-
-// 导入简体中文语言资源
-
-// 导入繁体中文语言资源
-
 // 导入英文语言资源
 import enAuth from './locales/en/auth.json';
 import enCommon from './locales/en/common.json';
@@ -71,6 +65,8 @@ import koTrading from './locales/ko/trading.json';
 import koHome from './locales/ko/home.json';
 import koPages from './locales/ko/pages.json';
 import koComponents from './locales/ko/components.json';
+
+// 导入简体中文语言资源
 import zhCNAuth from './locales/zh-CN/auth.json';
 import zhCNCommon from './locales/zh-CN/common.json';
 import zhCNComponents from './locales/zh-CN/components.json';
@@ -79,6 +75,8 @@ import zhCNHeader from './locales/zh-CN/header.json';
 import zhCNHome from './locales/zh-CN/home.json';
 import zhCNPages from './locales/zh-CN/pages.json';
 import zhCNTrading from './locales/zh-CN/trading.json';
+
+// 导入繁体中文语言资源
 import zhTCAuth from './locales/zh-TC/auth.json';
 import zhTCCommon from './locales/zh-TC/common.json';
 import zhTCComponents from './locales/zh-TC/components.json';
@@ -87,6 +85,18 @@ import zhTCHeader from './locales/zh-TC/header.json';
 import zhTCHome from './locales/zh-TC/home.json';
 import zhTCPages from './locales/zh-TC/pages.json';
 import zhTCTrading from './locales/zh-TC/trading.json';
+
+// 导入俄文语言资源
+import ruAuth from './locales/ru/auth.json';
+import ruCommon from './locales/ru/common.json';
+import ruComponents from './locales/ru/components.json';
+import ruFooter from './locales/ru/footer.json';
+import ruHeader from './locales/ru/header.json';
+import ruHome from './locales/ru/home.json';
+import ruPages from './locales/ru/pages.json';
+import ruTrading from './locales/ru/trading.json';
+
+// 导入语言检测服务
 import languageDetectionService, {
   initializeLanguageDetection,
   getCurrentLanguagePreference
@@ -164,6 +174,18 @@ const resources = {
     home: koHome,
     pages: koPages,
     components: koComponents,
+  },
+  
+  // 俄文
+  'ru': {
+    common: ruCommon,
+    trading: ruTrading,
+    header: ruHeader,
+    footer: ruFooter,
+    auth: ruAuth,
+    home: ruHome,
+    pages: ruPages,
+    components: ruComponents,
   },
 };
 

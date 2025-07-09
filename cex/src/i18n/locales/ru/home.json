@@ -1,0 +1,15 @@
+{
+  "marketOverview": "Обзор рынка",
+  "hotCoins": "Популярные монеты",
+  "totalMarketCap": "Общая рыночная капитализация",
+  "volume24h": "Объем за 24ч",
+  "btcDominance": "Доминирование BTC",
+  "activeCoins": "Активные монеты",
+  "tradingPairs": "Торговые пары",
+  "price": "Цена",
+  "change": "Изменение",
+  "volume": "Объем",
+  "loading": "Загрузка...",
+  "noData": "Нет данных",
+  "error": "Ошибка загрузки"
+} 

@@ -59,25 +59,6 @@ export const ADVANCED_LANGUAGE_CONFIG = {
     markets: ['global', 'americas', 'europe', 'oceania']
   },
 
-  // English (India) - Large market with specific terminology
-  'en-IN': {
-    code: 'en-IN',
-    name: 'English (India)',
-    nativeName: 'English (India)',
-    region: 'India',
-    flag: '🇮🇳',
-    dir: 'ltr',
-    currency: 'INR',
-    timezone: 'Asia/Kolkata',
-    isMainVariant: false,
-    fallback: 'en',
-    seoCode: 'en-in',
-    htmlLang: 'en-IN',
-    priority: 4,
-    regions: ['IN'],
-    markets: ['asia', 'india']
-  },
-
   // Simplified Chinese (China)
   'zh-CN': {
     code: 'zh-CN',
@@ -152,7 +133,45 @@ export const ADVANCED_LANGUAGE_CONFIG = {
     priority: 6,
     regions: ['KR'],
     markets: ['asia', 'korea']
-  }
+  },
+
+  // English (India) - Large market with specific terminology
+  'en-IN': {
+    code: 'en-IN',
+    name: 'English (India)',
+    nativeName: 'English (India)',
+    region: 'India',
+    flag: '🇮🇳',
+    dir: 'ltr',
+    currency: 'INR',
+    timezone: 'Asia/Kolkata',
+    isMainVariant: false,
+    fallback: 'en',
+    seoCode: 'en-in',
+    htmlLang: 'en-IN',
+    priority: 4,
+    regions: ['IN'],
+    markets: ['asia', 'india']
+  },
+
+  // Russian
+  'ru': {
+    code: 'ru',
+    name: 'Russian',
+    nativeName: 'Русский',
+    region: 'Russia',
+    flag: '🇷🇺',
+    dir: 'ltr',
+    currency: 'RUB',
+    timezone: 'Europe/Moscow',
+    isMainVariant: true,
+    fallback: 'en',
+    seoCode: 'ru',
+    htmlLang: 'ru',
+    priority: 7,
+    regions: ['RU'],
+    markets: ['europe', 'russia']
+  },
 };
 
 /**
@@ -191,9 +210,10 @@ export const SEO_TO_LOCALE_MAP = Object.fromEntries(
  */
 export const MARKET_REGIONS = {
   americas: ['en'],
-  europe: ['en'],
+  europe: ['en', 'ru'],
   asia: ['zh-CN', 'zh-TC', 'ja', 'ko', 'en-IN'],
-  global: ['en', 'zh-CN', 'ja']
+  russia: ['ru'],
+  global: ['en', 'zh-CN', 'ja', 'ru']
 };
 
 /**
@@ -205,7 +225,8 @@ export const BROWSER_LANGUAGE_PATTERNS = {
   'zh-CN': ['zh', 'zh-CN', 'zh-Hans', 'zh-Hans-CN'],
   'zh-TC': ['zh-TW', 'zh-HK', 'zh-Hant', 'zh-Hant-TW', 'zh-Hant-HK'],
   'ja': ['ja', 'ja-JP'],
-  'ko': ['ko', 'ko-KR']
+  'ko': ['ko', 'ko-KR'],
+  'ru': ['ru', 'ru-RU']
 };
 
 /**
@@ -222,7 +243,8 @@ export const NUMBER_FORMATS = {
   'zh-CN': { locale: 'zh-CN', currency: 'CNY' },
   'zh-TC': { locale: 'zh-TW', currency: 'TWD' },
   'ja': { locale: 'ja-JP', currency: 'JPY' },
-  'ko': { locale: 'ko-KR', currency: 'KRW' }
+  'ko': { locale: 'ko-KR', currency: 'KRW' },
+  'ru': { locale: 'ru-RU', currency: 'RUB' }
 };
 
 /**
@@ -234,7 +256,8 @@ export const DATE_FORMATS = {
   'zh-CN': 'YYYY年MM月DD日',
   'zh-TC': 'YYYY年MM月DD日',
   'ja': 'YYYY年MM月DD日',
-  'ko': 'YYYY년 MM월 DD일'
+  'ko': 'YYYY년 MM월 DD일',
+  'ru': 'DD.MM.YYYY'
 };
 
 /**
