@@ -1041,7 +1041,8 @@
 }
 
 .period-btn {
-  padding: 10px 16px;
+  padding: 8px 16px;
+  height: 35px;
   border: 1px solid transparent;
   background: transparent;
   color: #9ca3af;
@@ -1054,6 +1055,9 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .period-btn:hover {
@@ -1228,6 +1232,7 @@
   
   .period-btn {
     padding: 8px 14px;
+    height: 35px;
     font-size: 13px;
     min-width: 42px;
   }
@@ -1266,6 +1271,7 @@
   
   .period-btn {
     padding: 7px 12px;
+    height: 35px;
     font-size: 12px;
     min-width: 36px;
   }
@@ -1639,5 +1645,123 @@
     font-size: 10px;
     padding: 3px 4px;
     min-width: auto;
+  }
+}
+
+/* ========================================
+   Deposit Modal Styles
+   ======================================== */
+
+/* Modal Overlay */
+.deposit-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 99999 !important;
+  animation: modalFadeIn 0.3s ease-out;
+  margin: 0 !important;
+  padding: 16px !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+  inset: 0 !important;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Content */
+.deposit-modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  margin: 16px auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  flex-shrink: 0;
+  transform: none !important;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .deposit-modal-overlay {
+    padding: 8px !important;
+  }
+  
+  .deposit-modal-content {
+    margin: 8px auto;
+    padding: 20px;
+    border-radius: 12px;
+    max-height: calc(100vh - 16px);
+    width: calc(100% - 16px);
+    max-width: calc(100vw - 16px);
+  }
+}
+
+/* Animation for closing */
+.deposit-modal-overlay.closing {
+  animation: modalFadeOut 0.2s ease-out;
+}
+
+.deposit-modal-content.closing {
+  animation: modalSlideOut 0.2s ease-out;
+}
+
+@keyframes modalFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .deposit-modal-overlay,
+  .deposit-modal-content {
+    animation: none !important;
   }
 } 

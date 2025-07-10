@@ -111,7 +111,24 @@
     "collapseSidebar": "사이드바 축소",
     "expandSidebar": "사이드바 확대",
     "sidebarToggle": "사이드바 토글",
-    "tradingCalendar": "거래 캘린더"
+    "tradingCalendar": "거래 캘린더",
+    "withdraw": "출금",
+    "transfer": "이체",
+    "modal": {
+      "selectPaymentCurrency": "결제 통화를 선택해주세요",
+      "searchCurrency": "USD, CNY, HKD, JPY 등 검색",
+      "noCryptoAssets": "암호화폐 자산이 없습니다",
+      "c2cTrading": "C2C 거래",
+      "c2cDescription": "P2P 거래로 경쟁력 있는 가격과 다양한 현지 결제 방법을 지원합니다.",
+      "buyWithCurrency": "{{currency}}로 암호화폐 구매",
+      "buyWithFiat": "{{currency}}로 암호화폐 구매",
+      "fiatDescription": "은행 이체, 직불/신용카드 등 편리한 방법으로 구매하세요.",
+      "haveCryptoAssets": "이미 암호화폐 자산이 있습니다",
+      "alreadyDepositDescription": "RuaCoin 계정에 암호화폐를 입금하세요",
+      "digitalCurrencyDeposit": "디지털 화폐 입금",
+      "depositDescription": "외부 지갑에서 암호화폐 입금",
+      "comingSoon": "곧 출시 예정"
+    }
   },
   "assetChart": {
     "title": "총 자산 가치",
@@ -145,5 +162,20 @@
     "fullscreen": "전체화면",
     "download": "다운로드",
     "share": "공유"
+  },
+  "buyCryptoPage": {
+    "buyWithCurrency": "{{currency}}로 암호화폐 구매 ({{token}})",
+    "popularCrypto": "인기 암호화폐",
+    "buyTab": "구매",
+    "sellTab": "판매",
+    "spend": "지불",
+    "receive": "받기",
+    "paymentMethod": "결제 방법",
+    "defaultCard": "기본 카드",
+    "addNewCard": "새 카드 추가",
+    "errorAmount": "최소 금액은 {{min}}",
+    "supported": "지원",
+    "selectCrypto": "암호화폐 선택",
+    "searchCrypto": "BTC, ETH, USDT 등 검색"
   }
 } 

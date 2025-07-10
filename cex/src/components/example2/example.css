@@ -1,0 +1,186 @@
+  :root {
+    font-size: 24px;
+    --light-opacity: 0.2;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  body {
+    background: #1488cc;
+    /* fallback for old browsers */
+    background: linear-gradient(to left, #283593, #1976d2);
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    /* 添加3D变换支持 */
+    perspective: 1000px;
+  }
+  
+  /* Background circles start */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(#006db3, #29b6f6);
+  }
+  .circles {
+    position: absolute;
+    height: 270px;
+    width: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 优化过渡效果 */
+    transition: transform 0.3s ease-out;
+  }
+  .circle-1 {
+    height: 180px;
+    width: 180px;
+    top: -50px;
+    left: -60px;
+  }
+  .circle-2 {
+    height: 200px;
+    width: 200px;
+    bottom: -90px;
+    right: -90px;
+    opacity: 0.8;
+  }
+  /* Background circles end */
+  
+  .card-group {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 添加3D变换样式 */
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+  
+  .card {
+    position: relative;
+    height: 270px;
+    width: 450px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(30px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    /* 使用CSS变量来控制光照效果，避免频闪 */
+    box-shadow: 
+      0 0 80px rgba(0, 0, 0, 0.2), 
+      inset 0 0 100px rgba(255, 255, 255, var(--light-opacity));
+    overflow: hidden;
+    /* 添加3D变换支持 */
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+    /* 优化过渡效果，只对transform进行过渡 */
+    transition: transform 0.2s ease-out;
+    /* 确保卡片可以进行3D变换 */
+    will-change: transform;
+  }
+  
+  /* 卡片悬停效果增强 */
+  .card:hover {
+    backdrop-filter: blur(35px);
+  }
+  
+  .logo img,
+  .chip,
+  .number,
+  .name,
+  .from,
+  .to,
+  .ring {
+    position: absolute; /* All items inside card should have absolute position */
+  }
+  
+  .logo img {
+    top: 35px;
+    right: 40px;
+    width: 80px;
+    height: auto;
+    opacity: 0.8;
+    /* 添加轻微的3D效果 */
+    transform: translateZ(10px);
+  }
+  
+  .chip {
+    top: 90px;
+    left: 40px;
+    opacity: 0.9;
+    /* 添加轻微的3D效果 */
+    transform: translateZ(8px);
+  }
+  
+  .chip svg {
+    width: 60px;
+    height: 45px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  
+  .number,
+  .name,
+  .from,
+  .to {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+    /* 添加轻微的3D效果 */
+    transform: translateZ(5px);
+  }
+  
+  .number {
+    left: 40px;
+    bottom: 65px;
+    font-family: "Nunito", sans-serif;
+  }
+  
+  .name {
+    font-size: 0.5rem;
+    left: 40px;
+    bottom: 35px;
+  }
+  
+  .from {
+    font-size: 0.5rem;
+    bottom: 35px;
+    right: 110px;
+  }
+  
+  .to {
+    font-size: 0.5rem;
+    bottom: 35px;
+    right: 40px;
+  }
+  
+  /* The two rings on the card background */
+  .ring {
+    height: 500px;
+    width: 500px;
+    border-radius: 50%;
+    background: transparent;
+    border: 50px solid rgba(255, 255, 255, 0.1);
+    bottom: -250px;
+    right: -250px;
+    box-sizing: border-box;
+    /* 让环形背景稍微后移 */
+    transform: translateZ(-5px);
+  }
+  
+  .ring::after {
+    content: "";
+    position: absolute;
+    height: 600px;
+    width: 600px;
+    border-radius: 50%;
+    background: transparent;
+    border: 30px solid rgba(255, 255, 255, 0.1);
+    bottom: -80px;
+    right: -110px;
+    box-sizing: border-box;
+  }

@@ -17,7 +17,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { symbolSet } from '../config/SymbolSetConfig';
+import { SymbolSet } from '../config/SymbolSetConfig';
 import { formatUrl } from '../router/config';
 
 import { useLocalizedNavigation } from './LanguageRouter/AdvancedLanguageRouter';
@@ -78,7 +78,7 @@ const TradingPairs = () => {
     const fullSymbol = `${cleanSymbol}/USDT`;
     
     // 检查symbolSet中是否包含该币种
-    if (symbolSet.has(fullSymbol)) {
+    if (SymbolSet.has(fullSymbol)) {
       return formatUrl(`/asserts/logo/${cleanSymbol}.png`);
     }
     

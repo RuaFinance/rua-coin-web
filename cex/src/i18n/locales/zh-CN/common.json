@@ -111,7 +111,24 @@
     "collapseSidebar": "收起侧边栏",
     "expandSidebar": "展开侧边栏",
     "sidebarToggle": "切换侧边栏",
-    "tradingCalendar": "交易日历"
+    "tradingCalendar": "交易日历",
+    "withdraw": "提现",
+    "transfer": "划转",
+    "modal": {
+      "selectPaymentCurrency": "请选择支付币种",
+      "searchCurrency": "搜索 USD、CNY、HKD、JPY 等币种",
+      "noCryptoAssets": "我没有加密货币资产",
+      "c2cTrading": "C2C 交易",
+      "c2cDescription": "点对点交易，价格从优，支持多种本地支付方式。",
+      "buyWithCurrency": "用 {{currency}} 买币",
+      "buyWithFiat": "用 {{currency}} 买币",
+      "fiatDescription": "用银行转账、借记卡/信用卡等方式便捷买币。",
+      "haveCryptoAssets": "已拥有数字资产",
+      "alreadyDepositDescription": "向您的RuaCoin账户充值数字货币",
+      "digitalCurrencyDeposit": "数字货币充值",
+      "depositDescription": "从外部钱包充值加密货币",
+      "comingSoon": "即将推出"
+    }
   },
   "assetChart": {
     "title": "总资产估值",
@@ -145,5 +162,20 @@
     "fullscreen": "全屏",
     "download": "下载",
     "share": "分享"
+  },
+  "buyCryptoPage": {
+    "buyWithCurrency": "使用{{currency}}购买加密货币 ({{token}})",
+    "popularCrypto": "热门加密货币",
+    "buyTab": "买入",
+    "sellTab": "卖出",
+    "spend": "支付",
+    "receive": "获得",
+    "paymentMethod": "支付方式",
+    "defaultCard": "默认卡片",
+    "addNewCard": "添加新卡片",
+    "errorAmount": "最低金额为{{min}}",
+    "supported": "支持",
+    "selectCrypto": "选择加密货币",
+    "searchCrypto": "搜索 BTC、ETH、USDT 等"
   }
 } 

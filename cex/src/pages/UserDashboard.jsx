@@ -33,15 +33,20 @@ import {
   ArrowDownRight,
   Eye,
   EyeOff,
-  RefreshCw
+  RefreshCw,
+  X,
+  Search,
+  ChevronDown
 } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
 import AssetValueChart from '../components/AssetValueChart';
 import LanguageAwareLink from '../components/LanguageAware/LanguageAwareLink';
 import TradingCalendarHeatMap from '../components/TradingCalendarHeatMap';
-import { symbolSet } from '../config/SymbolSetConfig';
+import { Currencies } from '../config/Currencies';
+import { SymbolSet } from '../config/SymbolSetConfig';
 import { formatUrl } from '../router/config';
 
 const UserDashboard = () => {
@@ -49,6 +54,23 @@ const UserDashboard = () => {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState(null);
+  const [activeTab, setActiveTab] = useState('deposit'); // 当前选中的按钮
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [searchCurrency, setSearchCurrency] = useState('');
+  const [highlightedIndex, setHighlightedIndex] = useState(0); // 键盘导航高亮索引
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 下拉框展开状态
+  const currencyListRef = useRef(null); // 货币列表容器引用
+  const dropdownRef = useRef(null); // 下拉框容器引用
+
+  // 货币列表
+  const currencies = Currencies;
+
+  // 过滤货币列表
+  const filteredCurrencies = currencies.filter(currency =>
+    currency.code.toLowerCase().includes(searchCurrency.toLowerCase()) ||
+    currency.name.toLowerCase().includes(searchCurrency.toLowerCase())
+  );
 
   // 获取币种logo的函数（仿照TradingPairs.jsx）
   const getCoinLogo = (symbol) => {
@@ -61,13 +83,145 @@ const UserDashboard = () => {
     const fullSymbol = `${symbol}/USDT`;
     
     // 检查symbolSet中是否包含该币种
-    if (symbolSet.has(fullSymbol)) {
+    if (SymbolSet.has(fullSymbol)) {
       return formatUrl(`/asserts/logo/${symbol}.png`);
     }
     
     // 如果没有找到，返回默认的none.png
     return formatUrl('/asserts/logo/none.png');
   };
+
+  // 处理按钮点击
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'deposit') {
+      setShowDepositModal(true);
+      setHighlightedIndex(0); // 重置高亮索引
+    }
+    // 其他按钮暂时不处理
+  };
+
+  // 关闭模态框
+  const closeDepositModal = () => {
+    setShowDepositModal(false);
+    setIsDropdownOpen(false); // 关闭下拉框
+    setHighlightedIndex(0); // 重置高亮索引
+    setSearchCurrency(''); // 重置搜索内容
+  };
+
+  // 选择货币
+  const handleCurrencySelect = (currencyCode, fromKeyboard = false) => {
+    setSelectedCurrency(currencyCode);
+    setIsDropdownOpen(false); // 选择后关闭下拉框
+    setSearchCurrency(''); // 清空搜索
+    // 如果是键盘操作，同步高亮索引；如果是鼠标操作，清除高亮状态
+    if (fromKeyboard) {
+      const index = filteredCurrencies.findIndex(c => c.code === currencyCode);
+      if (index !== -1) {
+        setHighlightedIndex(index);
+      }
+    } else {
+      setHighlightedIndex(-1); // 鼠标操作时清除键盘高亮状态
+    }
+  };
+
+  // 切换下拉框状态
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+    if (!isDropdownOpen) {
+      setHighlightedIndex(0); // 打开时重置高亮索引
+    }
+  };
+
+  // 键盘导航处理
+  const handleKeyDown = (event) => {
+    if (!showDepositModal) return;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (isDropdownOpen) {
+          setHighlightedIndex(prev => 
+            prev < filteredCurrencies.length - 1 ? prev + 1 : 0
+          );
+        } else {
+          setIsDropdownOpen(true);
+          setHighlightedIndex(0);
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (isDropdownOpen) {
+          setHighlightedIndex(prev => 
+            prev > 0 ? prev - 1 : filteredCurrencies.length - 1
+          );
+        }
+        break;
+      case 'Enter':
+        event.preventDefault();
+        if (isDropdownOpen && filteredCurrencies[highlightedIndex]) {
+          handleCurrencySelect(filteredCurrencies[highlightedIndex].code, true);
+        } else if (!isDropdownOpen) {
+          setIsDropdownOpen(true);
+          setHighlightedIndex(0);
+        }
+        break;
+      case 'Escape':
+        event.preventDefault();
+        if (isDropdownOpen) {
+          setIsDropdownOpen(false);
+          setSearchCurrency('');
+        } else {
+          closeDepositModal();
+        }
+        break;
+    }
+  };
+
+  // 绑定键盘事件
+  useEffect(() => {
+    if (showDepositModal) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [showDepositModal, filteredCurrencies, highlightedIndex, isDropdownOpen]);
+
+  // 点击外部关闭下拉框
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+        setSearchCurrency('');
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [isDropdownOpen]);
+
+  // 搜索内容变化时重置高亮索引
+  useEffect(() => {
+    setHighlightedIndex(0);
+  }, [searchCurrency]);
+
+  // 滚动到高亮的选项
+  useEffect(() => {
+    if (currencyListRef.current && highlightedIndex >= 0) {
+      const highlightedElement = currencyListRef.current.children[highlightedIndex];
+      if (highlightedElement) {
+        highlightedElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
+      }
+    }
+  }, [highlightedIndex]);
 
   // Mock API call for dashboard data
   useEffect(() => {
@@ -186,32 +340,59 @@ const UserDashboard = () => {
       <div className="dashboard-card">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-white">{t('userDashboard.totalAssets')}</h2>
-          <Wallet className="w-6 h-6 text-blue-400" />
+          {/* <Wallet className="w-6 h-6 text-blue-400" /> */}
         </div>
         
         <div className="space-y-6">
-          {/* Balance Summary */}
-          <div>
-            <div className="flex items-baseline space-x-2">
-              <span className="text-3xl font-bold text-white">
-                ${formatBalance(dashboardData.totalBalance.usd)}
-              </span>
-              <span className="text-sm text-white">USD</span>
-            </div>
-            <div className="flex items-center space-x-2 mt-1">
-              <span className="text-sm text-white">
-                ≈ {formatCrypto(dashboardData.totalBalance.btc)} BTC
-              </span>
-              <div className={`flex items-center space-x-1 text-sm ${
-                dashboardData.totalBalance.change24h >= 0 ? 'text-green-400' : 'text-red-400'
-              }`}>
-                {dashboardData.totalBalance.change24h >= 0 ? (
-                  <ArrowUpRight className="w-4 h-4" />
-                ) : (
-                  <ArrowDownRight className="w-4 h-4" />
-                )}
-                <span>{Math.abs(dashboardData.totalBalance.change24h)}%</span>
+          {/* Balance Summary with Action Buttons */}
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+            {/* Balance Summary */}
+            <div className="flex-1">
+              <div className="flex items-baseline space-x-2">
+                <span className="text-3xl font-bold text-white">
+                  ${formatBalance(dashboardData.totalBalance.usd)}
+                </span>
+                <span className="text-sm text-white">USD</span>
               </div>
+              <div className="flex items-center space-x-2 mt-1">
+                <span className="text-sm text-white">
+                  ≈ {formatCrypto(dashboardData.totalBalance.btc)} BTC
+                </span>
+                <div className={`flex items-center space-x-1 text-sm ${
+                  dashboardData.totalBalance.change24h >= 0 ? 'text-green-400' : 'text-red-400'
+                }`}>
+                  {dashboardData.totalBalance.change24h >= 0 ? (
+                    <ArrowUpRight className="w-4 h-4" />
+                  ) : (
+                    <ArrowDownRight className="w-4 h-4" />
+                  )}
+                  <span>{Math.abs(dashboardData.totalBalance.change24h)}%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex space-x-0 mt-4 lg:mt-0">
+              {[
+                { key: 'deposit', label: t('userDashboard.deposit') },
+                { key: 'withdraw', label: t('userDashboard.withdraw') },
+                { key: 'transfer', label: t('userDashboard.transfer') }
+              ].map((button, index) => (
+                <button
+                  key={button.key}
+                  onClick={() => handleTabClick(button.key)}
+                  className={`
+                    px-6 py-2 text-white transition-all duration-300 border-b-2
+                    ${activeTab === button.key 
+                      ? 'bg-gray-700 border-[#fcd535]' 
+                      : 'bg-gray-800 hover:bg-gray-700 border-transparent hover:border-white'
+                    }
+                  `}
+                  style={{ background: '#1d1d1d' }}
+                >
+                  {button.label}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -388,6 +569,201 @@ const UserDashboard = () => {
             </LanguageAwareLink>
         </div>
       </div>
+
+      {/* Deposit Modal */}
+      {showDepositModal && createPortal(
+        <div 
+          className="deposit-modal-overlay"
+          onClick={closeDepositModal}
+        >
+          {/* Modal Content */}
+          <div 
+            className="deposit-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeDepositModal}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Modal Header */}
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              {t('userDashboard.modal.selectPaymentCurrency')}
+            </h2>
+
+            {/* Currency Selector */}
+            <div className="mb-6">
+              <div ref={dropdownRef} className="relative">
+                {/* Dropdown Trigger */}
+                <button
+                  onClick={toggleDropdown}
+                  className="w-full flex items-center justify-between p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white hover:border-gray-400 transition-colors"
+                >
+                  <div className="flex items-center">
+                    <div className="w-8 flex items-center justify-center mr-3">
+                      <span className="text-lg font-medium">
+                        {currencies.find(c => c.code === selectedCurrency)?.symbol}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-gray-900 font-medium">{selectedCurrency}</span>
+                      <span className="text-gray-500 text-sm">
+                        {currencies.find(c => c.code === selectedCurrency)?.name}
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                    isDropdownOpen ? 'transform rotate-180' : ''
+                  }`} />
+                </button>
+
+                {/* Dropdown Content */}
+                {isDropdownOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-64 overflow-hidden">
+                    {/* Search Input */}
+                    <div className="p-3 border-b border-gray-200">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                          type="text"
+                          placeholder={t('userDashboard.modal.searchCurrency')}
+                          value={searchCurrency}
+                          onChange={(e) => setSearchCurrency(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+
+                    {/* Currency Options */}
+                    <div ref={currencyListRef} className="max-h-40 overflow-y-auto">
+                      {filteredCurrencies.map((currency, index) => (
+                        <button
+                          key={currency.code}
+                          onClick={() => handleCurrencySelect(currency.code)}
+                          className={`w-full flex items-center justify-between p-3 border-l-4 transition-all duration-200 ${
+                            selectedCurrency === currency.code 
+                              ? 'bg-blue-50 border-blue-500' 
+                              : index === highlightedIndex && highlightedIndex >= 0
+                              ? 'bg-gray-50 border-transparent'
+                              : 'hover:bg-gray-50 border-transparent'
+                          }`}
+                        >
+                          <div className="flex items-center">
+                            <div className="w-8 flex items-center justify-center mr-3">
+                              <span className="text-lg font-medium">{currency.symbol}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-gray-900 font-medium">{currency.code}</span>
+                              <span className="text-gray-500 text-sm">{currency.name}</span>
+                            </div>
+                          </div>
+                          {selectedCurrency === currency.code && (
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Section: No Crypto Assets */}
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                {t('userDashboard.modal.noCryptoAssets')}
+              </h3>
+              
+              {/* C2C Trading Option - clickable card */}
+              <LanguageAwareLink
+                to={`/trade/c2c/all?currency=${selectedCurrency}`}
+                className="block border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="flex items-start space-x-3">
+                  {/* C2C Trading Icon */}
+                  <div className="w-8 h-8 flex items-center justify-center mt-1">
+                    <img 
+                      src={formatUrl('/asserts/currency/aaa-p2p-icon.png')} 
+                      alt="C2C Trading"
+                      className="w-8 h-8 object-contain"
+                    />
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900 mb-1">
+                      {t('userDashboard.modal.c2cTrading')}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {t('userDashboard.modal.c2cDescription')}
+                    </p>
+                  </div>
+                </div>
+              </LanguageAwareLink>
+
+              {/* Bank Transfer Option - clickable card */}
+              <LanguageAwareLink
+                to={`/crypto/buy/${selectedCurrency}/USDT`}
+                className="block border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="flex items-start space-x-3">
+                  {/* Bank Transfer Icon */}
+                  <div className="w-8 h-8 flex items-center justify-center mt-1">
+                    <img 
+                      src={formatUrl('/asserts/currency/aaa-digital-currency-recharge.png')} 
+                      alt="Bank Transfer"
+                      className="w-8 h-8 object-contain"
+                    />
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900 mb-1">
+                      {t('userDashboard.modal.buyWithFiat', { currency: selectedCurrency })}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {t('userDashboard.modal.fiatDescription')}
+                    </p>
+                  </div>
+                </div>
+              </LanguageAwareLink>
+            </div>
+
+            {/* Section: Already Have Crypto */}
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                {t('userDashboard.modal.haveCryptoAssets')}
+              </h3>
+              <div className="border border-gray-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  {/* Digital Currency Deposit Icon */}
+                  <div className="w-8 h-8 flex items-center justify-center mt-1">
+                    <img
+                      src={formatUrl('/asserts/currency/aaa-use-currency.png')}
+                      alt="Digital Currency Deposit"
+                      className="w-8 h-8 object-contain"
+                    />
+                  </div>
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900 mb-1">
+                      {t('userDashboard.modal.digitalCurrencyDeposit')}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {t('userDashboard.modal.alreadyDepositDescription')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 };

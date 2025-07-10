@@ -33,6 +33,7 @@ import languageDetectionService, {
 // Import existing components
 import Layout from '../../layouts/Layout';
 import UserLayout from '../../layouts/UserLayout';
+import BuyCryptoPage from '../../pages/BuyCryptoPage';
 import DeviceTestPage from '../../pages/DeviceTestPage';
 import FooterTestPage from '../../pages/FooterTestPage';
 import HomePage from '../../pages/HomePage';
@@ -447,6 +448,10 @@ const createAdvancedLanguageRouter = () => {
           },
         ],
       },
+      {
+        path: `${locale}/crypto/buy/:currency/:token`,
+        element: <BuyCryptoPage />,
+      },
     ]);
   };
   
@@ -549,6 +554,10 @@ const createAdvancedLanguageRouter = () => {
               element: <div className="text-white p-8">帮助中心页面 - 开发中</div>,
             },
           ],
+        },
+        {
+          path: 'crypto/buy/:currency/:token',
+          element: <BuyCryptoPage />,
         },
         {
           path: '*',

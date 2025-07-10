@@ -111,7 +111,24 @@
     "collapseSidebar": "Collapse Sidebar",
     "expandSidebar": "Expand Sidebar",
     "sidebarToggle": "Toggle Sidebar",
-    "tradingCalendar": "Trading Calendar"
+    "tradingCalendar": "Trading Calendar",
+    "withdraw": "Withdraw",
+    "transfer": "Transfer",
+    "modal": {
+      "selectPaymentCurrency": "Please select payment currency",
+      "searchCurrency": "Search USD, CNY, HKD, JPY, etc.",
+      "noCryptoAssets": "I don't have cryptocurrency assets",
+      "c2cTrading": "C2C Trading",
+      "c2cDescription": "Peer-to-peer trading with competitive rates and multiple local payment methods.",
+      "buyWithCurrency": "Buy crypto with {{currency}}",
+      "buyWithFiat": "Buy crypto with {{currency}}",
+      "fiatDescription": "Use bank transfer, debit/credit cards and other convenient methods.",
+      "haveCryptoAssets": "Already have crypto assets",
+      "alreadyDepositDescription": "Deposit crypto into your RuaCoin account",
+      "digitalCurrencyDeposit": "Digital Currency Deposit",
+      "depositDescription": "Deposit cryptocurrency from external wallets",
+      "comingSoon": "Coming Soon"
+    }
   },
   "assetChart": {
     "title": "Total Asset Value",
@@ -145,5 +162,20 @@
     "fullscreen": "Fullscreen",
     "download": "Download",
     "share": "Share"
+  },
+  "buyCryptoPage": {
+    "buyWithCurrency": "Buy Crypto with {{currency}} ({{token}})",
+    "popularCrypto": "Popular Cryptocurrencies",
+    "buyTab": "Buy",
+    "sellTab": "Sell",
+    "spend": "Spend",
+    "receive": "Receive",
+    "paymentMethod": "Payment Method",
+    "defaultCard": "Default Card",
+    "addNewCard": "Add New Card",
+    "errorAmount": "Minimum amount is {{min}}",
+    "supported": "Supported",
+    "selectCrypto": "Select Cryptocurrency",
+    "searchCrypto": "Search BTC, ETH, USDT, etc."
   }
 } 

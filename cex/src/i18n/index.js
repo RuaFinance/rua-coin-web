@@ -29,44 +29,52 @@ import {
 // 导入英文语言资源
 import enAuth from './locales/en/auth.json';
 import enCommon from './locales/en/common.json';
+import enComponents from './locales/en/components.json';
 import enFooter from './locales/en/footer.json';
 import enHeader from './locales/en/header.json';
-import enTrading from './locales/en/trading.json';
 import enHome from './locales/en/home.json';
 import enPages from './locales/en/pages.json';
-import enComponents from './locales/en/components.json';
+import enTrading from './locales/en/trading.json';
 
 // 导入英文印度语言资源
 import enINAuth from './locales/en-IN/auth.json';
 import enINCommon from './locales/en-IN/common.json';
+import enINComponents from './locales/en-IN/components.json';
 import enINFooter from './locales/en-IN/footer.json';
 import enINHeader from './locales/en-IN/header.json';
-import enINTrading from './locales/en-IN/trading.json';
 import enINHome from './locales/en-IN/home.json';
 import enINPages from './locales/en-IN/pages.json';
-import enINComponents from './locales/en-IN/components.json';
+import enINTrading from './locales/en-IN/trading.json';
 
 // 导入日文语言资源
 import jaAuth from './locales/ja/auth.json';
 import jaCommon from './locales/ja/common.json';
+import jaComponents from './locales/ja/components.json';
 import jaFooter from './locales/ja/footer.json';
 import jaHeader from './locales/ja/header.json';
-import jaTrading from './locales/ja/trading.json';
 import jaHome from './locales/ja/home.json';
 import jaPages from './locales/ja/pages.json';
-import jaComponents from './locales/ja/components.json';
+import jaTrading from './locales/ja/trading.json';
 
 // 导入韩文语言资源
 import koAuth from './locales/ko/auth.json';
 import koCommon from './locales/ko/common.json';
+import koComponents from './locales/ko/components.json';
 import koFooter from './locales/ko/footer.json';
 import koHeader from './locales/ko/header.json';
-import koTrading from './locales/ko/trading.json';
 import koHome from './locales/ko/home.json';
 import koPages from './locales/ko/pages.json';
-import koComponents from './locales/ko/components.json';
+import koTrading from './locales/ko/trading.json';
 
 // 导入简体中文语言资源
+import ruAuth from './locales/ru/auth.json';
+import ruCommon from './locales/ru/common.json';
+import ruComponents from './locales/ru/components.json';
+import ruFooter from './locales/ru/footer.json';
+import ruHeader from './locales/ru/header.json';
+import ruHome from './locales/ru/home.json';
+import ruPages from './locales/ru/pages.json';
+import ruTrading from './locales/ru/trading.json';
 import zhCNAuth from './locales/zh-CN/auth.json';
 import zhCNCommon from './locales/zh-CN/common.json';
 import zhCNComponents from './locales/zh-CN/components.json';
@@ -87,14 +95,6 @@ import zhTCPages from './locales/zh-TC/pages.json';
 import zhTCTrading from './locales/zh-TC/trading.json';
 
 // 导入俄文语言资源
-import ruAuth from './locales/ru/auth.json';
-import ruCommon from './locales/ru/common.json';
-import ruComponents from './locales/ru/components.json';
-import ruFooter from './locales/ru/footer.json';
-import ruHeader from './locales/ru/header.json';
-import ruHome from './locales/ru/home.json';
-import ruPages from './locales/ru/pages.json';
-import ruTrading from './locales/ru/trading.json';
 
 // 导入语言检测服务
 import languageDetectionService, {

@@ -104,7 +104,24 @@
     "collapseSidebar": "收合側邊欄",
     "expandSidebar": "展開側邊欄",
     "sidebarToggle": "切換側邊欄",
-    "tradingCalendar": "交易日曆"
+    "tradingCalendar": "交易日曆",
+    "withdraw": "提現",
+    "transfer": "劃轉",
+    "modal": {
+      "selectPaymentCurrency": "請選擇支付幣種",
+      "searchCurrency": "搜索 USD、CNY、HKD、JPY 等幣種",
+      "noCryptoAssets": "我沒有加密貨幣資產",
+      "c2cTrading": "C2C 交易",
+      "c2cDescription": "點對點交易，價格從優，支持多種本地支付方式。",
+      "buyWithCurrency": "用 {{currency}} 買幣",
+      "buyWithFiat": "用 {{currency}} 買幣",
+      "fiatDescription": "用銀行轉賬、借記卡/信用卡等方式便捷買幣。",
+      "haveCryptoAssets": "已擁有數字資產",
+      "alreadyDepositDescription": "向您的RuaCoin帳戶充值數字貨幣",
+      "digitalCurrencyDeposit": "數字貨幣充值",
+      "depositDescription": "從外部錢包充值加密貨幣",
+      "comingSoon": "即將推出"
+    }
   },
   "assetChart": {
     "title": "總資產估值",
@@ -146,5 +163,20 @@
     "tabletDescription": "您似乎正在使用平板裝置。雖然平板體驗比行動裝置更好，但我們仍建議使用桌上型電腦以獲得最佳交易體驗。",
     "understood": "知道了",
     "neverShowAgain": "不再顯示"
+  },
+  "buyCryptoPage": {
+    "buyWithCurrency": "使用{{currency}}購買加密貨幣 ({{token}})",
+    "popularCrypto": "熱門加密貨幣",
+    "buyTab": "買入",
+    "sellTab": "賣出",
+    "spend": "支付",
+    "receive": "獲得",
+    "paymentMethod": "支付方式",
+    "defaultCard": "默認卡片",
+    "addNewCard": "新增卡片",
+    "errorAmount": "最低金額為{{min}}",
+    "supported": "支援",
+    "selectCrypto": "選擇加密貨幣",
+    "searchCrypto": "搜尋 BTC、ETH、USDT 等"
   }
 } 

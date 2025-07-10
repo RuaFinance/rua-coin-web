@@ -111,7 +111,24 @@
     "collapseSidebar": "サイドバーを縮小",
     "expandSidebar": "サイドバーを展開",
     "sidebarToggle": "サイドバー切り替え",
-    "tradingCalendar": "取引カレンダー"
+    "tradingCalendar": "取引カレンダー",
+    "withdraw": "出金",
+    "transfer": "振替",
+    "modal": {
+      "selectPaymentCurrency": "支払い通貨を選択してください",
+      "searchCurrency": "USD、CNY、HKD、JPY等を検索",
+      "noCryptoAssets": "暗号資産を持っていません",
+      "c2cTrading": "C2C取引",
+      "c2cDescription": "P2P取引で競争力のある価格と多様な現地決済方法をサポート。",
+      "buyWithCurrency": "{{currency}}で暗号資産を購入",
+      "buyWithFiat": "{{currency}}で暗号資産を購入",
+      "fiatDescription": "銀行振込、デビット/クレジットカード等で便利に購入。",
+      "haveCryptoAssets": "既に暗号資産を保有しています",
+      "alreadyDepositDescription": "RuaCoinアカウントに暗号資産を入金",
+      "digitalCurrencyDeposit": "デジタル通貨入金",
+      "depositDescription": "外部ウォレットから暗号資産を入金",
+      "comingSoon": "近日公開"
+    }
   },
   "assetChart": {
     "title": "総資産価値",
@@ -145,5 +162,20 @@
     "fullscreen": "フルスクリーン",
     "download": "ダウンロード",
     "share": "共有"
+  },
+  "buyCryptoPage": {
+    "buyWithCurrency": "{{currency}}で暗号資産を購入 ({{token}})",
+    "popularCrypto": "人気の暗号資産",
+    "buyTab": "購入",
+    "sellTab": "売却",
+    "spend": "支払う",
+    "receive": "受け取る",
+    "paymentMethod": "支払い方法",
+    "defaultCard": "デフォルトカード",
+    "addNewCard": "新しいカードを追加",
+    "errorAmount": "最低金額は{{min}}",
+    "supported": "対応",
+    "selectCrypto": "暗号資産を選択",
+    "searchCrypto": "BTC、ETH、USDT等を検索"
   }
 } 

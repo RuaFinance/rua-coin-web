@@ -15,12 +15,12 @@
 /**
  * @example
  * ```jsx
- * import { symbolSet } from '../config/SymbolSetConfig';
+ * import { SymbolSet } from '../config/SymbolSetConfig';
  * 
- * console.log(symbolSet);
+ * console.log(SymbolSet);
  * ```
  */
-export const symbolSet = new Set([
+export const SymbolSet = new Set([
     'BTC/USDT',
     'ETH/USDT',
     'BNB/USDT',
@@ -45,3 +45,30 @@ export const symbolSet = new Set([
     'BTC3L/USDT',
     'ETH3S/USDT'
 ]);
+
+export const TokenList = [
+    'USDT',
+    'BTC',
+    'ETH',
+    'BNB',
+    'ADA',
+    'SOL',
+    'DOT',
+    'AVAX',
+    'MATIC',
+    'XRP',
+    'DOGE',
+    'LTC',
+    'LINK',
+    'UNI',
+    'ATOM',
+    'XLM',
+    'FIL',
+    'AAVE',
+    'AXS',
+    'MANA',
+    'USDC',
+    'DAI',
+    'BTC3L',
+    'ETH3S'
+];

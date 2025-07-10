@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchMarketOverview, fetchPopularCoins } from '../api/market';
 import { useLocalizedNavigation } from '../components/LanguageRouter/AdvancedLanguageRouter';
 import TradingPairs from '../components/TradingPairs';
-import { symbolSet } from '../config/SymbolSetConfig';
+import { SymbolSet } from '../config/SymbolSetConfig';
 import { formatUrl } from '../router/config';
 
 const HomePage = () => {
@@ -40,7 +40,7 @@ const HomePage = () => {
     const fullSymbol = `${cleanSymbol}/USDT`;
     
     // 检查symbolSet中是否包含该币种
-    if (symbolSet.has(fullSymbol)) {
+    if (SymbolSet.has(fullSymbol)) {
       return formatUrl(`/asserts/logo/${cleanSymbol}.png`);
     }
     

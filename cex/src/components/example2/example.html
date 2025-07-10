@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Visa Card</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="example.css">
+</head>
+<body>
+  <div class="circles">
+    <!-- <div class="circle circle-1"></div> -->
+    <!-- <div class="circle circle-2"></div> -->
+  </div>
+
+  <div class="card-group">
+    <div class="card">
+      <div class="logo"><img src="https://raw.githubusercontent.com/dasShounak/freeUseImages/main/Visa-Logo-PNG-Image.png" alt="Visa"></div>
+      <div class="chip">
+        <svg width="76.5" height="58" viewBox="0 0 76.5 58">
+          <defs>
+            <linearGradient id="chipGradient" x1="0%" y1="0%" x2="100%" y2="85%">
+              <stop offset="0%" stop-color="#f5eacc" />
+              <stop offset="80%" stop-color="#e0c677" />
+              <stop offset="110%" stop-color="#ebd8a0" />      
+            </linearGradient>
+          </defs>
+          <!-- 旋转90度，使芯片变为横向 -->
+          <g transform="translate(38.25, 29) rotate(90) translate(-29, -38.25)">
+            <rect fill="url(#chipGradient)" width="58" height="76.5" rx="9" ry="9" />
+            <path fill="none" opacity="0.8" stroke="#c9b678" d="M58,54.05 M0,25.72c2.11,0.21,3.75,0.47,4.03,0.74c2.92,3.64,5.83,7.28,8.67,10.98c0.77,1,1.52,1.72,2.89,1.47c0.95-0.18,1.28,0.3,1.27,1.25c-0.04,4.03-0.01,8.03-0.02,12.07c8.44,0,16.73,0,25.08,0c0-8.43,0-25.32,0-25.32l-26.77,0c0,0-1.95,0-1.95-1.96c-0.4-1.85-0.4-14.9-0.34-24.95 M45.96,0c0,8.65,0.01,18.65-0.01,24.19c-0.01,2.9,0.27,2.55-2.38,2.84c0,3.91,0,7.82,0,12.17c4.69-3.07,7.28-8.53,11.07-12.63C55,26.06,56.3,25.72,58,25.5 M58,54.05c-0.55,0-0.89,0.01-0.89,0.01c-2.46,0.26-9.33-10.83-12.02-13.2c-0.41-0.36-1.57,0.2-1.57,0.2s-0.02,7.37-0.02,11.13c2.56,0.32,2.56,0.32,2.56,2.77c0,4.4,0,12.9,0,21.04 M13.1,76c0.01-8.57,0.04-17.77,0.07-22.53c-0.01-0.82,0.36-1.2,1.17-1.17c0.28,0.01,1.03-0.06,1.03-0.06l0.05-11.81c0,0-1.73,0.15-2.12,0.72c-0.39,0.57-6.16,7.63-9.18,11.5C3.9,52.85,2.19,53.11,0,53.35"/>
+          </g>
+        </svg>
+      </div>
+      <div class="number">4000 1234 5678 9010</div>
+      <div class="name">PHILIP GOODWIN</div>
+      <div class="from">05/25</div>
+      <div class="to">05/30</div>
+      <div class="ring"></div>
+    </div>
+  </div>
+
+  <script src="example.js"></script>
+</body>
+</html>

@@ -252,12 +252,12 @@ const UserSidebar = () => {
 
         {/* Logout Button */}
         <div className="sidebar-footer">
-          <button className="sidebar-nav-item w-full logout-btn">
+          <LanguageAwareLink to="/" className="sidebar-nav-item w-full logout-btn">
             <div className="sidebar-nav-link">
               <LogOut className="sidebar-nav-icon" />
               {isExpanded && <span>{t('userDashboard.logout')}</span>}
             </div>
-          </button>
+          </LanguageAwareLink>
         </div>
       </div>
     </aside>

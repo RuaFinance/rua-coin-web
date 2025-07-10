@@ -111,7 +111,24 @@
     "collapseSidebar": "Свернуть боковую панель",
     "expandSidebar": "Развернуть боковую панель",
     "sidebarToggle": "Переключить боковую панель",
-    "tradingCalendar": "Торговый календарь"
+    "tradingCalendar": "Торговый календарь",
+    "withdraw": "Вывод",
+    "transfer": "Перевод",
+    "modal": {
+      "selectPaymentCurrency": "Выберите валюту платежа",
+      "searchCurrency": "Поиск USD, CNY, HKD, JPY и др.",
+      "noCryptoAssets": "У меня нет криптовалютных активов",
+      "c2cTrading": "C2C торговля",
+      "c2cDescription": "P2P торговля с конкурентными ценами и поддержкой множественных местных способов оплаты.",
+      "buyWithCurrency": "Купить криптовалюту за {{currency}}",
+      "buyWithFiat": "Купить криптовалюту за {{currency}}",
+      "fiatDescription": "Используйте банковский перевод, дебетовые/кредитные карты и другие удобные способы.",
+      "haveCryptoAssets": "Уже есть криптовалютные активы",
+      "alreadyDepositDescription": "Пополните криптовалюту на свой счёт RuaCoin",
+      "digitalCurrencyDeposit": "Депозит цифровой валюты",
+      "depositDescription": "Пополните криптовалютой с внешних кошельков",
+      "comingSoon": "Скоро"
+    }
   },
   "assetChart": {
     "title": "Общая стоимость активов",
@@ -145,5 +162,20 @@
     "fullscreen": "Полный экран",
     "download": "Скачать",
     "share": "Поделиться"
+  },
+  "buyCryptoPage": {
+    "buyWithCurrency": "Купить криптовалюту за {{currency}} ({{token}})",
+    "popularCrypto": "Популярные криптовалюты",
+    "buyTab": "Купить",
+    "sellTab": "Продать",
+    "spend": "Потратить",
+    "receive": "Получить",
+    "paymentMethod": "Способ оплаты",
+    "defaultCard": "Карта по умолчанию",
+    "addNewCard": "Добавить новую карту",
+    "errorAmount": "Минимальная сумма {{min}}",
+    "supported": "Поддерживается",
+    "selectCrypto": "Выбрать криптовалюту",
+    "searchCrypto": "Поиск BTC, ETH, USDT и др."
   }
 } 
