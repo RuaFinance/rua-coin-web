@@ -14,11 +14,11 @@
 
 import { DownOutlined } from '@ant-design/icons';
 import { Menu, X, User, Bell, Search } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LanguageAwareLink from './LanguageAware/LanguageAwareLink';
-import { useLocalizedNavigation } from './LanguageRouter/AdvancedLanguageRouter';
+import { useLocalizedNavigation, useCurrentLocale } from './LanguageRouter/AdvancedLanguageRouter';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
@@ -48,6 +48,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isSpotItemsMenuOpen, setIsSpotItemsMenuOpen] = useState(false);
+  const [isTradeMenuOpen, setIsTradeMenuOpen] = useState(false);
+  const [isEarnMenuOpen, setIsEarnMenuOpen] = useState(false); // 新增理财菜单状态
 
   // 现货交易对数据
   const [spotTradingPairs, setSpotTradingPairs] = useState([]);
@@ -70,6 +72,7 @@ const Header = () => {
 
   // 路由导航
   const { navigateLocalized } = useLocalizedNavigation();
+  const { locale } = useCurrentLocale();
 
   // Mock现货交易对数据
   const fetchSpotTradingPairs = async () => {
@@ -154,17 +157,28 @@ const Header = () => {
     );
   };
 
+  const mobileMenuRef = useRef(null);
+
+  // 点击菜单栏外自动关闭菜单栏（无遮罩层）
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const handleClickOutside = (event) => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   return (
     <header className="bg-black sticky top-0 z-50">
       <div className="w-full pl-1 pr-2 sm:pl-2 sm:pr-2 lg:pl-2 lg:pr-4">
-        <div 
-          className="flex justify-between items-center h-16"
-          onMouseLeave={() => {
-            setIsSpotItemsMenuOpen(false);
-            setIsUserMenuOpen(false);
-            setIsSearchFocused(false);
-          }}
-        >
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center ml-3">
             <div className="flex-shrink-0">
@@ -175,45 +189,77 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className={`hidden ${headerSpacing.navLeftMargin} md:flex ${headerSpacing.navItemsSpacing}`}>
-              <LanguageAwareLink to="/trading/BTCUSDT" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                {t('header:trade')}
-              </LanguageAwareLink>
-
-              <div className="relative">
+              {/* 交易菜单 */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsTradeMenuOpen(true)}
+                onMouseLeave={() => setIsTradeMenuOpen(false)}
+              >
                 <button
-                  onClick={() => setIsSpotItemsMenuOpen(!isSpotItemsMenuOpen)}
-                  onMouseEnter={() => {
-                    setIsSpotItemsMenuOpen(true);
-                  }}
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1"
+                  onClick={() => setIsTradeMenuOpen((v) => !v)}
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 justify-center"
+                >
+                  <span>{t('header:trade')}</span>
+                  <DownOutlined className="text-xs" />
+                </button>
+                {isTradeMenuOpen && (
+                  <div className="absolute left-0 top-full mt-0 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50">
+                    <LanguageAwareLink 
+                      to="/trading/BTCUSDT" 
+                      className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg transition-colors text-center"
+                      onClick={() => setIsTradeMenuOpen(false)}
+                    >
+                      {t('header:spot')}
+                    </LanguageAwareLink>
+                    <LanguageAwareLink 
+                      to="/trade/c2c/USDT?fiat=USD"
+                      className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg transition-colors text-center"
+                      onClick={() => setIsTradeMenuOpen(false)}
+                    >
+                      {t('header:c2cBuyCrypto')}
+                    </LanguageAwareLink>
+                    <LanguageAwareLink 
+                      to={`/${locale}/crypto/buy/USD/USDT`} 
+                      className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg transition-colors text-center"
+                      onClick={() => setIsTradeMenuOpen(false)}
+                    >
+                      {t('header:buyCrypto')}
+                    </LanguageAwareLink>
+                  </div>
+                )}
+              </div>
+
+              {/* 现货菜单 */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsSpotItemsMenuOpen(true)}
+                onMouseLeave={() => setIsSpotItemsMenuOpen(false)}
+              >
+                <button
+                  onClick={() => setIsSpotItemsMenuOpen((v) => !v)}
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 justify-center"
                 >
                   <span>{t('header:spot')}</span>
                   <DownOutlined className="text-xs" />
                 </button>
-
-                {/* 现货交易对菜单 */}
                 {isSpotItemsMenuOpen && (
-                  <div
-                    className="absolute left-0 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50"
-                    onMouseLeave={() => setIsSpotItemsMenuOpen(false)}
-                    onMouseEnter={() => setIsSpotItemsMenuOpen(true)}
-                  >
+                  <div className="absolute left-0 top-full mt-0 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50">
                     {isLoadingSpotPairs ? (
-                      <div className="px-4 py-2 text-sm text-gray-400">
+                      <div className="px-4 py-2 text-sm text-gray-400 text-center">
                         {t('common:loading')}
                       </div>
                     ) : spotTradingPairs.length === 0 ? (
-                      <div className="px-4 py-2 text-sm text-gray-400">
+                      <div className="px-4 py-2 text-sm text-gray-400 text-center">
                         {t('common:noData')}
                       </div>
                     ) : (
                       spotTradingPairs
-                        .filter(pair => pair.isActive) // 只显示活跃的交易对
-                        .map((pair) => (
+                        .filter(pair => pair.isActive)
+                        .map((pair, idx, arr) => (
                           <LanguageAwareLink 
                             key={pair.id}
                             to={`/trading/${pair.baseCurrency}`} 
-                            className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg transition-colors"
+                            className={`block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors text-center ${idx === 0 ? 'rounded-t-lg' : ''} ${idx === arr.length - 1 ? 'rounded-b-lg' : ''}`}
                             onClick={() => setIsSpotItemsMenuOpen(false)}
                           >
                             {pair.pair}
@@ -223,16 +269,38 @@ const Header = () => {
                   </div>
                 )}
               </div>
-              
-              <LanguageAwareLink to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+
+              {/* 合约（注释保留） */}
+              {/* <LanguageAwareLink to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:futures')}
-              </LanguageAwareLink>
-              <LanguageAwareLink to="/user/assets/spot" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </LanguageAwareLink> */}
+
+              {/* 资产 */}
+              <LanguageAwareLink to="/user/dashboard" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 {t('header:assets')}
               </LanguageAwareLink>
-              <LanguageAwareLink to="/todo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                {t('header:earn')}
-              </LanguageAwareLink>
+
+              {/* 理财菜单 */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsEarnMenuOpen(true)}
+                onMouseLeave={() => setIsEarnMenuOpen(false)}
+              >
+                <button
+                  onClick={() => setIsEarnMenuOpen((v) => !v)}
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 justify-center"
+                >
+                  <span>{t('header:earn')}</span>
+                  <DownOutlined className="text-xs" />
+                </button>
+                {isEarnMenuOpen && (
+                  <div className="absolute left-0 top-full mt-0 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50">
+                    <div className="px-4 py-2 text-sm text-gray-400 text-center">
+                      即将推出
+                    </div>
+                  </div>
+                )}
+              </div>
             </nav>
           </div>
 
@@ -377,37 +445,35 @@ const Header = () => {
             </button>
 
             {/* User Menu */}
-            <div className="relative">
+            <div
+              className="relative"
+              onMouseEnter={() => setIsUserMenuOpen(true)}
+              onMouseLeave={() => setIsUserMenuOpen(false)}
+            >
               <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                onMouseEnter={() => {
-                  setIsUserMenuOpen(true);
-                }}
-                className="flex items-center space-x-2 p-2 text-gray-400 hover:text-white transition-colors"
+                onClick={() => setIsUserMenuOpen((v) => !v)}
+                className="flex items-center space-x-2 p-2 text-gray-400 hover:text-white transition-colors justify-center"
               >
                 <User className="h-5 w-5" />
                 <span className="hidden md:block text-sm">{t('header:user')}</span>
               </button>
-
               {isUserMenuOpen && (
                 <div
-                  className="absolute left-1/2 -translate-x-1/2 mt-2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50"
-                  onMouseLeave={() => setIsUserMenuOpen(false)}
-                  onMouseEnter={() => setIsUserMenuOpen(true)}
+                  className="absolute left-1/2 top-full mt-0 -translate-x-1/2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50 text-center"
                 >
-                  <LanguageAwareLink to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg">
+                  <LanguageAwareLink to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg transition-colors">
                     {t('common:userDashboard.overview')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg">
+                  <LanguageAwareLink to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg transition-colors">
                     {t('header:profile')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  <LanguageAwareLink to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors">
                     {t('header:security')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a]">
+                  <LanguageAwareLink to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors">
                     {t('header:apiManagement')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg">
+                  <LanguageAwareLink to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg transition-colors">
                     {t('header:logout')}
                   </LanguageAwareLink>
                 </div>
@@ -442,7 +508,7 @@ const Header = () => {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden">
+          <div className="md:hidden" ref={mobileMenuRef}>
             {/* Mobile Search Bar */}
             <div className="px-2 pt-2 pb-3 border-t border-slate-700">
               <div className="relative">
@@ -497,19 +563,28 @@ const Header = () => {
             </div>
 
             <div className={`px-2 pt-2 pb-3 ${headerSpacing.mobileNavSpacing} border-t border-slate-700`}>
-              <LanguageAwareLink to="/trading/BTCUSDT" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                {t('header:trade')}
-              </LanguageAwareLink>
-              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
-                {t('header:spot')}
-              </LanguageAwareLink>
-              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              {/* 移动端交易菜单 */}
+              <div className="mb-2">
+                <div className="px-3 py-2 text-base font-medium text-gray-300">
+                  {t('header:trade')}
+                </div>
+                <LanguageAwareLink to="/trading/BTCUSDT" className="block px-6 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
+                  {t('header:spot')}
+                </LanguageAwareLink>
+                <LanguageAwareLink to={`/${locale}/crypto/buy/USD/USDT`} className="block px-6 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
+                  {t('header:buyCrypto')}
+                </LanguageAwareLink>
+                <LanguageAwareLink to="/trade/c2c/USDT?fiat=USD" className="block px-6 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
+                  {t('header:c2c')}
+                </LanguageAwareLink>
+              </div>
+              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
                 {t('header:futures')}
               </LanguageAwareLink>
-              <LanguageAwareLink to="/user/assets/spot" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              <LanguageAwareLink to="/user/assets/spot" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
                 {t('header:assets')}
               </LanguageAwareLink>
-              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md">
+              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
                 {t('header:earn')}
               </LanguageAwareLink>
               <div className="pt-4 pb-3 border-t border-slate-700">

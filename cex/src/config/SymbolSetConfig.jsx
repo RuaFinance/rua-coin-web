@@ -34,6 +34,7 @@ export const SymbolSet = new Set([
     'LTC/USDT',
     'LINK/USDT',
     'UNI/USDT',
+    'HYPER/USDT',
     'ATOM/USDT',
     'XLM/USDT',
     'FIL/USDT',
@@ -48,6 +49,7 @@ export const SymbolSet = new Set([
 
 export const TokenList = [
     'USDT',
+    'USDC',
     'BTC',
     'ETH',
     'BNB',
@@ -61,13 +63,13 @@ export const TokenList = [
     'LTC',
     'LINK',
     'UNI',
+    'HYPER',
     'ATOM',
     'XLM',
     'FIL',
     'AAVE',
     'AXS',
     'MANA',
-    'USDC',
     'DAI',
     'BTC3L',
     'ETH3S'

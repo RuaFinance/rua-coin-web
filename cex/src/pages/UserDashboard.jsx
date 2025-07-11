@@ -107,6 +107,12 @@ const UserDashboard = () => {
     setIsDropdownOpen(false); // 关闭下拉框
     setHighlightedIndex(0); // 重置高亮索引
     setSearchCurrency(''); // 重置搜索内容
+    
+    // 恢复viewport设置
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+    }
   };
 
   // 选择货币
@@ -210,6 +216,27 @@ const UserDashboard = () => {
     setHighlightedIndex(0);
   }, [searchCurrency]);
 
+  // 处理移动端输入框自动放大问题
+  useEffect(() => {
+    if (showDepositModal) {
+      // 保存原始的viewport设置
+      const originalViewport = document.querySelector('meta[name="viewport"]');
+      const originalContent = originalViewport ? originalViewport.getAttribute('content') : '';
+      
+      // 设置viewport防止自动放大
+      if (originalViewport) {
+        originalViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+      }
+      
+      // 清理函数：恢复原始viewport设置
+      return () => {
+        if (originalViewport && originalContent) {
+          originalViewport.setAttribute('content', originalContent);
+        }
+      };
+    }
+  }, [showDepositModal]);
+
   // 滚动到高亮的选项
   useEffect(() => {
     if (currencyListRef.current && highlightedIndex >= 0) {
@@ -229,7 +256,7 @@ const UserDashboard = () => {
       setIsLoading(true);
       try {
         // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Mock dashboard data
         const mockData = {
@@ -622,7 +649,7 @@ const UserDashboard = () => {
 
                 {/* Dropdown Content */}
                 {isDropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-64 overflow-hidden">
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-[500px] overflow-hidden">
                     {/* Search Input */}
                     <div className="p-3 border-b border-gray-200">
                       <div className="relative">
@@ -632,14 +659,25 @@ const UserDashboard = () => {
                           placeholder={t('userDashboard.modal.searchCurrency')}
                           value={searchCurrency}
                           onChange={(e) => setSearchCurrency(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-base"
                           autoFocus
+                          style={{
+                            fontSize: '16px', // 确保字体大小至少16px
+                            WebkitAppearance: 'none',
+                            MozAppearance: 'none',
+                            appearance: 'none'
+                          }}
+                          // 移动端优化属性
+                          autoComplete="off"
+                          autoCorrect="off"
+                          autoCapitalize="off"
+                          spellCheck="false"
                         />
                       </div>
                     </div>
 
                     {/* Currency Options */}
-                    <div ref={currencyListRef} className="max-h-40 overflow-y-auto">
+                    <div ref={currencyListRef} className="max-h-[380px] overflow-y-auto">
                       {filteredCurrencies.map((currency, index) => (
                         <button
                           key={currency.code}
@@ -680,7 +718,7 @@ const UserDashboard = () => {
               
               {/* C2C Trading Option - clickable card */}
               <LanguageAwareLink
-                to={`/trade/c2c/all?currency=${selectedCurrency}`}
+                to={`/trade/c2c/USDT?fiat=${selectedCurrency}`}
                 className="block border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 style={{ textDecoration: 'none' }}
               >

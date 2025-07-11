@@ -1,0 +1,398 @@
+/* Visa Payment Card Styles */
+:root {
+  --visa-light-opacity: 0.2;
+  /* 卡片尺寸 - 响应式设计，根据浏览器大小自适应 */
+  --visa-card-width: min(600px, 90vw);    /* 最大600px，最小90vw */
+  --visa-card-height: calc(var(--visa-card-width) * 0.6);   /* 高:宽 = 0.6 */
+  --visa-border-radius: 25px;
+  --visa-border-color: rgba(255, 255, 255, 0.3);
+  --visa-shadow-color: rgba(0, 0, 0, 0.1);
+  --visa-text-color: #fff;
+  --visa-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --visa-chip-gradient-start: #f5eacc;
+  --visa-chip-gradient-middle: #e0c677;
+  --visa-chip-gradient-end: #ebd8a0;
+  --visa-ring-color: rgba(0, 123, 255, 0.1);
+}
+
+.visa-payment-card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  height: auto !important;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+/* 移除背景圆圈相关样式 */
+
+/* 卡片组样式 */
+.visa-card-group {
+  position: relative;
+  z-index: 2;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* 主卡片样式 */
+.visa-card {
+  position: relative;
+  height: var(--visa-card-height);
+  width: var(--visa-card-width);
+  border-radius: var(--visa-border-radius);
+  background: linear-gradient(to left, #283593, #1976d2);
+  border: 2px solid var(--visa-border-color);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 8px 25px rgba(0, 0, 0, 0.1),
+    inset 0 0 100px rgba(255, 255, 255, var(--visa-light-opacity));
+  overflow: hidden;
+  /* 只做 rotate，不做 translate */
+  transform-style: preserve-3d;
+  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+  cursor: pointer;
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.visa-card:hover {
+  /* 移除所有hover效果，保持颜色不变 */
+  /* box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2), 0 12px 35px rgba(0, 0, 0, 0.15); */
+}
+
+.visa-card.flipped {
+  transform: translate3d(-50%, -50%, 0) rotateY(180deg);
+}
+
+.visa-card-front,
+.visa-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--visa-border-radius);
+  overflow: hidden;
+}
+
+.visa-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.visa-logo img,
+.visa-logo-back img {
+  position: absolute;
+  width: 80px;
+  height: auto;
+  opacity: 0.9;
+  transform: translateZ(10px);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.visa-logo img {
+  top: 35px;
+  right: 40px;
+}
+
+.visa-logo-back img {
+  bottom: 35px;
+  right: 40px;
+  opacity: 0.7;
+}
+
+.visa-chip {
+  position: absolute;
+  top: 90px;
+  left: 40px;
+  opacity: 0.9;
+  transform: translateZ(8px);
+}
+
+.visa-chip svg {
+  width: 60px;
+  height: 45px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.visa-number,
+.visa-name,
+.visa-from,
+.visa-cvv {
+  color: var(--visa-text-color);
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: var(--visa-text-shadow);
+  transform: translateZ(5px);
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.visa-number {
+  position: absolute;
+  left: 40px;
+  bottom: 65px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.visa-name {
+  position: absolute;
+  font-size: 0.5rem;
+  left: 40px;
+  bottom: 35px;
+  color: #e0e0e0;
+  text-transform: uppercase;
+}
+
+.visa-from, .visa-to {
+  position: absolute;
+  bottom: 35px;
+  font-size: 0.5rem;
+  color: rgba(255,255,255,0.8);
+  font-family: 'Nunito', monospace, sans-serif;
+  letter-spacing: 1.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.visa-from { right: 110px; }
+.visa-to { right: 40px; }
+.visa-label {
+  font-size: 0.4rem;
+  opacity: 0.7;
+  letter-spacing: 2px;
+  font-family: 'Nunito', monospace, sans-serif;
+}
+
+.visa-ring {
+  display: none;
+}
+
+.visa-magnetic-stripe {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.visa-signature-panel {
+  position: absolute;
+  top: 90px;
+  left: 40px;
+  right: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.visa-signature-line {
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    #333 0px,
+    #333 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  margin-right: 20px;
+}
+
+.visa-cvv {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --visa-card-width: min(400px, 85vw);    /* 平板端稍小一些 */
+    --visa-card-height: calc(var(--visa-card-width) * 0.6);
+  }
+  .visa-logo img,
+  .visa-logo-back img {
+    width: 60px;
+  }
+  .visa-chip svg {
+    width: 45px;
+    height: 35px;
+  }
+  .visa-number {
+    font-size: 0.9rem;
+    bottom: 50px;
+  }
+  .visa-name,
+  .visa-from {
+    font-size: 0.4rem;
+    bottom: 25px;
+  }
+  .visa-from {
+    right: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --visa-card-width: min(350px, 80vw);    /* 手机端更小 */
+    --visa-card-height: calc(var(--visa-card-width) * 0.6);
+  }
+  .visa-logo img,
+  .visa-logo-back img {
+    width: 50px;
+  }
+  .visa-chip svg {
+    width: 40px;
+    height: 30px;
+  }
+  .visa-number {
+    font-size: 0.8rem;
+    bottom: 40px;
+  }
+  .visa-name,
+  .visa-from {
+    font-size: 0.35rem;
+    bottom: 20px;
+  }
+  .visa-from {
+    right: 70px;
+  }
+}
+
+/* 动画效果 - 简化以减少性能消耗 */
+@keyframes cardGlow {
+  0%, 100% {
+    box-shadow: 
+      0 20px 60px rgba(0, 0, 0, 0.15),
+      0 8px 25px rgba(0, 0, 0, 0.1),
+      inset 0 0 100px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 25px 80px rgba(0, 0, 0, 0.2),
+      0 12px 35px rgba(0, 0, 0, 0.15),
+      inset 0 0 120px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.visa-card {
+  /* 移除自动动画，改为手动控制 */
+  /* animation: cardGlow 4s ease-in-out infinite; */
+}
+
+/* 加载动画 - 简化 */
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+  }
+}
+
+.visa-card {
+  /* 移除自动加载动画，改为手动控制 */
+  /* animation: cardAppear 0.8s ease-out; */
+}
+
+/* 焦点状态 */
+.visa-card:focus {
+  outline: none;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.2),
+    0 12px 35px rgba(0, 0, 0, 0.15),
+    inset 0 0 120px rgba(255, 255, 255, 0.3),
+    0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+/* 无障碍支持 */
+@media (prefers-reduced-motion: reduce) {
+  .visa-card,
+  .visa-circles,
+  .visa-circle-1,
+  .visa-circle-2 {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+  .visa-card {
+    border: 3px solid #000;
+    background: #fff;
+  }
+  
+  .visa-number,
+  .visa-name,
+  .visa-from,
+  .visa-cvv {
+    color: #000;
+    text-shadow: none;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .visa-payment-card-container {
+    background: white;
+  }
+  
+  .visa-card {
+    box-shadow: none;
+    border: 2px solid #000;
+  }
+  
+  .visa-circles {
+    display: none;
+  }
+} 
+
+/* 平板及以下隐藏卡片和响应式尺寸 */
+@media (max-width: 1024px) {
+  .visa-card-container {
+    display: none !important;
+  }
+  :root {
+    --visa-card-width: min(320px, 90vw);
+    --visa-card-height: calc(var(--visa-card-width) * 0.6);
+  }
+}
+
+/* 900px以上，桌面端正常显示 */
+@media (min-width: 1025px) {
+  :root {
+    --visa-card-width: min(600px, 90vw);
+    --visa-card-height: calc(var(--visa-card-width) * 0.6);
+  }
+}
+
+@media (max-width: 1024px) {
+  .buy-main {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .buy-main-left-col {
+    display: none !important;
+  }
+  .buy-form-card {
+    margin: 0 auto !important;
+    width: 100%;
+    max-width: 420px;
+  }
+}

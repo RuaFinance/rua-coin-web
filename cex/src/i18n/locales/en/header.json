@@ -29,5 +29,7 @@
   "security": "Security",
   "apiManagement": "API Management",
   "logout": "Logout",
-  "mobileSearchPlaceholder": "Search trading pairs"
+  "mobileSearchPlaceholder": "Search trading pairs",
+  "buyCrypto": "Buy Crypto",
+  "c2cBuyCrypto": "C2C Buy Crypto"
 } 

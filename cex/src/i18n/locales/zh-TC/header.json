@@ -46,6 +46,8 @@
   "notFoundTradingPairs": "未找到相關交易對",
   "user": "用戶",
   "mobileSearchPlaceholder": "搜尋交易對",
+  "buyCrypto": "法幣便捷買幣",
+  "c2cBuyCrypto": "C2C買幣",
   "navigation": {
     "home": "首頁",
     "spot": "現貨",

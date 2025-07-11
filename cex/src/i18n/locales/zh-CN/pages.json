@@ -79,6 +79,16 @@
     "loadingData": "数据加载中...",
     "failedToLoadData": "数据加载失败"
   },
+  "c2c": {
+    "title": "C2C交易",
+    "description": "点对点加密货币交易",
+    "buy": "买入",
+    "sell": "卖出",
+    "amount": "数量",
+    "buyNow": "立即买入",
+    "sellNow": "立即卖出",
+    "status": "C2C交易页面运行正常！"
+  },
   "notFound": {
     "title": "页面未找到",
     "backToHome": "返回到首页",

@@ -29,5 +29,7 @@
   "security": "セキュリティ",
   "apiManagement": "API管理",
   "logout": "ログアウト",
-  "mobileSearchPlaceholder": "取引ペアを検索"
+  "mobileSearchPlaceholder": "取引ペアを検索",
+  "buyCrypto": "暗号通貨を購入",
+  "c2cBuyCrypto": "C2C暗号通貨購入"
 } 

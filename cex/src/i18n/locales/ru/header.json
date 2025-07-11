@@ -29,5 +29,7 @@
   "security": "Безопасность",
   "apiManagement": "Управление API",
   "logout": "Выход",
-  "mobileSearchPlaceholder": "Поиск торговых пар"
+  "mobileSearchPlaceholder": "Поиск торговых пар",
+  "buyCrypto": "Купить криптовалюту",
+  "c2cBuyCrypto": "C2C Покупка криптовалюты"
 } 

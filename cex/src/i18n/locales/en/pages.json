@@ -79,6 +79,16 @@
     "loadingData": "Loading data...",
     "failedToLoadData": "Failed to load data"
   },
+  "c2c": {
+    "title": "C2C Trading",
+    "description": "Peer-to-peer cryptocurrency trading",
+    "buy": "Buy",
+    "sell": "Sell",
+    "amount": "Amount",
+    "buyNow": "Buy Now",
+    "sellNow": "Sell Now",
+    "status": "C2C trading page is working correctly!"
+  },
   "notFound": {
     "title": "Page Not Found",
     "backToHome": "Back to Home",

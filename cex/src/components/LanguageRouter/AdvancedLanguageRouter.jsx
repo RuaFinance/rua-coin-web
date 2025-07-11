@@ -34,6 +34,7 @@ import languageDetectionService, {
 import Layout from '../../layouts/Layout';
 import UserLayout from '../../layouts/UserLayout';
 import BuyCryptoPage from '../../pages/BuyCryptoPage';
+import C2CTradePage from '../../pages/C2CTradePage';
 import DeviceTestPage from '../../pages/DeviceTestPage';
 import FooterTestPage from '../../pages/FooterTestPage';
 import HomePage from '../../pages/HomePage';
@@ -452,6 +453,10 @@ const createAdvancedLanguageRouter = () => {
         path: `${locale}/crypto/buy/:currency/:token`,
         element: <BuyCryptoPage />,
       },
+      {
+        path: `${locale}/trade/c2c/:crypto`,
+        element: <C2CTradePage />,
+      },
     ]);
   };
   
@@ -558,6 +563,10 @@ const createAdvancedLanguageRouter = () => {
         {
           path: 'crypto/buy/:currency/:token',
           element: <BuyCryptoPage />,
+        },
+        {
+          path: 'trade/c2c/:crypto',
+          element: <C2CTradePage />,
         },
         {
           path: '*',

@@ -29,5 +29,7 @@
   "security": "보안",
   "apiManagement": "API 관리",
   "logout": "로그아웃",
-  "mobileSearchPlaceholder": "거래 페어 검색"
+  "mobileSearchPlaceholder": "거래 페어 검색",
+  "buyCrypto": "암호화폐 구매",
+  "c2cBuyCrypto": "C2C 암호화폐 구매"
 } 

@@ -29,6 +29,8 @@
   "darkMode": "Dark Mode",
   "menu": "Menu",
   "close": "Close",
+  "buyCrypto": "Buy Crypto",
+  "c2cBuyCrypto": "C2C Buy Crypto",
   "navigation": {
     "home": "Home",
     "markets": "Markets",

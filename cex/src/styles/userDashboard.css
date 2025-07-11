@@ -1764,4 +1764,51 @@
   .deposit-modal-content {
     animation: none !important;
   }
+}
+
+/* ========================================
+   Mobile Input Optimization
+   ======================================== */
+
+/* 防止移动端输入框自动放大 */
+@media (max-width: 768px) {
+  .deposit-modal-content input[type="text"],
+  .deposit-modal-content input[type="search"] {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    line-height: 1.5;
+    /* 防止iOS Safari自动放大 */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* 确保输入框在移动端有足够的点击区域 */
+  .deposit-modal-content input[type="text"]:focus,
+  .deposit-modal-content input[type="search"]:focus {
+    font-size: 16px !important;
+    /* 防止iOS Safari在focus时放大 */
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+  
+  /* 优化移动端模态框内容 */
+  .deposit-modal-content {
+    /* 确保模态框内容不会被键盘推起 */
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* 防止模态框在移动端被键盘影响 */
+  .deposit-modal-overlay {
+    align-items: center !important;
+    padding-top: 0 !important;
+  }
 } 

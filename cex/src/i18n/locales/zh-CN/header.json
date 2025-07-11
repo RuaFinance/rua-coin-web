@@ -29,5 +29,7 @@
   "security": "安全设置",
   "apiManagement": "API管理",
   "logout": "退出登录",
-  "mobileSearchPlaceholder": "搜索交易对"
+  "mobileSearchPlaceholder": "搜索交易对",
+  "buyCrypto": "法币便捷买币",
+  "c2cBuyCrypto": "C2C买币"
 } 
