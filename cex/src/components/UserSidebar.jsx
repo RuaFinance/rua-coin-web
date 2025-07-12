@@ -51,6 +51,9 @@ import { useSidebar } from '../contexts/SidebarContext';
 
 import LanguageAwareLink from './LanguageAware/LanguageAwareLink';
 
+// Import sidebar styles
+import '../styles/userSidebar.css';
+
 
 const UserSidebar = () => {
   const { t } = useTranslation('common');

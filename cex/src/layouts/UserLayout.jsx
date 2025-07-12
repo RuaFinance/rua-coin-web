@@ -32,6 +32,7 @@ import ScrollToTop from '../components/ScrollToTop';
 import UserSidebar from '../components/UserSidebar';
 import { SidebarProvider, useSidebar } from '../contexts/SidebarContext';
 import '../styles/userDashboard.css';
+import '../styles/userSidebar.css';
 
 const UserLayoutContent = () => {
   const { t } = useTranslation('common');

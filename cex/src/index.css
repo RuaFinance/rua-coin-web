@@ -4,6 +4,7 @@
 @import '@/styles/footer.css';
 @import '@/styles/mobileAlert.css';
 @import '@/styles/userDashboard.css';
+@import '@/styles/userSidebar.css';
 @import '@/styles/visaPaymentCard.css';
 
 @tailwind base;
@@ -639,7 +640,362 @@
     /* background: var(--bg1, #f1f2f3); */
     background: var(--bg1, #000000);
     border-radius: 10px;
-}
+  }
+
+  /* Mobile Header Menu Styles */
+  .mobile-header-menu {
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* 确保菜单容器有正确的尺寸 */
+    box-sizing: border-box;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .mobile-header-menu-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-header-menu-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateX(4px);
+  }
+
+  .mobile-header-menu-item.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  /* Mobile Header Menu Responsive */
+  @media (max-width: 640px) {
+    .mobile-header-menu {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mobile-header-menu {
+      width: 100%;
+      max-width: 260px;
+    }
+  }
+
+  /* 新增移动端菜单样式 - 参考UserSidebar设计 */
+  .mobile-menu-item {
+    position: relative;
+    margin: 3px 0;
+    border-radius: 11px;
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .mobile-menu-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateX(4px);
+  }
+
+  .mobile-menu-item.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .mobile-menu-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    color: #9ca3af;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .mobile-menu-item:hover .mobile-menu-link,
+  .mobile-menu-item.active .mobile-menu-link {
+    color: #ffffff;
+  }
+
+  .mobile-menu-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    transition: transform 0.3s ease, margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .mobile-menu-item:hover .mobile-menu-icon {
+    transform: scale(1.1);
+  }
+
+  /* 移动端子菜单样式 */
+  .mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  .mobile-submenu.expanded {
+    max-height: 200px;
+    opacity: 1;
+  }
+
+  /* 展开状态下的子菜单项显示效果 */
+  .mobile-submenu.expanded .mobile-submenu-item {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* 子菜单项逐个显示效果 */
+  .mobile-submenu.expanded .mobile-submenu-item:nth-child(1) {
+    transition-delay: 0.25s;
+  }
+
+  .mobile-submenu.expanded .mobile-submenu-item:nth-child(2) {
+    transition-delay: 0.29s;
+  }
+
+  .mobile-submenu.expanded .mobile-submenu-item:nth-child(3) {
+    transition-delay: 0.33s;
+  }
+
+  .mobile-submenu.expanded .mobile-submenu-item:nth-child(4) {
+    transition-delay: 0.37s;
+  }
+
+  .mobile-submenu.expanded .mobile-submenu-item:nth-child(5) {
+    transition-delay: 0.41s;
+  }
+
+  .mobile-submenu-item {
+    padding: 6px 12px 6px 36px;
+    color: #6b7280;
+    font-size: 13px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    border-radius: 7px;
+    margin: 1px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+                visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+                color 0.3s ease,
+                background 0.3s ease,
+                border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .mobile-submenu.expanded .mobile-submenu-item:hover {
+    color: #ffffff;
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.2);
+    transform: translateY(0) translateX(4px);
+  }
+
+  .mobile-submenu.expanded .mobile-submenu-item.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #ffffff;
+  }
+
+  /* 移动端菜单响应式设计 */
+  @media (max-width: 640px) {
+    .mobile-menu-item {
+      margin: 2px 0;
+    }
+    
+    .mobile-menu-link {
+      padding: 10px 12px;
+    }
+    
+    .mobile-menu-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+    }
+  }
+
+  /* 动态自适应菜单样式 */
+  .mobile-header-menu .flex-1 {
+    /* 确保导航区域可以正确计算高度 */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* 确保移动端菜单内容不会溢出 */
+  .mobile-header-menu {
+    max-height: 100vh;
+    overflow: hidden;
+    /* 确保菜单容器有正确的尺寸计算 */
+    box-sizing: border-box;
+  }
+
+  /* 强制确保footer可见 */
+  .mobile-header-menu .flex-shrink-0 {
+    flex-shrink: 0 !important;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* 滚动提示样式 */
+  .mobile-menu-scroll-hint {
+    padding: 8px 12px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(13, 13, 13, 0.5);
+    backdrop-filter: blur(10px);
+  }
+
+  /* 滚动条样式优化 */
+  .mobile-header-menu nav::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .mobile-header-menu nav::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+
+  .mobile-header-menu nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .mobile-header-menu nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  /* 高对比度模式下的滚动条 */
+  @media (prefers-contrast: high) {
+    .mobile-header-menu nav::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  /* 移动端菜单高度优化 - 动态自适应版本 */
+  @media (max-height: 700px) {
+    .mobile-header-menu nav {
+      /* 动态计算，不再使用固定值 */
+      min-height: 150px;
+    }
+  }
+
+  @media (max-height: 600px) {
+    .mobile-header-menu nav {
+      min-height: 120px;
+    }
+  }
+
+  @media (max-height: 500px) {
+    .mobile-header-menu nav {
+      min-height: 100px;
+    }
+  }
+
+  /* 确保移动端菜单内容不会溢出 */
+  .mobile-header-menu {
+    max-height: 100vh;
+    overflow: hidden;
+  }
+
+  .mobile-header-menu .flex-1 {
+    min-height: 0;
+  }
+
+  /* 强制确保footer可见 */
+  .mobile-header-menu .flex-shrink-0 {
+    flex-shrink: 0 !important;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* 无障碍设计 */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-item,
+    .mobile-menu-link,
+    .mobile-menu-icon,
+    .mobile-submenu,
+    .mobile-submenu-item {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* 高对比度模式 */
+  @media (prefers-contrast: high) {
+    .mobile-header-menu {
+      border-color: #ffffff;
+      background: #000000;
+    }
+    
+    .mobile-menu-link {
+      color: #ffffff;
+    }
+  }
+
+  /* 移动端用户菜单样式 */
+  .user-menu-container {
+    position: relative;
+  }
+
+  .user-menu-container button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .user-menu-container button:active {
+    transform: scale(0.95);
+  }
+
+  /* 移动端用户菜单下拉框 */
+  @media (max-width: 768px) {
+    .user-menu-container .absolute {
+      position: fixed;
+      top: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 300px;
+      z-index: 60;
+    }
+  }
+
+  /* 移动端触摸优化 */
+  @media (hover: none) and (pointer: coarse) {
+    .user-menu-container button:hover {
+      background-color: transparent;
+    }
+    
+    .user-menu-container .absolute a:hover {
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+  }
 }
 
 @font-face {

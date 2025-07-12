@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   css: {
-    devSourcemap: true,
+    devSourcemap: process.env.NODE_ENV !== 'production', // 开发环境开启，生产环境关闭
   },
   server: {
     host: '::',

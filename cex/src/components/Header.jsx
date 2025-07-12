@@ -13,13 +13,14 @@
 // limitations under the License.
 
 import { DownOutlined } from '@ant-design/icons';
-import { Menu, X, User, Bell, Search } from 'lucide-react';
-import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, User, Bell, Search, ChevronDown, ChevronRight, TrendingUp, CreditCard, FileText, Shield, Key, Gift, HelpCircle, LogOut } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LanguageAwareLink from './LanguageAware/LanguageAwareLink';
 import { useLocalizedNavigation, useCurrentLocale } from './LanguageRouter/AdvancedLanguageRouter';
 import LanguageSwitcher from './LanguageSwitcher';
+import useMobileMenuAdaptive from '../hooks/useMobileMenuAdaptive';
 
 const Header = () => {
   const { t } = useTranslation(['common', 'header']);
@@ -50,6 +51,9 @@ const Header = () => {
   const [isSpotItemsMenuOpen, setIsSpotItemsMenuOpen] = useState(false);
   const [isTradeMenuOpen, setIsTradeMenuOpen] = useState(false);
   const [isEarnMenuOpen, setIsEarnMenuOpen] = useState(false); // 新增理财菜单状态
+  const [isMobileTradeExpanded, setIsMobileTradeExpanded] = useState(true); // 移动端交易菜单展开状态
+  const [isMobileAssetsExpanded, setIsMobileAssetsExpanded] = useState(false); // 移动端资产菜单展开状态
+  const [isMobileOrdersExpanded, setIsMobileOrdersExpanded] = useState(false); // 移动端订单菜单展开状态
 
   // 现货交易对数据
   const [spotTradingPairs, setSpotTradingPairs] = useState([]);
@@ -73,6 +77,83 @@ const Header = () => {
   // 路由导航
   const { navigateLocalized } = useLocalizedNavigation();
   const { locale } = useCurrentLocale();
+
+  // 移动端菜单项配置 - 使用useMemo优化性能
+  const mobileMenuItems = useMemo(() => [
+    {
+      id: 'trade',
+      label: t('header:trade'),
+      icon: TrendingUp,
+      isExpandable: true,
+      isExpanded: isMobileTradeExpanded,
+      onToggle: () => setIsMobileTradeExpanded(!isMobileTradeExpanded),
+      subItems: [
+        { 
+          label: t('header:spot'), 
+          path: '/trading/BTCUSDT', 
+          icon: TrendingUp,
+          color: 'bg-blue-500'
+        },
+        { 
+          label: '法币便捷买币', 
+          path: `/${locale}/crypto/buy/USD/USDT`, 
+          icon: CreditCard,
+          color: 'bg-green-500'
+        },
+        { 
+          label: 'C2C', 
+          path: '/trade/c2c/USDT?fiat=USD', 
+          icon: FileText,
+          color: 'bg-purple-500'
+        }
+      ]
+    },
+    // {
+    //   id: 'futures',
+    //   label: t('header:futures'),
+    //   icon: TrendingUp,
+    //   path: '/todo'
+    // },
+    {
+      id: 'assets',
+      label: t('header:assets'),
+      icon: CreditCard,
+      path: '/user/assets/spot'
+    },
+    // {
+    //   id: 'earn',
+    //   label: t('header:earn'),
+    //   icon: Gift,
+    //   path: '/todo'
+    // },
+    {
+      id: 'account',
+      label: t('common:userDashboard.account'),
+      icon: User,
+      path: '/user/account'
+    },
+    // {
+    //   id: 'security',
+    //   label: t('common:userDashboard.security'),
+    //   icon: Shield,
+    //   path: '/user/security'
+    // }
+  ], [t, locale, isMobileTradeExpanded]);
+
+  // 使用自适应Hook
+  const {
+    availableMenuHeight,
+    visibleMenuItems,
+    isMenuScrollable,
+    menuContainerHeight,
+    screenSize,
+    mobileMenuRef,
+    mobileNavRef,
+    mobileHeaderRef,
+    mobileSearchRef,
+    mobileFooterRef,
+    recalculateMenu,
+  } = useMobileMenuAdaptive(isMenuOpen, mobileMenuItems);
 
   // Mock现货交易对数据
   const fetchSpotTradingPairs = async () => {
@@ -157,23 +238,114 @@ const Header = () => {
     );
   };
 
-  const mobileMenuRef = useRef(null);
-
-  // 点击菜单栏外自动关闭菜单栏（无遮罩层）
+  // 点击菜单栏外自动关闭菜单栏（现在有遮罩层，不需要额外处理）
   useEffect(() => {
     if (!isMenuOpen) return;
+    
+    // 阻止body滚动
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      // 恢复body滚动
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // 点击外部区域关闭用户菜单
+  useEffect(() => {
     const handleClickOutside = (event) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
+      if (isUserMenuOpen) {
+        // 检查点击是否在用户菜单区域外
+        const userMenuElement = event.target.closest('.user-menu-container');
+        if (!userMenuElement) {
+          setIsUserMenuOpen(false);
+        }
       }
     };
+
+    // 添加事件监听器
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('touchstart', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
     };
-  }, [isMenuOpen]);
+  }, [isUserMenuOpen]);
+
+  // 当菜单展开状态变化时重新计算
+  useEffect(() => {
+    if (isMenuOpen) {
+      // 延迟重新计算以确保状态更新
+      const timer = setTimeout(() => {
+        recalculateMenu();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobileTradeExpanded, isMenuOpen]);
+
+  // 开发环境下的调试信息
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && isMenuOpen) {
+      console.log('🔍 Mobile Menu Debug Info:');
+      console.log('📱 Screen Size:', screenSize);
+      console.log('📏 Available Height:', availableMenuHeight);
+      console.log('📋 Visible Items:', visibleMenuItems.length);
+      console.log('🔄 Is Scrollable:', isMenuScrollable);
+      console.log('📦 Menu Container Height:', menuContainerHeight);
+    }
+  }, [isMenuOpen, screenSize, availableMenuHeight, visibleMenuItems.length, isMenuScrollable, menuContainerHeight]);
+
+  const renderMobileMenuItem = (item) => {
+    if (item.isExpandable) {
+      return (
+        <div key={item.id} className="mobile-menu-item">
+          <button
+            className="mobile-menu-link w-full text-left"
+            onClick={item.onToggle}
+          >
+            <item.icon className="mobile-menu-icon" />
+            <span className="flex-1">{item.label}</span>
+            {item.isExpanded ? (
+              <ChevronDown className="w-4 h-4 transition-transform" />
+            ) : (
+              <ChevronRight className="w-4 h-4 transition-transform" />
+            )}
+          </button>
+          
+          {item.isExpanded && (
+            <div className="mobile-submenu expanded">
+              {item.subItems.map((subItem, index) => (
+                <LanguageAwareLink
+                  key={index}
+                  to={subItem.path}
+                  className="mobile-submenu-item"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span className={`w-2 h-2 ${subItem.color} rounded-full mr-3`}></span>
+                  {subItem.label}
+                </LanguageAwareLink>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <LanguageAwareLink
+        key={item.id}
+        to={item.path}
+        className="mobile-menu-item"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        <div className="mobile-menu-link">
+          <item.icon className="mobile-menu-icon" />
+          <span className="flex-1">{item.label}</span>
+        </div>
+      </LanguageAwareLink>
+    );
+  };
 
   return (
     <header className="bg-black sticky top-0 z-50">
@@ -445,11 +617,7 @@ const Header = () => {
             </button>
 
             {/* User Menu */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsUserMenuOpen(true)}
-              onMouseLeave={() => setIsUserMenuOpen(false)}
-            >
+            <div className="relative user-menu-container">
               <button
                 onClick={() => setIsUserMenuOpen((v) => !v)}
                 className="flex items-center space-x-2 p-2 text-gray-400 hover:text-white transition-colors justify-center"
@@ -461,19 +629,19 @@ const Header = () => {
                 <div
                   className="absolute left-1/2 top-full mt-0 -translate-x-1/2 w-48 bg-[#1d1d1d] rounded-lg shadow-lg z-50 text-center"
                 >
-                  <LanguageAwareLink to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg transition-colors">
+                  <LanguageAwareLink to="/user/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-t-lg transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                     {t('common:userDashboard.overview')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg transition-colors">
+                  <LanguageAwareLink to="/user/account" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-lg shadow-lg transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                     {t('header:profile')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors">
+                  <LanguageAwareLink to="/user/security" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                     {t('header:security')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors">
+                  <LanguageAwareLink to="/user/api" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                     {t('header:apiManagement')}
                   </LanguageAwareLink>
-                  <LanguageAwareLink to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg transition-colors">
+                  <LanguageAwareLink to="/" className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-[#3a3a3a] rounded-b-lg transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                     {t('header:logout')}
                   </LanguageAwareLink>
                 </div>
@@ -506,11 +674,37 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu overlay */}
         {isMenuOpen && (
-          <div className="md:hidden" ref={mobileMenuRef}>
+          <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setIsMenuOpen(false)} />
+        )}
+
+        {/* Mobile sidebar menu - 动态自适应版本 */}
+        <div 
+          className={`md:hidden fixed top-16 left-0 w-72 mobile-header-menu transform transition-transform duration-300 ease-in-out z-50 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`} 
+          ref={mobileMenuRef}
+          style={{ height: `${menuContainerHeight}px` }}
+        >
+          <div className="flex flex-col h-full overflow-hidden">
+            {/* Mobile Header */}
+            <div 
+              ref={mobileHeaderRef}
+              className="flex items-center justify-between p-4 border-b border-gray-800 flex-shrink-0"
+            >
+              <h3 className="text-lg font-semibold text-white">RuaCoin</h3>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
             {/* Mobile Search Bar */}
-            <div className="px-2 pt-2 pb-3 border-t border-slate-700">
+            <div 
+              ref={mobileSearchRef}
+              className="p-4 border-b border-gray-800 flex-shrink-0"
+            >
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Search className="h-5 w-5 text-gray-400" />
@@ -562,54 +756,61 @@ const Header = () => {
               </div>
             </div>
 
-            <div className={`px-2 pt-2 pb-3 ${headerSpacing.mobileNavSpacing} border-t border-slate-700`}>
-              {/* 移动端交易菜单 */}
-              <div className="mb-2">
-                <div className="px-3 py-2 text-base font-medium text-gray-300">
-                  {t('header:trade')}
+            {/* Mobile Navigation - 动态自适应 */}
+            <nav 
+              ref={mobileNavRef}
+              className={`flex-1 p-3 space-y-1 ${isMenuScrollable ? 'overflow-y-auto' : 'overflow-hidden'}`}
+              style={{ 
+                maxHeight: `${availableMenuHeight}px`,
+                minHeight: '200px'
+              }}
+            >
+              {visibleMenuItems.map(renderMobileMenuItem)}
+              
+              {/* 当菜单项被截断时显示提示 */}
+              {isMenuScrollable && (
+                <div className="text-center py-2">
+                  <div className="text-xs text-gray-500">
+                    向下滚动查看更多菜单
+                  </div>
                 </div>
-                <LanguageAwareLink to="/trading/BTCUSDT" className="block px-6 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
-                  {t('header:spot')}
-                </LanguageAwareLink>
-                <LanguageAwareLink to={`/${locale}/crypto/buy/USD/USDT`} className="block px-6 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
-                  {t('header:buyCrypto')}
-                </LanguageAwareLink>
-                <LanguageAwareLink to="/trade/c2c/USDT?fiat=USD" className="block px-6 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
-                  {t('header:c2c')}
-                </LanguageAwareLink>
-              </div>
-              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
-                {t('header:futures')}
+              )}
+            </nav>
+
+            {/* Mobile Footer - 始终可见 */}
+            <div 
+              ref={mobileFooterRef}
+              className="p-4 border-t border-gray-800 space-y-2 flex-shrink-0"
+            >
+              <LanguageAwareLink
+                to="/login"
+                className="
+                  w-full h-12 flex items-center justify-center text-sm font-medium
+                  text-white bg-[#0f172a] border-2 border-[#00d4ff] rounded-lg
+                  transition-all duration-300
+                  hover:shadow-lg
+                  hover:bg-gradient-to-r hover:from-[#00d4ff] hover:via-[#0f172a] hover:to-[#00d4ff]
+                "
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('header:login')}
               </LanguageAwareLink>
-              <LanguageAwareLink to="/user/assets/spot" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
-                {t('header:assets')}
+              <LanguageAwareLink
+                to="/register"
+                className="
+                  w-full h-12 flex items-center justify-center text-sm font-medium
+                  text-white bg-[#0f172a] border-2 border-[#00d4ff] rounded-lg
+                  transition-all duration-300
+                  hover:shadow-lg
+                  hover:bg-gradient-to-r hover:from-[#00d4ff] hover:via-[#0f172a] hover:to-[#00d4ff]
+                "
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('header:register')}
               </LanguageAwareLink>
-              <LanguageAwareLink to="/todo" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-slate-700 rounded-md" onClick={() => setIsMenuOpen(false)}>
-                {t('header:earn')}
-              </LanguageAwareLink>
-              <div className="pt-4 pb-3 border-t border-slate-700">
-                <div className={`flex items-center px-3 ${headerSpacing.mobileButtonSpacing}`}>
-                  <LanguageAwareLink 
-                    to="/login"
-                    className="btn-primary w-full text-center"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {t('header:login')}
-                  </LanguageAwareLink>
-                </div>
-                <div className={`flex items-center px-3 ${headerSpacing.mobileButtonSpacing} mt-2`}>
-                  <LanguageAwareLink 
-                    to="/register"
-                    className="btn-primary w-full text-center"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {t('header:register')}
-                  </LanguageAwareLink>
-                </div>
-              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );
